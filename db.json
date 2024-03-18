@@ -26,26 +26,22 @@
     {
       "id": "5288762b-4b53-4f16-a39f-e09600879f39",
       "leagueId": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
-      "canSeePick": false,
       "gameType": "survivor",
-      "hardCore": true,
-      "neverOut": false,
-      "oneMulligan": false,
-      "twoMulligan": false,
+      "elimination": "hardCore",
       "ties": true,
       "earlyPoint": false,
+      "canSeePick": false,
+      "cantPickSame": false,
       "locked": true
     },
     {
       "id": "7008f31f-81d0-4290-9a65-a88f51817cad",
-      "leagueId": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
-      "canSeePick": false,
+      "leagueID": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
+      "canSeePick": true,
       "gameType": "loser",
-      "hardCore": false,
-      "neverOut": true,
-      "oneMulligan": false,
-      "twoMulligan": false,
+      "elimination": "hardCore",
       "ties": false,
+      "cantPickSame": true,
       "earlyPoint": true,
       "locked": false
     }

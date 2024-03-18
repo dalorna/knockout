@@ -1,7 +1,7 @@
 import { Modal, Button } from 'react-bootstrap';
 
 export const SimpleModal = (props) => {
-    const { show, handleClose, modalTitle, modalBody, callback } = props;
+    const { show, handleClose, modalTitle, modalBody, callback, buttonTitle } = props;
     return (
         <Modal show={show} onHide={handleClose} centered data-bs-theme="superhero">
             <Modal.Header closeButton={handleClose}>
@@ -12,7 +12,7 @@ export const SimpleModal = (props) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>Close</Button>
-                <Button variant="primary" onClick={callback}>Do Work</Button>
+                { callback && buttonTitle && <Button variant="primary" onClick={callback}>{buttonTitle}</Button>}
             </Modal.Footer>
         </Modal>
     );

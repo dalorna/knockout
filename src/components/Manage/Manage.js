@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState} from 'react';
 import { Tooltip } from 'react-tooltip';
 import { SimpleModal } from '../../utils/simpleModal'
-import { saveRule, getRuleByLeagueId } from '../../api/rules';
+import {saveRule, getRuleByLeagueId, updateRules, updateRule} from '../../api/rules';
 import { generateUUID } from '../../utils/helpers';
 import { useCurrentLeagues } from '../../state/rule';
 import {saveRulesBody, submitRulesBody} from '../../utils/constants';
@@ -10,9 +10,8 @@ import {saveRulesBody, submitRulesBody} from '../../utils/constants';
 const Manage = () => {
     // const user = useCurrentUser();
     const currentLeagues = useCurrentLeagues();
-    const [currentRules, setCurrentRules] = useState(null);
     const [selectedLeague, setSelectedLeague] = useState(null);
-    const [rules,] = useState(null);
+    const [currentRules, setCurrentRules] = useState(null);
     const [show, setShow] = useState(false);
     const [modalTitle, setModalTitle] = useState('Save Rules');
     const [modalBody, setModalBody] = useState('Save');
@@ -28,29 +27,37 @@ const Manage = () => {
     const locked = watch('locked')
     
     const handleOnSubmit = async (data) => {
-        setShow(true);
-        setModalTitle(isSubmit ? 'Submit Rules' : 'Save Rules');
-        setModalBody(isSubmit ? submitRulesBody : saveRulesBody)
         const rules =  {
-            id: generateUUID(),
-            leagueID: data.leagueId,
+            id: currentRules.id ?? generateUUID(),
+            leagueID: currentRules.leagueId ?? selectedLeague.id,
             canSeePick: data.canSeePick,
             gameType: data.gameType,
-            hardCore: data.hardCore,
-            neverOut: data.neverOut,
-            oneMulligan: data.oneMulligan,
-            twoMulligan: data.twoMulligan,
+            elimination: data.elimination,
             ties: data.ties,
-            cantPick: data.cantPick,
+            cantPickSame: data.cantPickSame,
             earlyPoint: data.earlyPoint,
             locked: isSubmit
         };
-        await saveRule(rules);
+        if (!isSubmit) {
+            await saveCurrentRules(rules, currentRules.id);
+            setShow(true);
+            setModalTitle('Saving Rules');
+            setModalBody(saveRulesBody)
+            return;
+        }
+        await saveCurrentRules(rules, currentRules.id);
+        setShow(true);
+        setModalTitle('Saving Rules');
+        setModalBody(submitRulesBody)
 
     };
-    const onSaveData = (isSubmit) => {
-        console.log('onSaveData', isSubmit)
-    }    
+    const saveCurrentRules = async (rules, currentRulesId) => {
+        if (currentRulesId) {
+            await updateRule(rules);
+        } else {
+            await saveRule(rules);
+        }
+    }
     const setLeague = async (id) => {
         const l = currentLeagues.data.find(f => f.id === id);
         const r = await getRuleByLeagueId(l.id);
@@ -101,9 +108,9 @@ const Manage = () => {
                                 </div>
                                 <div className="card-body">
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" {...register("gameType")}
-                                               value="survivor" />
-                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                        <input className="form-check-input" type="radio" {...register('gameType')}
+                                               value="survivor" disabled={locked} />
+                                        <label className="form-check-label">
                                             Must Pick a <strong>Winner</strong> Each Week
                                         </label>
                                     </div>
@@ -117,9 +124,9 @@ const Manage = () => {
                                 </div>
                                 <div className="card-body">
                                     <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" {...register("gameType")}
-                                               value="loser" />
-                                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                                        <input className="form-check-input" type="radio" {...register('gameType')}
+                                               value="loser" disabled={locked} />
+                                        <label className="form-check-label">
                                             Must Pick a <strong>Loser</strong> each week
                                         </label>
                                     </div>
@@ -141,34 +148,30 @@ const Manage = () => {
                                     <div className="card-body">
                                         <h5>Select the Elimination rules fo the league</h5>
                                         <div className="form-check">
-                                            <input className="form-check-input"
-                                                   type="checkbox"  {...register('hardCore', {disabled: !!rules})}
-                                                   id="hardCore"/>
-                                            <label className="form-check-label" htmlFor="HardCore">
+                                            <input className="form-check-input" type="radio" {...register('elimination')}
+                                                   value="hardCore" disabled={locked} />
+                                            <label className="form-check-label" htmlFor="hardCore">
                                                 Hard Core
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input"
-                                                   type="checkbox" {...register('oneMulligan', {disabled: !!rules})}
-                                                   id="oneMulligan"/>
+                                            <input className="form-check-input" type="radio" {...register('elimination')}
+                                                   value="oneMulligan" disabled={locked}/>
                                             <label className="form-check-label" htmlFor="oneMulligan">
                                                 One Mulligan
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input"
-                                                   type="checkbox" {...register('twoMulligan', {disabled: !!rules})}
-                                                   id="twoMulligan"/>
+                                            <input className="form-check-input" type="radio" {...register('elimination')}
+                                                   value="twoMulligan" disabled={locked}/>
                                             <label className="form-check-label" htmlFor="twoMulligan">
                                                 Two Mulligans
                                             </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input"
-                                                   type="checkbox" {...register('neverOut', {disabled: !!rules})}
-                                                   id="NeverOut"/>
-                                            <label className="form-check-label" htmlFor="NeverOut">
+                                            <input className="form-check-input" type="radio" {...register('elimination')}
+                                                   value="neverOut" disabled={locked}/>
+                                            <label className="form-check-label" htmlFor="neverOut">
                                                 Never Out - requires Point system
                                             </label>
                                         </div>
@@ -178,13 +181,13 @@ const Manage = () => {
                             <div className="col-5">
                                 <div className="card">
                                     <div className="card-header">
-                                        Other Rules
+                                        Optional Rules
                                     </div>
                                     <div className="card-body">
                                         <h5>Optional Rules</h5>
                                         <div className="form-check">
                                             <input className="form-check-input"
-                                                   type="checkbox" {...register('ties', {disabled: !!rules})}
+                                                   type="checkbox" {...register('ties', {disabled: locked})}
                                                    id="ties"/>
                                             <label className="form-check-label" htmlFor="ties">
                                                 Ties Count as Losses
@@ -192,7 +195,7 @@ const Manage = () => {
                                         </div>
                                         <div className="form-check">
                                             <input className="form-check-input"
-                                                   type="checkbox" {...register('canSeePick', {disabled: !!rules})}
+                                                   type="checkbox" {...register('canSeePick', {disabled: locked})}
                                                    id="canSeePick"/>
                                             <label className="form-check-label" htmlFor="canSeePick">
                                                 See Other's picks
@@ -200,7 +203,7 @@ const Manage = () => {
                                         </div>
                                         <div className="form-check">
                                             <input className="form-check-input"
-                                                   type="checkbox" {...register('earlyPoint', {disabled: !!rules})}
+                                                   type="checkbox" {...register('earlyPoint', {disabled: locked})}
                                                    id="earlyPoint"/>
                                             <label className="form-check-label" htmlFor="earlyPoint">
                                                 Early losses Count more
@@ -209,9 +212,9 @@ const Manage = () => {
                                         {
                                             gameType === 'loser' && <div className="form-check form-check-inline">
                                                 <input className="form-check-input"
-                                                       type="checkbox" {...register('cantPick', {disabled: !!rules})}
-                                                       id="cantPick"/>
-                                                <label className="form-check-label" htmlFor="cantPick">
+                                                       type="checkbox" {...register('cantPickSame', {disabled: locked})}
+                                                       id="cantPickSame"/>
+                                                <label className="form-check-label" htmlFor="cantPickSame">
                                                     Can't pick the same team
                                                 </label>
                                             </div>
@@ -223,27 +226,33 @@ const Manage = () => {
                     </div>
                     <div className="p-3 shadow-sm rounded bg-body-secondary mx-3 mt-5 text-end">
                         <button
-                            type="button"
-                            className="btn btn-outline-secondary btn-margin-right btn-standard-width"
+                            type="button" data-tooltip-id="select-tip" data-tooltip-variant="info"
+                            data-tooltip-content="Click to Switch Leagues"
+                            className="btn btn-outline-secondary btn-margin-right float-start"
                             aria-label="Home"
                             onClick={() => setSelectedLeague(null)}>
-                            Select
+                            <Tooltip id="select-tip" />
+                            Select League
                         </button>
                         <button
-                            type="submit"
-                            className="btn btn-primary btn-margin-right btn-standard-width"
+                            type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
+                            data-tooltip-content="Save your setting for later"
+                            className="btn btn-primary btn-margin-right"
                             aria-label="Save Form" disabled={locked}
                             onClick={() => setIsSubmit(false)}
                         >
-                            Save
+                            <Tooltip id="save-tip" />
+                            Save Rules
                         </button>
                         <button
-                            type="submit"
-                            className="btn btn-primary btn-standard-width"
+                            type="submit" data-tooltip-id="submit-tip" data-tooltip-variant="info"
+                            data-tooltip-content="This will finalize your league rules!"
+                            className="btn btn-primary"
                             aria-label="Save Form" disabled={locked}
                             onClick={() => setIsSubmit(true)}
                         >
-                            Submit
+                            <Tooltip id="submit-tip" />
+                            Submit Final Rules
                         </button>
                     </div>
                 </form>
@@ -255,7 +264,6 @@ const Manage = () => {
                      handleShow={() => setShow(true)}
                      modalTitle={modalTitle}
                      modalBody={modalBody}
-                     callback={() => onSaveData(isSubmit)}
         />
     </>);
 }
