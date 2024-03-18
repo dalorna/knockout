@@ -1,25 +1,25 @@
 {
   "league": [
     {
-      "Id": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
-      "UserId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "Name": "Test League",
-      "Description": "Title If you want to say something cool",
-      "ManagerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
+      "id": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "name": "Test League",
+      "description": "Title If you want to say something cool",
+      "managerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
     },
     {
-      "Id": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
-      "UserId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "Name": "Test League 2",
-      "Description": "My Second League",
-      "ManagerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
+      "id": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "name": "Test League 2",
+      "description": "My Second League",
+      "managerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
     },
     {
-      "Id": "56125868-3c66-4fc7-b955-bbb1f1c11f43",
-      "UserId": 2,
-      "Name": "Test League 3",
-      "Description": "The Third League League",
-      "ManagerId": 2
+      "id": "56125868-3c66-4fc7-b955-bbb1f1c11f43",
+      "userId": 2,
+      "name": "Test League 3",
+      "description": "The Third League League",
+      "managerId": 2
     }
   ],
   "rule": [
@@ -32,12 +32,24 @@
       "neverOut": false,
       "oneMulligan": false,
       "twoMulligan": false,
-      "ties": false,
+      "ties": true,
       "earlyPoint": false,
+      "locked": true
+    },
+    {
+      "id": "7008f31f-81d0-4290-9a65-a88f51817cad",
+      "leagueId": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
+      "canSeePick": false,
+      "gameType": "loser",
+      "hardCore": false,
+      "neverOut": true,
+      "oneMulligan": false,
+      "twoMulligan": false,
+      "ties": false,
+      "earlyPoint": true,
       "locked": false
     }
   ],
-  "leagueRules": [],
   "pick": [],
   "schedule": [],
   "member": [],
@@ -45,36 +57,36 @@
   "standings": [],
   "user": [
     {
-      "Id": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "FirstName": "Jason",
-      "LastName": "Rango",
-      "Email": "Kcrango@hotmail.com",
-      "AddressLine1": "6728 N. Saint Clair Ave.",
-      "AddressLine2": "",
-      "City": "Kansas City",
-      "State": "MO",
-      "Zip": "64151"
+      "id": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "firstName": "Jason",
+      "lastName": "Rango",
+      "email": "Kcrango@hotmail.com",
+      "addressLine1": "6728 N. Saint Clair Ave.",
+      "addressLine2": "",
+      "city": "Kansas City",
+      "state": "MO",
+      "zip": "64151"
     },
     {
-      "Id": "13af6045-400d-45fb-9247-38b00d8cdd98",
-      "FirstName": "Ronald",
-      "LastName": "Tester",
-      "Email": "Kcrango@hotmail.com",
-      "AddressLine1": "",
-      "AddressLine2": "",
-      "City": "",
-      "State": "",
-      "Zip": ""
+      "id": "13af6045-400d-45fb-9247-38b00d8cdd98",
+      "firstName": "Ronald",
+      "lastName": "Tester",
+      "email": "Kcrango@hotmail.com",
+      "addressLine1": "",
+      "addressLine2": "",
+      "city": "",
+      "state": "",
+      "zip": ""
     }
   ],
   "refTable": [
     {
-      "Id": 1,
+      "id": 1,
       "key": "gameType",
       "value": "loser"
     },
     {
-      "Id": 2,
+      "id": 2,
       "key": "gameType",
       "value": "survivor"
     }

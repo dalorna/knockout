@@ -1,33 +1,31 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState} from 'react';
 import { Tooltip } from 'react-tooltip';
 import { SimpleModal } from '../../utils/simpleModal'
-import { saveRule } from '../../api/rules';
+import { saveRule, getRuleByLeagueId } from '../../api/rules';
 import { generateUUID } from '../../utils/helpers';
-import {useCurrentLeagues } from '../../state/rule';
+import { useCurrentLeagues } from '../../state/rule';
+import {saveRulesBody, submitRulesBody} from '../../utils/constants';
 
 const Manage = () => {
     // const user = useCurrentUser();
-    const leagues = useCurrentLeagues();
+    const currentLeagues = useCurrentLeagues();
+    const [currentRules, setCurrentRules] = useState(null);
     const [selectedLeague, setSelectedLeague] = useState(null);
-    const [gameType, setGameType] = useState('')
     const [rules,] = useState(null);
     const [show, setShow] = useState(false);
     const [modalTitle, setModalTitle] = useState('Save Rules');
     const [modalBody, setModalBody] = useState('Save');
-    const [isSubmit, setIsSubmit] = useState(false);
-    const submitRulesBody = `Submitting the Rules will no longer allow edits, these will be the final rules for the season`; 
-    const saveRulesBody = `Saving the rules will still allow for editing,\r Submit the rules with you're final decision`;
-
+    const [isSubmit, setIsSubmit] = useState(false); 
+    
     const {
         register,
+        watch,
+        reset,
         handleSubmit
-    } = useForm({
-        defaultValues: {
-            hardCore: true,
-            gameType: 'survivor'
-        }
-    })
+    } = useForm({ })
+    const gameType = watch('gameType');
+    const locked = watch('locked')
     
     const handleOnSubmit = async (data) => {
         setShow(true);
@@ -53,9 +51,14 @@ const Manage = () => {
     const onSaveData = (isSubmit) => {
         console.log('onSaveData', isSubmit)
     }    
-    const setLeague = (id) => {
-        const l = leagues.data.find(f => f.Id === id);
+    const setLeague = async (id) => {
+        const l = currentLeagues.data.find(f => f.id === id);
+        const r = await getRuleByLeagueId(l.id);
         setSelectedLeague(l);
+        if (r && r.data && r.data.length > 0) {
+            setCurrentRules(r.data[0]);
+            reset(r.data[0]);
+        }
     }
 
     return(<>
@@ -65,8 +68,8 @@ const Manage = () => {
                 <div className="mb-2 p-5 bg-primary text-white rounded">
                     <ul >
                         {
-                            leagues.data.map((league) => 
-                                <li className="select" key={league.Id} onClick={() => setLeague(league.Id)} >{league.Name}</li>
+                            currentLeagues.data.map((league) => 
+                                <li className="select" key={league.id} onClick={() => setLeague(league.id)} >{league.name}</li>
                             )
                         }
                     </ul>
@@ -79,7 +82,7 @@ const Manage = () => {
             <div className="page container py-4 py-sm-5 form-background-color">
                 <div className="mb-2 p-5 bg-info text-white rounded">
                     <div className="text-center">
-                        <h4>{`Manage - ${selectedLeague.Name}`}</h4>
+                        <h4>{`Manage - ${selectedLeague.name}`}</h4>
                         <h6>{selectedLeague.Description}</h6>
                         <p>As the administrator of the league, you will decide what type of game you will be playing this
                             year,
@@ -99,9 +102,7 @@ const Manage = () => {
                                 <div className="card-body">
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" {...register("gameType")}
-                                               value="survivor" onChange={(x) => {
-                                            setGameType(x.target.value)
-                                        }}/>
+                                               value="survivor" />
                                         <label className="form-check-label" htmlFor="flexCheckDefault">
                                             Must Pick a <strong>Winner</strong> Each Week
                                         </label>
@@ -117,10 +118,7 @@ const Manage = () => {
                                 <div className="card-body">
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" {...register("gameType")}
-                                               value="loser"
-                                               onChange={(x) => {
-                                                   setGameType(x.target.value)
-                                               }}/>
+                                               value="loser" />
                                         <label className="form-check-label" htmlFor="flexCheckDefault">
                                             Must Pick a <strong>Loser</strong> each week
                                         </label>
@@ -131,7 +129,7 @@ const Manage = () => {
                     </div>
                     <div className="p-3 shadow-sm rounded bg-white mx-3 mt-5">
                         <div className="text-center">
-                            <h5>{gameType === 'survivor' ? 'Survivor Series Rules' : 'Loser Pot Rules'}</h5>
+                            <h5>{ gameType === 'survivor' ? 'Survivor Series Rules' : 'Loser Pot Rules'}</h5>
                         </div>
                         <div className="row">
                             <div className="col-1"></div>
@@ -234,7 +232,7 @@ const Manage = () => {
                         <button
                             type="submit"
                             className="btn btn-primary btn-margin-right btn-standard-width"
-                            aria-label="Save Form"
+                            aria-label="Save Form" disabled={locked}
                             onClick={() => setIsSubmit(false)}
                         >
                             Save
@@ -242,7 +240,7 @@ const Manage = () => {
                         <button
                             type="submit"
                             className="btn btn-primary btn-standard-width"
-                            aria-label="Save Form"
+                            aria-label="Save Form" disabled={locked}
                             onClick={() => setIsSubmit(true)}
                         >
                             Submit

@@ -5,7 +5,7 @@ const Home = () => {
     return <div className="page container py-4 py-sm-5 text-center">
         <div className="row p-3 shadow-sm rounded bg-white mx-3">
             <h1>Home</h1>
-            <h3>{`Welcome ${user && user.data[0].FirstName} ${user && user.data[0].LastName}`}</h3>
+            <h3>{`Welcome ${user && user.data[0].firstName} ${user && user.data[0].lastName}`}</h3>
         </div>
         <div className="row p-3 shadow-sm rounded bg-white mx-3 mt-5">
             This should show something about where you stand in the league and what team you have picked this week
