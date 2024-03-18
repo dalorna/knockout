@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tooltip';
 
 const SideMenu = () => {
   const navigate = useNavigate();
-
+  const userId = 'cfc555e0-4c96-4b1e-b50e-b858bd600686';
   return<>
     <div>
       <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
@@ -18,7 +18,7 @@ const SideMenu = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link href="/home/cfc555e0-4c96-4b1e-b50e-b858bd600686">Home</Nav.Link>
                 <Nav.Link href="#link">Log Out</Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -28,7 +28,7 @@ const SideMenu = () => {
     </div>
     <div>
       <SideNav onSelect={selected => {
-        navigate(`/${selected}`)
+        navigate(`/${selected}/${userId}`)
       }}>
         <SideNav.Toggle/>
         <SideNav.Nav defaultSelected="home">

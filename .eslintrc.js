@@ -6,7 +6,7 @@ module.exports = {
   },
   extends: "eslint:recommended",
   rules: {
-    "no-unused-vars": "warn"
+    "no-unused-vars": "off"
   },
   parserOptions: {
     "sourceType": "module",

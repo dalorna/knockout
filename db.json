@@ -1,0 +1,82 @@
+{
+  "league": [
+    {
+      "Id": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
+      "UserId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "Name": "Test League",
+      "Description": "Title If you want to say something cool",
+      "ManagerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
+    },
+    {
+      "Id": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
+      "UserId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "Name": "Test League 2",
+      "Description": "My Second League",
+      "ManagerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
+    },
+    {
+      "Id": "56125868-3c66-4fc7-b955-bbb1f1c11f43",
+      "UserId": 2,
+      "Name": "Test League 3",
+      "Description": "The Third League League",
+      "ManagerId": 2
+    }
+  ],
+  "rule": [
+    {
+      "id": "5288762b-4b53-4f16-a39f-e09600879f39",
+      "leagueId": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
+      "canSeePick": false,
+      "gameType": "survivor",
+      "hardCore": true,
+      "neverOut": false,
+      "oneMulligan": false,
+      "twoMulligan": false,
+      "ties": false,
+      "earlyPoint": false,
+      "locked": false
+    }
+  ],
+  "leagueRules": [],
+  "pick": [],
+  "schedule": [],
+  "member": [],
+  "leagueMembers": [],
+  "standings": [],
+  "user": [
+    {
+      "Id": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "FirstName": "Jason",
+      "LastName": "Rango",
+      "Email": "Kcrango@hotmail.com",
+      "AddressLine1": "6728 N. Saint Clair Ave.",
+      "AddressLine2": "",
+      "City": "Kansas City",
+      "State": "MO",
+      "Zip": "64151"
+    },
+    {
+      "Id": "13af6045-400d-45fb-9247-38b00d8cdd98",
+      "FirstName": "Ronald",
+      "LastName": "Tester",
+      "Email": "Kcrango@hotmail.com",
+      "AddressLine1": "",
+      "AddressLine2": "",
+      "City": "",
+      "State": "",
+      "Zip": ""
+    }
+  ],
+  "refTable": [
+    {
+      "Id": 1,
+      "key": "gameType",
+      "value": "loser"
+    },
+    {
+      "Id": 2,
+      "key": "gameType",
+      "value": "survivor"
+    }
+  ]
+}
