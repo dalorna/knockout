@@ -28,8 +28,8 @@ const Manage = () => {
     
     const handleOnSubmit = async (data) => {
         const rules =  {
-            id: currentRules.id ?? generateUUID(),
-            leagueID: currentRules.leagueId ?? selectedLeague.id,
+            id: currentRules?.id ?? generateUUID(),
+            leagueId: currentRules?.leagueId ?? selectedLeague.id,
             canSeePick: data.canSeePick,
             gameType: data.gameType,
             elimination: data.elimination,
@@ -39,13 +39,13 @@ const Manage = () => {
             locked: isSubmit
         };
         if (!isSubmit) {
-            await saveCurrentRules(rules, currentRules.id);
+            await saveCurrentRules(rules, currentRules?.id);
             setShow(true);
             setModalTitle('Saving Rules');
             setModalBody(saveRulesBody)
             return;
         }
-        await saveCurrentRules(rules, currentRules.id);
+        await saveCurrentRules(rules, currentRules?.id);
         setShow(true);
         setModalTitle('Saving Rules');
         setModalBody(submitRulesBody)

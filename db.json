@@ -4,22 +4,25 @@
       "id": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
       "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
       "name": "Test League",
-      "description": "Title If you want to say something cool",
-      "managerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
+      "description": "Title If you want to say something cool"
     },
     {
       "id": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
       "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
       "name": "Test League 2",
-      "description": "My Second League",
-      "managerId": "cfc555e0-4c96-4b1e-b50e-b858bd600686"
+      "description": "My Second League"
     },
     {
       "id": "56125868-3c66-4fc7-b955-bbb1f1c11f43",
       "userId": 2,
       "name": "Test League 3",
-      "description": "The Third League League",
-      "managerId": 2
+      "description": "The Third League League"
+    },
+    {
+      "id": "0bb42559-d1b4-4a56-9b19-d2a064ca3450",
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "name": "asdf",
+      "description": "asdf"
     }
   ],
   "rule": [
@@ -36,7 +39,7 @@
     },
     {
       "id": "7008f31f-81d0-4290-9a65-a88f51817cad",
-      "leagueID": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
+      "leagueId": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
       "canSeePick": true,
       "gameType": "loser",
       "elimination": "hardCore",
@@ -44,6 +47,16 @@
       "cantPickSame": true,
       "earlyPoint": true,
       "locked": false
+    },
+    {
+      "id": "6d51413d-9f66-43fc-baed-279d6d5cc8e3",
+      "leagueId": "0bb42559-d1b4-4a56-9b19-d2a064ca3450",
+      "canSeePick": true,
+      "gameType": "survivor",
+      "elimination": "hardCore",
+      "ties": true,
+      "earlyPoint": true,
+      "locked": true
     }
   ],
   "pick": [],

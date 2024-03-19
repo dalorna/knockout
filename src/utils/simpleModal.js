@@ -1,4 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
+import {  useEffect, useState, useRef,  } from 'react';
+import { Modal as BootstrapModal } from 'bootstrap';
 
 export const SimpleModal = (props) => {
     const { show, handleClose, modalTitle, modalBody, callback, buttonTitle } = props;
@@ -20,5 +22,12 @@ export const SimpleModal = (props) => {
 }
 export default SimpleModal;
 
+export const useModalInstance = (options) => {
+    const optionsRef = useRef(options);
+    const [modal, setModal] = useState();
+    const modalRef = useRef();
 
+    useEffect(() => setModal(new BootstrapModal(modalRef.current, optionsRef.current)), []);
 
+    return [modal, modalRef];
+};
