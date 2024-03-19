@@ -59,6 +59,12 @@ const Home = () => {
                 <li>
                     add scroll to Home page div
                 </li>
+                <li>
+                    Toast messages everywhere
+                </li>
+                <li>
+                    imperative ref for rules save
+                </li>
             </ul>
         </div>
         <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} />
