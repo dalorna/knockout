@@ -17,9 +17,8 @@ const Home = () => {
     const refresher = () => {
         toast.success('League Successfully Saved')
     }
-    return <div className="page container py-4 py-sm-5 text-center">
-        <div className="row p-3 shadow-sm rounded bg-white mx-3">
-            <h1>Home</h1>
+    return <div className="page container py-4 py-sm-5 text-center overflow-auto">
+        <div className="row p-2 shadow-sm rounded bg-white mx-3">
             <h3>{`Welcome ${user && user.data[0].firstName} ${user && user.data[0].lastName}`}</h3>
         </div>
         <div className="row p-3 shadow-sm rounded bg-dark-subtle mx-3 mt-5">
@@ -31,8 +30,8 @@ const Home = () => {
         <div className="row p-3 shadow-sm rounded bg-success mx-3 mt-5">
             <h5>Feature enhancements</h5>
             <ul>
-                <li>This should show something about where you stand in the league and what team you have picked this
-                    week
+                <li>
+                    League Edit screen or Delete League...
                 </li>
                 <li> Current weeks games</li>
                 <li>Who's still in, and or who is in the lead</li>
@@ -42,7 +41,7 @@ const Home = () => {
                 <li>Login Page</li>
                 <li>Set up nfl feed</li>
                 <li>Create Picks UI</li>
-                <li>league standings</li>
+                <li>league standings, view other leagues (public leagues)</li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>
             </ul>
@@ -52,9 +51,6 @@ const Home = () => {
             <ul>
                 <li>
                     refresh save of rules
-                </li>
-                <li>
-                    refresh save of leagues
                 </li>
                 <li>
                     add scroll to Home page div

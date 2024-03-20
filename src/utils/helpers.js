@@ -15,11 +15,11 @@ export const generateUUID = () => { // Public Domain/MIT
 }
 
 
-export const ErrorFeedback = ({ error }) =>
-    error ? (
-        <div
+export const ErrorFeedback = ({ error }) => {
+    console.log('ErrorFeedback: ', error);
+  return (  error &&  <div
             role="alert"
-            className="invalid-feedback"
+            className="text-danger" style={{fontSize: 'smaller'}}
             dangerouslySetInnerHTML={{ __html: error.message }}
-        ></div>
-    ) : null;
+        ></div>);
+}
