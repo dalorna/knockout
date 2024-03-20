@@ -1,21 +1,17 @@
 import { useForm } from 'react-hook-form';
-import { useState} from 'react';
+import {useRef, useState} from 'react';
 import { Tooltip } from 'react-tooltip';
-import { SimpleModal } from '../../utils/simpleModal'
-import {saveRule, getRuleByLeagueId, updateRules, updateRule} from '../../api/rules';
+import { getRuleByLeagueId } from '../../api/rules';
 import { generateUUID } from '../../utils/helpers';
 import { useCurrentLeagues } from '../../state/rule';
-import {saveRulesBody, submitRulesBody} from '../../utils/constants';
+import {SaveRulesModal} from './SaveRulesModal';
 
 const Manage = () => {
-    // const user = useCurrentUser();
     const currentLeagues = useCurrentLeagues();
     const [selectedLeague, setSelectedLeague] = useState(null);
     const [currentRules, setCurrentRules] = useState(null);
-    const [show, setShow] = useState(false);
-    const [modalTitle, setModalTitle] = useState('Save Rules');
-    const [modalBody, setModalBody] = useState('Save');
-    const [isSubmit, setIsSubmit] = useState(false); 
+    const [isSubmit, setIsSubmit] = useState(false);
+    const createModalRef = useRef();
     
     const {
         register,
@@ -38,26 +34,15 @@ const Manage = () => {
             earlyPoint: data.earlyPoint,
             locked: isSubmit
         };
-        if (!isSubmit) {
-            await saveCurrentRules(rules, currentRules?.id);
-            setShow(true);
-            setModalTitle('Saving Rules');
-            setModalBody(saveRulesBody)
-            return;
-        }
-        await saveCurrentRules(rules, currentRules?.id);
-        setShow(true);
-        setModalTitle('Saving Rules');
-        setModalBody(submitRulesBody)
 
+        createModalRef.current.show(
+            {
+                rules: rules,
+                currentRulesId: currentRules?.id
+            }
+        )
     };
-    const saveCurrentRules = async (rules, currentRulesId) => {
-        if (currentRulesId) {
-            await updateRule(rules);
-        } else {
-            await saveRule(rules);
-        }
-    }
+
     const setLeague = async (id) => {
         const l = currentLeagues.data.find(f => f.id === id);
         const r = await getRuleByLeagueId(l.id);
@@ -67,7 +52,7 @@ const Manage = () => {
             reset(r.data[0]);
         }
     }
-
+    
     return(<>
         {
             !selectedLeague && <>
@@ -259,18 +244,7 @@ const Manage = () => {
             </div>
         </>
     }
-        <SimpleModal show={show}
-                     handleClose={() => setShow(false)}
-                     handleShow={() => setShow(true)}
-                     modalTitle={modalTitle}
-                     modalBody={modalBody}
-        />
+    <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit} />
     </>);
 }
 export default Manage;
-
-/*<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-</button>*/
-

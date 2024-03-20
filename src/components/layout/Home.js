@@ -33,7 +33,10 @@ const Home = () => {
                 <li>
                     League Edit screen or Delete League...
                 </li>
-                <li> Current weeks games</li>
+                <li>
+                    create season table, rules only locked for season
+                </li>
+                <li>Current weeks games</li>
                 <li>Who's still in, and or who is in the lead</li>
                 <li>Some Sort of selection for the next week, with message to select by a certain time</li>
                 <li>We need to show the create league for a user in the role of manager</li>
@@ -57,9 +60,6 @@ const Home = () => {
                 </li>
                 <li>
                     Toast messages everywhere
-                </li>
-                <li>
-                    imperative ref for rules save
                 </li>
             </ul>
         </div>

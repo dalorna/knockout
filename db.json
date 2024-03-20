@@ -93,6 +93,16 @@
       "ties": true,
       "earlyPoint": true,
       "locked": true
+    },
+    {
+      "id": "6ed22c37-1270-49e3-a8ea-e7850c0937e2",
+      "leagueId": "8841da9e-d927-4c6b-a809-00469c4777d5",
+      "canSeePick": true,
+      "gameType": null,
+      "elimination": "oneMulligan",
+      "ties": false,
+      "earlyPoint": true,
+      "locked": false
     }
   ],
   "pick": [],
