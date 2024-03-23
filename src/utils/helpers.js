@@ -16,7 +16,6 @@ export const generateUUID = () => { // Public Domain/MIT
 
 
 export const ErrorFeedback = ({ error }) => {
-    console.log('ErrorFeedback: ', error);
   return (  error &&  <div
             role="alert"
             className="text-danger" style={{fontSize: 'smaller'}}

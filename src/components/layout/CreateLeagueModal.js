@@ -1,8 +1,8 @@
 import {useModalInstance} from '../../utils/simpleModal';
 import {useImperativeHandle, useState, useEffect} from 'react';
 import { useForm } from 'react-hook-form';
-import { saveLeague } from '../../api/user';
-import {ErrorFeedback, generateUUID} from '../../utils/helpers';
+import {saveLeague, saveLeagueSeason} from '../../api/league';
+import { ErrorFeedback, generateUUID } from '../../utils/helpers';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
@@ -10,8 +10,7 @@ const validationSchema = Yup.object().shape({
     name: Yup.string().required('League name is required')
 });
 
-export const ConfirmLeagueForm = ({onSubmit}) => {
-    // const [isPrivateLeague, setIsPrivateLeague] = useState(false);
+export const ConfirmLeagueForm = ({onSubmit, props}) => {
     const { 
         handleSubmit, 
         register, 
@@ -49,7 +48,7 @@ export const ConfirmLeagueForm = ({onSubmit}) => {
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="modal-content" style={{width: '500px'}}>
-                <div className="modal-header text-primary-emphasis bg-dark-subtle justify-content-center">Create new league</div>
+                <div className="modal-header text-primary-emphasis bg-dark-subtle justify-content-center">{`Create New League for the ${props.year} season`}</div>
                 <div className="modal-body">
                     <div className="form-group text-start">
                         <label htmlFor="name" className="text-primary-emphasis">League Name</label>
@@ -87,41 +86,45 @@ export const ConfirmLeagueForm = ({onSubmit}) => {
         </form>
     );
 }
-export const CreateLeagueModal = ({actionsRef, afterSubmit}) => {
+export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
     const [modal, modalRef] = useModalInstance();
     const [user, setUser] = useState(null);
+    const [season, setSeason] = useState(null);
 
     useImperativeHandle(
         actionsRef,
         () => ({
             show: (details) => {
                 setUser(details.user)
+                setSeason(details.season)
                 modal.show();
             },
             hide: () => modal.hide(),
         }),
         [modal]
     );
-
-    useEffect(() => {
-        console.log('user from Modal: ', user);
-    }, []);
     
     const onConfirm = async (data) => {
-        await saveLeague({
+        const league = await saveLeague({
             id: generateUUID(),
             userId: user.id,
             name: data.name,
             description: data.description,
-            privateCode: data.privateCode
-        })
+        });
+        await saveLeagueSeason({
+            id: generateUUID(),
+            seasonId: season.id,
+            leagueId: league.data.id,
+            privateCode: data.privateCode,
+            locked: false
+        });
         afterSubmit();
         modal.hide();
     }
     return (
         <div className="modal fade" tabIndex="-1" ref={modalRef}>
             <div className="modal-dialog modal-dialog-centered">
-                <ConfirmLeagueForm onSubmit={onConfirm} />
+                <ConfirmLeagueForm onSubmit={onConfirm} props={props} />
             </div>
         </div>
     );

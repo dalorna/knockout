@@ -1,108 +1,43 @@
 {
   "league": [
     {
-      "id": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
+      "id": "ea2a044b-f005-449c-b849-d837091a159d",
       "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "Test League",
-      "description": "Title If you want to say something cool"
+      "name": "My First League",
+      "description": "Pay league"
     },
     {
-      "id": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
+      "id": "42811b53-3b91-4693-bfc2-c8420d951aa7",
       "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "Test League 2",
-      "description": "My Second League"
+      "name": "Second League",
+      "description": "another league"
     },
     {
-      "id": "56125868-3c66-4fc7-b955-bbb1f1c11f43",
-      "userId": "13af6045-400d-45fb-9247-38b00d8cdd98",
-      "name": "Test League 3",
-      "description": "The Third League League",
-      "privateCode": "3a36eb67-fa21-4b88-8239-cadc47aa07a9"
-    },
-    {
-      "id": "0bb42559-d1b4-4a56-9b19-d2a064ca3450",
+      "id": "7c03cead-93fb-4f23-80d9-4916e052d9ce",
       "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "asdf",
-      "description": "asdf",
-      "privateCode": "47b90c90-2899-4a04-a8bd-1b80ea0dd452"
-    },
-    {
-      "id": "75f2059f-b000-4adc-b9d7-72a75beb915d",
-      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "things",
-      "description": "somethings"
-    },
-    {
-      "id": "3508c903-f1fe-471d-9ec7-56f56679e3c4",
-      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "dsafadsfas",
-      "description": "asdfadsfadsf",
-      "privateCode": "a7c04b25-e4cb-4d20-90b3-da7c492bbdb8"
-    },
-    {
-      "id": "6e23e414-b380-4572-84e7-4e0a03fc311a",
-      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "dsafadsfassdfdsf",
-      "description": "asdfadsfadsfsdfdsf",
-      "privateCode": "1fa07240-85fb-427b-8c76-84f5d7b769c4"
-    },
-    {
-      "id": "f975583f-6dee-47c9-bc7b-00cb970817ab",
-      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "asdfdsaf",
-      "description": "asdfsdaf",
-      "privateCode": "be753a8b-f88f-4286-898b-d88d033bf727"
-    },
-    {
-      "id": "8841da9e-d927-4c6b-a809-00469c4777d5",
-      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "name": "find me",
-      "description": "find me in the place",
-      "privateCode": "c9d7e8c9-6548-4532-8b50-e4aa5b6d79c9"
+      "name": "3 league",
+      "description": "333"
     }
   ],
   "rule": [
     {
-      "id": "5288762b-4b53-4f16-a39f-e09600879f39",
-      "leagueId": "b52b38c8-e78a-4f08-8a93-a574aa3244f1",
-      "gameType": "survivor",
+      "id": "d2b6aa8e-6741-4096-9b68-f1579e711e38",
+      "leagueId": "ea2a044b-f005-449c-b849-d837091a159d",
+      "canSeePick": false,
+      "gameType": "loser",
       "elimination": "hardCore",
       "ties": true,
       "earlyPoint": false,
-      "canSeePick": false,
-      "cantPickSame": false,
-      "locked": true
-    },
-    {
-      "id": "7008f31f-81d0-4290-9a65-a88f51817cad",
-      "leagueId": "7df0d178-fbd2-4bc3-b2cb-4e84c605c1f4",
-      "canSeePick": true,
-      "gameType": "loser",
-      "elimination": "hardCore",
-      "ties": false,
-      "cantPickSame": true,
-      "earlyPoint": true,
       "locked": false
     },
     {
-      "id": "6d51413d-9f66-43fc-baed-279d6d5cc8e3",
-      "leagueId": "0bb42559-d1b4-4a56-9b19-d2a064ca3450",
+      "id": "fe03bd91-f17c-4086-9769-20ca9e80dc56",
+      "leagueId": "42811b53-3b91-4693-bfc2-c8420d951aa7",
       "canSeePick": true,
       "gameType": "survivor",
       "elimination": "hardCore",
-      "ties": true,
-      "earlyPoint": true,
-      "locked": true
-    },
-    {
-      "id": "6ed22c37-1270-49e3-a8ea-e7850c0937e2",
-      "leagueId": "8841da9e-d927-4c6b-a809-00469c4777d5",
-      "canSeePick": true,
-      "gameType": null,
-      "elimination": "oneMulligan",
       "ties": false,
-      "earlyPoint": true,
-      "locked": false
+      "earlyPoint": true
     }
   ],
   "pick": [],
@@ -110,6 +45,64 @@
   "member": [],
   "leagueMembers": [],
   "standings": [],
+  "leagueSeason": [
+    {
+      "id": "a15116cc-8982-48c7-aee3-31c4678089f6",
+      "seasonId": 2,
+      "leagueId": "ea2a044b-f005-449c-b849-d837091a159d",
+      "privateCode": "b83dcc74-3e65-4e6b-a42e-779199dd0fda",
+      "locked": false
+    },
+    {
+      "id": "ee28b9bc-67d3-4160-8267-71a01dbec5c9",
+      "seasonId": 2,
+      "leagueId": "42811b53-3b91-4693-bfc2-c8420d951aa7",
+      "privateCode": "9bd91b1e-80d7-4118-900f-cd906f83b9c4",
+      "locked": false
+    },
+    {
+      "id": "643e68f2-a447-4b1d-afe6-d24e314c65cf",
+      "seasonId": 2,
+      "leagueId": "7c03cead-93fb-4f23-80d9-4916e052d9ce",
+      "privateCode": "",
+      "locked": false
+    }
+  ],
+  "winner": [
+    {
+      "id": 1,
+      "place": 1,
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "leagueSeasonId": 1
+    }
+  ],
+  "season": [
+    {
+      "id": 1,
+      "year": "2023",
+      "over": true
+    },
+    {
+      "id": 2,
+      "year": "2024",
+      "over": false
+    },
+    {
+      "id": 3,
+      "year": "2025",
+      "over": false
+    },
+    {
+      "id": 4,
+      "year": "2026",
+      "over": false
+    },
+    {
+      "id": 5,
+      "year": "2027",
+      "over": false
+    }
+  ],
   "user": [
     {
       "id": "cfc555e0-4c96-4b1e-b50e-b858bd600686",

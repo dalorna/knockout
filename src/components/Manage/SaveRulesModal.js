@@ -3,18 +3,23 @@ import {useImperativeHandle, useState } from 'react';
 import toast from 'react-hot-toast';
 import {saveRule, updateRule} from '../../api/rules';
 import {saveRulesBody, submitRulesBody} from '../../utils/constants';
+import {getLeagueSeason, updateLeagueSeason} from '../../api/league';
 
 export const SaveRulesModal = ({actionsRef, isSubmit}) => {
     const [modal, modalRef] = useModalInstance();
     const [rules, setRules] = useState(null);
+    const [seasonId, setSeasonId] = useState(null);
     const [currentRulesId, setCurrentRulesId] = useState(null);
+    const [locked, setLocked] = useState(false);
 
     useImperativeHandle(
         actionsRef,
         () => ({
             show: (details) => {
                 setRules(details.rules);
-                setCurrentRulesId(details.currentRulesId)
+                setCurrentRulesId(details.currentRulesId);
+                setLocked(details.locked);
+                setSeasonId(details.seasonId)
                 modal.show();
             },
             hide: () => modal.hide(),
@@ -23,18 +28,20 @@ export const SaveRulesModal = ({actionsRef, isSubmit}) => {
     );
 
     const onSave = async () => {
-        console.log('rules', rules);
-        await saveCurrentRules(rules, currentRulesId);
+        await saveCurrentRules(rules, currentRulesId, locked, seasonId);
         toast.success('League Successfully Saved')
         modal.hide();
     }
     
-    const saveCurrentRules = async (rules, currentRulesId) => {
+    const saveCurrentRules = async (rules, currentRulesId, locked, seasonId) => {
+        const leagueSeason = await getLeagueSeason(rules.leagueId, seasonId);
         if (currentRulesId) {
             await updateRule(rules);
         } else {
             await saveRule(rules);
         }
+        leagueSeason.data[0].locked = locked;
+        await updateLeagueSeason(leagueSeason.data[0].id, leagueSeason.data[0])
     }
     
     return (

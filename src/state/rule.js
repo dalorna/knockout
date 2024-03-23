@@ -1,7 +1,9 @@
 import { useParams } from 'react-router';
-import {atomFamily, useRecoilValue, atom} from 'recoil';
-import {getRuleByLeagueId} from '../api/rules';
-import {getLeagues, getUser} from '../api/user';
+import { atomFamily, useRecoilValue, atom} from 'recoil';
+import { getRuleByLeagueId } from '../api/rules';
+import { getUser } from '../api/user';
+import { getLeagues } from '../api/league';
+import { getCurrentSeason } from '../api/league';
 
 
 export const useRuleParams = () => {
@@ -55,4 +57,19 @@ const leagueFamily = atomFamily({
 export const useCurrentLeagues = () => {
     const { userId } = useParams();
     return useRecoilValue(leagueFamily(userId))
+}
+
+const seasonFamily = atomFamily({
+    key: 'leagueSeason',
+    default: async (year) => {
+        try {
+            return year && getCurrentSeason(year)
+        } catch {
+            return null;
+        }
+    }
+})
+
+export const useCurrentSeason = () => {
+    return useRecoilValue(seasonFamily((new Date()).getFullYear()))
 }

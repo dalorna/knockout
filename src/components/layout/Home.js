@@ -1,16 +1,18 @@
 import React, {useRef} from 'react';
-import {useCurrentUser} from '../../state/rule';
+import {useCurrentSeason, useCurrentUser} from '../../state/rule';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 
 const Home = () => {
     const user = useCurrentUser();
+    const season = useCurrentSeason();
     const createModalRef = useRef();
     
     const create =() => {
         createModalRef.current.show(
             {
-                user: user.data[0]
+                user: user.data[0],
+                season: season.data[0]
             }
         )
     }
@@ -29,14 +31,17 @@ const Home = () => {
         </div>
         <div className="row p-3 shadow-sm rounded bg-success mx-3 mt-5">
             <h5>Feature enhancements</h5>
-            <ul>
+            <ol className="features text-start" >
+                <li>
+                    create season table, rules only locked for season
+                </li>
                 <li>
                     League Edit screen or Delete League...
                 </li>
                 <li>
-                    create season table, rules only locked for season
+                    Margin of victory to determine winner option?
                 </li>
-                <li>Current weeks games</li>
+                <li style={{color: 'red'}}>Current weeks games</li>
                 <li>Who's still in, and or who is in the lead</li>
                 <li>Some Sort of selection for the next week, with message to select by a certain time</li>
                 <li>We need to show the create league for a user in the role of manager</li>
@@ -47,11 +52,11 @@ const Home = () => {
                 <li>league standings, view other leagues (public leagues)</li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>
-            </ul>
+            </ol>
         </div>
         <div className="row p-3 shadow-sm rounded bg-danger-subtle mx-3 mt-5">
             <h6>Bugs</h6>
-            <ul>
+            <ol className="features text-start">
                 <li>
                     refresh save of rules
                 </li>
@@ -61,9 +66,9 @@ const Home = () => {
                 <li>
                     Toast messages everywhere
                 </li>
-            </ul>
+            </ol>
         </div>
-        <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} />
+        <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season.data[0]} />
     </div>
 }
 export default Home;

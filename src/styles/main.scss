@@ -31,3 +31,13 @@ ul {
   text-decoration: underline white;
   cursor: pointer;
 }
+
+
+.features { counter-reset: item }
+.features li { display: block }
+.features li:before {
+  content: counter(item) ". ";
+  counter-increment: item;
+  width: 2em;
+  display: inline-block;
+}
