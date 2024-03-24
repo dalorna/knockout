@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import { atomFamily, useRecoilValue, atom} from 'recoil';
+import { atomFamily, useRecoilValue } from 'recoil';
 import { getRuleByLeagueId } from '../api/rules';
 import { getUser } from '../api/user';
 import { getLeagues } from '../api/league';

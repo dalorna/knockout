@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { nflApiHost, nflApiKey } from '../utils/constants';
 
 
 export const getScore = async () => {
@@ -36,9 +37,36 @@ export const getScore = async () => {
     };
 
     try {
-        const response = await axios.request(options);
-        console.log(response.data);
+       return await axios.request(options);
     } catch (error) {
         console.error(error);
     }
+}
+
+export const getDailySchedule = async () => {
+    const options = {
+        method: 'GET',
+        URL: `https://${nflApiHost}/getNFLGamesForDate`,
+        headers: {
+            'X-RapidAPI-Key': nflApiKey,
+            'X-RapidAPI-Host': nflApiHost
+        }
+    };
+}
+
+export const getSeasonWeeklySchedule = async (season) => {    
+    const options = {
+        method: 'GET',
+        url: `https://${nflApiHost}/getNFLGamesForWeek`,
+        params: {
+            week: 'all',
+            seasonType: 'reg',
+            season
+        },
+        headers: {
+            'X-RapidAPI-Key': nflApiKey,
+            'X-RapidAPI-Host': nflApiHost
+        }
+    };
+    return await axios.request(options);
 }

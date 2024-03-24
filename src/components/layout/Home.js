@@ -31,7 +31,7 @@ const Home = () => {
         </div>
         <div className="row p-3 shadow-sm rounded bg-success mx-3 mt-5">
             <h5>Feature enhancements</h5>
-            <ol className="features text-start" >
+            <ol className="features text-start">
                 <li>
                     create season table, rules only locked for season
                 </li>
@@ -41,14 +41,15 @@ const Home = () => {
                 <li>
                     Margin of victory to determine winner option?
                 </li>
-                <li style={{color: 'red'}}>Current weeks games</li>
                 <li>Who's still in, and or who is in the lead</li>
-                <li>Some Sort of selection for the next week, with message to select by a certain time</li>
+                <li style={{color: '#f7f786'}}>Create Picks UI</li>
+                <li style={{color: '#f7f786'}}>Some Sort of selection for the next week, with message to select by a certain
+                    time
+                </li>
                 <li>We need to show the create league for a user in the role of manager</li>
                 <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
                 <li>Login Page</li>
                 <li>Set up nfl feed</li>
-                <li>Create Picks UI</li>
                 <li>league standings, view other leagues (public leagues)</li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>

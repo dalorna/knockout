@@ -14,7 +14,7 @@ import {Loading} from './utils/loading';
 
 const App = () => {
   return (
-      <ErrorBoundary>
+      <>
           <Toaster position='top-right' reverseOrder={false}  toastOptions={{
               duration: 3000,
               success: {
@@ -32,19 +32,21 @@ const App = () => {
                   }
               }}} />
           <SideMenu />
-          <Suspense fallback={<Loading />}>
-              <Routes>
-                  <Route path="/*" element={<Home />} />
-                  <Route path="home/:userId" element={<Home />} />
-                  <Route path="manage/:userId/:leagueId?/:ruleId?" element={<Manage />} />
-                  <Route path="members" element={<Members />} />
-                  <Route path="schedule" element={<Schedule />} />
-                  <Route path="standings" element={<Standings />} />
-                  <Route path="picks" element={<Picks />} />
-                  <Route path="rules" element={<Rules />} />
-              </Routes>
-          </Suspense>
-      </ErrorBoundary>
+          <ErrorBoundary>
+              <Suspense fallback={<Loading />}>
+                  <Routes>
+                      <Route path="/home" element={<Home />} />
+                      <Route path="home/:userId" element={<Home />} />
+                      <Route path="manage/:userId/:leagueId?/:ruleId?" element={<Manage />} />
+                      <Route path="members/:userId" element={<Members />} />
+                      <Route path="schedule/:userId" element={<Schedule />} />
+                      <Route path="standings/:userId" element={<Standings />} />
+                      <Route path="picks/:userId" element={<Picks />} />
+                      <Route path="rules:userId" element={<Rules />} />
+                  </Routes>
+              </Suspense>
+          </ErrorBoundary>
+      </>
   );
 };
 
