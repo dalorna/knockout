@@ -6,12 +6,10 @@ import { generateUUID } from '../../utils/helpers';
 import { useCurrentLeagues, useCurrentSeason } from '../../state/rule';
 import { SaveRulesModal } from './SaveRulesModal';
 import { loser, survivor } from '../../utils/constants';
-import { getScore } from '../../api/nfl';
 
-const Manage = () => {
+const Manage = ({currentSelectedLeague}) => {
     const currentLeagues = useCurrentLeagues();
     const season = useCurrentSeason();
-    const [selectedLeague, setSelectedLeague] = useState(null);
     const [currentRules, setCurrentRules] = useState(null);
     const [isSubmit, setIsSubmit] = useState(false);
     const [isDisabled, setIsDisabled] = useState([false, false, false, false])
@@ -19,7 +17,16 @@ const Manage = () => {
     
     useEffect(() => {
         const load = async () => {
-            await getScore();
+            const l = currentLeagues.data.find(f => f.id === currentSelectedLeague.value.id);
+            const r = await getRuleByLeagueId(l.id);
+            if (r && r.data && r.data.length > 0) {
+                setCurrentRules(r.data[0]);
+                reset(r.data[0]);
+                setValue('gameType', r.data[0].gameType);
+                if (r.data[0].gameType === 'hardCore') {
+                    setHardCore();
+                }
+            }
         };
         
         load().then(() => {});
@@ -39,7 +46,7 @@ const Manage = () => {
     const handleOnSubmit = async (data) => {
         const rules =  {
             id: currentRules?.id ?? generateUUID(),
-            leagueId: currentRules?.leagueId ?? selectedLeague.id,
+            leagueId: currentSelectedLeague.value,
             canSeePick: data.canSeePick,
             gameType: data.gameType,
             elimination: data.elimination,
@@ -57,10 +64,9 @@ const Manage = () => {
             }
         )
     };
-    const setLeague = async (id) => {
+/*    const setLeague = async (id) => {
         const l = currentLeagues.data.find(f => f.id === id);
         const r = await getRuleByLeagueId(l.id);
-        setSelectedLeague(l);
         if (r && r.data && r.data.length > 0) {
             setCurrentRules(r.data[0]);
             reset(r.data[0]);
@@ -69,7 +75,7 @@ const Manage = () => {
                 setHardCore();
             }
         }
-    }
+    }*/
 
     const onHardCoreClick = () => {
         setValue('canSeePick', false);
@@ -91,28 +97,13 @@ const Manage = () => {
     }
     
     return(<>
-        {
-            !selectedLeague && <>
-            <div  className="page container py-4 py-sm-5 form-background-color">
-                <div className="mb-2 p-5 bg-primary text-white rounded">
-                    <ul >
-                        {
-                            currentLeagues.data.map((league) => 
-                                <li className="select" key={league.id} onClick={async () => await setLeague(league.id)} >{league.name}</li>
-                            )
-                        }
-                    </ul>
-                </div>
-            </div>
-            </>
-        }
-        {
-            selectedLeague && <>
+
+    
             <div className="page container py-4 py-sm-5 form-background-color">
                 <div className="mb-2 p-5 bg-info text-white rounded">
                     <div className="text-center">
-                        <h4>{`Manage - ${selectedLeague?.name}`}</h4>
-                        <h6>{selectedLeague?.Description}</h6>
+                        <h4>{`Manage - ${currentSelectedLeague.value?.name}`}</h4>
+                        <h6>{currentSelectedLeague.value?.Description}</h6>
                         <p>As the administrator of the league, you will decide what type of game you will be playing this
                             year,
                             once the game type is set. You can then pick all of the rules of the league</p>
@@ -261,15 +252,6 @@ const Manage = () => {
                             </div>
                             <div className="p-3 shadow-sm rounded bg-body-secondary mx-3 mt-5 text-end">
                                 <button
-                                    type="button" data-tooltip-id="select-tip" data-tooltip-variant="info"
-                                    data-tooltip-content="Click to Switch Leagues"
-                                    className="btn btn-outline-secondary btn-margin-right float-start"
-                                    aria-label="Home"
-                                    onClick={() => setSelectedLeague(null)}>
-                                    <Tooltip id="select-tip"/>
-                                    Select League
-                                </button>
-                                <button
                                     type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
                                     data-tooltip-content="Save your setting for later"
                                     className="btn btn-primary btn-margin-right"
@@ -294,8 +276,8 @@ const Manage = () => {
                     }
                 </form>
             </div>
-            </>
-        }
+            
+        
         <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit}/>
     </>);
 }

@@ -4,6 +4,7 @@ import { getRuleByLeagueId } from '../api/rules';
 import { getUser } from '../api/user';
 import { getLeagues } from '../api/league';
 import { getCurrentSeason } from '../api/league';
+import {useUser} from './user';
 
 
 export const useRuleParams = () => {
@@ -39,7 +40,7 @@ const userFamily = atomFamily({
 });
 
 export const useCurrentUser = () => {
-    const { userId } = useParams();
+    const userId = useUser();
     return useRecoilValue(userFamily(userId));
 }
 
@@ -55,7 +56,11 @@ const leagueFamily = atomFamily({
 })
 
 export const useCurrentLeagues = () => {
-    const { userId } = useParams();
+    const userId = useUser()
+    return useRecoilValue(leagueFamily(userId))
+}
+
+export const useCL = (userId) => {
     return useRecoilValue(leagueFamily(userId))
 }
 

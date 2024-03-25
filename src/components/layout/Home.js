@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef} from 'react';
 import {useCurrentSeason, useCurrentUser} from '../../state/rule';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const Home = () => {
     const user = useCurrentUser();
     const season = useCurrentSeason();
-    const createModalRef = useRef();
+    const createModalRef = useRef();    
     
     const create =() => {
         createModalRef.current.show(

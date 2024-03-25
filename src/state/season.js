@@ -15,3 +15,10 @@ const nflSeasonFamily = atomFamily({
 export const useNFLSeason = (year) => {
     return  useRecoilValue(nflSeasonFamily(year))
 }
+
+export const useWeeklySchedule = (year, week) => {
+    const nflSchedule = useNFLSeason(year);
+    const weekly = Object.groupBy(nflSchedule.data.body, ({gameWeek}) => gameWeek);
+    const weeklySchedule = Object.keys(weekly).map((key) => weekly[key]);
+    return weeklySchedule[week - 1];
+}
