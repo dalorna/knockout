@@ -56,8 +56,9 @@ const leagueFamily = atomFamily({
 })
 
 export const useCurrentLeagues = () => {
-    const userId = useUser()
-    return useRecoilValue(leagueFamily(userId))
+    const userId = useUser();
+    const leagues = useRecoilValue(leagueFamily(userId));
+    return leagues.data;
 }
 
 export const useCL = (userId) => {

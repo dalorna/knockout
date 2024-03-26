@@ -17,7 +17,7 @@ const Manage = ({currentSelectedLeague}) => {
     
     useEffect(() => {
         const load = async () => {
-            const l = currentLeagues.data.find(f => f.id === currentSelectedLeague.value.id);
+            const l = currentLeagues.find(f => f.id === currentSelectedLeague.value.id);
             const r = await getRuleByLeagueId(l.id);
             if (r && r.data && r.data.length > 0) {
                 setCurrentRules(r.data[0]);
@@ -64,18 +64,6 @@ const Manage = ({currentSelectedLeague}) => {
             }
         )
     };
-/*    const setLeague = async (id) => {
-        const l = currentLeagues.data.find(f => f.id === id);
-        const r = await getRuleByLeagueId(l.id);
-        if (r && r.data && r.data.length > 0) {
-            setCurrentRules(r.data[0]);
-            reset(r.data[0]);
-            setValue('gameType', r.data[0].gameType);
-            if (r.data[0].gameType === 'hardCore') {
-                setHardCore();
-            }
-        }
-    }*/
 
     const onHardCoreClick = () => {
         setValue('canSeePick', false);

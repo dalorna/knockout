@@ -2,8 +2,8 @@ import { Modal, Button } from 'react-bootstrap';
 import {  useEffect, useState, useRef,  } from 'react';
 import { Modal as BootstrapModal } from 'bootstrap';
 
-export const SimpleModal = (props) => {
-    const { show, handleClose, modalTitle, modalBody, callback, buttonTitle } = props;
+export const SimpleModal = ({props, show}) => {
+    const { handleClose, modalTitle, modalBody, callback, buttonTitle } = props;
     return (
         <Modal show={show} onHide={handleClose} centered data-bs-theme="superhero">
             <Modal.Header closeButton={handleClose}>

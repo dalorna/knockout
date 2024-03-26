@@ -3,10 +3,10 @@ import {useCurrentSeason, useCurrentUser} from '../../state/rule';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 
-const Home = () => {
+const Home = ({leagues, setLeagues}) => {
     const user = useCurrentUser();
     const season = useCurrentSeason();
-    const createModalRef = useRef();    
+    const createModalRef = useRef();
     
     const create =() => {
         createModalRef.current.show(
@@ -16,7 +16,8 @@ const Home = () => {
             }
         )
     }
-    const refresher = () => {
+    const refresher = (league) => {
+        setLeagues([...leagues, league]);
         toast.success('League Successfully Saved')
     }
     return <div className="page container py-4 py-sm-5 text-center overflow-auto">

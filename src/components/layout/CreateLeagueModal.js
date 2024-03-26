@@ -118,7 +118,7 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
             privateCode: data.privateCode,
             locked: false
         });
-        afterSubmit();
+        afterSubmit(league.data);
         modal.hide();
     }
     return (

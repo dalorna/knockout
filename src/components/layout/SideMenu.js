@@ -8,8 +8,6 @@ import { Tooltip } from 'react-tooltip';
 import { signal } from '@preact/signals';
 import {Dropdown} from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
-import {getLeagues} from '../../api/league';
-import {useUser} from '../../state/user';
 import {Route, Routes} from 'react-router';
 import Home from './Home';
 import Manage from '../Manage/Manage';
@@ -18,22 +16,23 @@ import Schedule from '../Schedule/Schedule';
 import Standings from '../Standings/Standings';
 import Picks from '../Picks/Picks';
 import Rules from '../Rules/Rules';
+import SimpleModal from '../../utils/simpleModal';
+import {useCurrentLeagues} from '../../state/rule';
 
 const currentSelectedLeague = signal(null);
 
 const SideMenu = () => {
-  const userId = useUser();
-  const [currentLeagues, setCurrentLeagues] = useState(null);
+  const leagues = useCurrentLeagues();
   const navigate = useNavigate();
-  const [league, setLeague] = useState('Select League')
+  const [allLeagues, setAllLeagues] = useState([]);
+  const [league, setLeague] = useState('Select League');
+  const [show, setShow] = useState(false);
+  const modalProps = { modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)};
   
   useEffect(() => {
-    const load = async () => {
-      const l = await getLeagues(userId);
-      setCurrentLeagues(l.data);
-    };
-    load().then(() => {});
+    setAllLeagues(leagues);
   }, [])
+
   const setSelectedLeague = (league) => {
     currentSelectedLeague.value = league;
     setLeague(league.name)
@@ -41,7 +40,7 @@ const SideMenu = () => {
   
   const getDisableMessage = () => {
     if (!currentSelectedLeague.value?.id) {
-      alert('select a league');
+      setShow(true);
     }
   }
   
@@ -60,11 +59,11 @@ const SideMenu = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu id="leagueDropDown">
                     {
-                        currentLeagues && currentLeagues.map(league => <Dropdown.Item key={league.id} onClick={() => setSelectedLeague(league)} >{league.name}</Dropdown.Item>)
+                      allLeagues.map(league => <Dropdown.Item key={league.id} onClick={() => setSelectedLeague(league)} >{league.name}</Dropdown.Item>)
                     }
                   </Dropdown.Menu>
                 </Dropdown>
-                <Nav.Link href="/home">Home</Nav.Link>
+                {/*<Nav.Link href="/home">Home</Nav.Link>*/}
                 <Nav.Link href="#link">Log Out</Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -78,6 +77,12 @@ const SideMenu = () => {
       }}>
         <SideNav.Toggle/>
         <SideNav.Nav defaultSelected="home">
+          <NavItem  eventKey="home" data-tooltip-id="home-tip" data-tooltip-content="Home"
+                    data-tooltip-variant="info">
+            <Tooltip id="manage-tip" place="top"/>
+            <NavIcon><i className="fa fa-fw fa-home" style={{fontSize: '1.5em'}}/></NavIcon>
+            <NavText>Manage</NavText>
+          </NavItem>            
           <NavItem eventKey="manage" data-tooltip-id="manage-tip" data-tooltip-content="Manage League" disabled={!currentSelectedLeague.value} onClick={getDisableMessage}
                    data-tooltip-variant="info">
             <Tooltip id="manage-tip" place="top"/>
@@ -110,7 +115,7 @@ const SideMenu = () => {
     </div>
     <div>
       <Routes>
-        <Route path="/home" element={<Home currentSelectedLeague={currentSelectedLeague} />} />
+        <Route path="/home" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
         <Route path="manage/:leagueId?/:ruleId?" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
         <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
         <Route path="schedule" element={<Schedule />} />
@@ -119,6 +124,7 @@ const SideMenu = () => {
         <Route path="rules" element={<Rules currentSelectedLeague={currentSelectedLeague} />} />
       </Routes>
     </div>
+    <SimpleModal props={modalProps} show={show} />
   </>
 }
 export default SideMenu;
