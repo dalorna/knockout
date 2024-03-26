@@ -18,6 +18,7 @@ import Picks from '../Picks/Picks';
 import Rules from '../Rules/Rules';
 import SimpleModal from '../../utils/simpleModal';
 import {useCurrentLeagues} from '../../state/rule';
+import Join from '../Join/Join';
 
 const currentSelectedLeague = signal(null);
 
@@ -79,7 +80,7 @@ const SideMenu = () => {
         <SideNav.Nav defaultSelected="home">
           <NavItem  eventKey="home" data-tooltip-id="home-tip" data-tooltip-content="Home"
                     data-tooltip-variant="info">
-            <Tooltip id="manage-tip" place="top"/>
+            <Tooltip id="home-tip" place="top"/>
             <NavIcon><i className="fa fa-fw fa-home" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Manage</NavText>
           </NavItem>            
@@ -110,6 +111,11 @@ const SideMenu = () => {
             <NavIcon><i className="fa fa-fw fa-list-alt" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Rules</NavText>
           </NavItem>
+          <NavItem eventKey="join" data-tooltip-id="join-tip" data-tooltip-content="Join a New league" data-tooltip-variant="info">
+            <Tooltip id="join-tip" place="top"/>
+            <NavIcon><i className="fa fa-fw fa-user-plus" style={{fontSize: '1.5em'}}/></NavIcon>
+            <NavText>Join a new league</NavText>
+          </NavItem>          
         </SideNav.Nav>
       </SideNav>
     </div>
@@ -122,6 +128,7 @@ const SideMenu = () => {
         <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
         <Route path="picks" element={<Picks currentSelectedLeague={currentSelectedLeague} />} />
         <Route path="rules" element={<Rules currentSelectedLeague={currentSelectedLeague} />} />
+        <Route path="join" element={<Join />} />
       </Routes>
     </div>
     <SimpleModal props={modalProps} show={show} />
