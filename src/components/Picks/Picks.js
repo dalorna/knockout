@@ -1,10 +1,13 @@
-import { useWeeklySchedule } from '../../state/season';
+import {useCurrentLeagueSeason, useCurrentPickLeagueSeasonWeek, useWeeklySchedule} from '../../state/season';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
 import {useState, useRef} from 'react';
 import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {generateUUID} from '../../utils/helpers';
+import {useUser} from '../../state/user';
+import {useCurrentSeason} from '../../state/rule';
 
 const validationSchema = yup.object().shape({
     pick: yup.string().required("must make a pick")
@@ -12,10 +15,16 @@ const validationSchema = yup.object().shape({
 
 
 const Picks = ({currentSelectedLeague}) => {
-    const currentWeeklySchedule = useWeeklySchedule('2023', 1);
+    // TODO: get Current Week and Year
+    // TODO: save pick
+    const week = 1;
+    const year = '2023';
+    const userId = useUser();
+    const season = useCurrentSeason(year);
+    const leagueSeason = useCurrentLeagueSeason(currentSelectedLeague.value.id, season.data[0].id)
+    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason.data[0].id, week);
+    const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
-    const [pickLocked, ] = useState(false); // from get pick
-    // get pick, save pick
     
     const {
         register,
@@ -29,11 +38,19 @@ const Picks = ({currentSelectedLeague}) => {
         mode: 'onChange'
     })
     const handleOnSubmit = (data) => {
-        console.log('data', data);
+        const pick = {
+            id: currentWeeklyPick?.id ?? generateUUID(),
+            userId: userId,
+            week: week,
+            leagueSeasonId: leagueSeason.data[0].id,
+            locked: false,
+            gameId: data.pick.split('-')[1],
+            teamId: data.pick.split('-')[0]
+        };
         createModalRef.current.show(
             {
-                pick: data.pick,
-                week: currentWeeklySchedule
+                pick: pick,
+                week: currentWeeklySchedule.find(f => f.gameID === pick.gameId)
             }
         )
     }
@@ -61,10 +78,10 @@ const Picks = ({currentSelectedLeague}) => {
                                         <div className="card-text mb-2 text-muted">
                                             <div className="form-check form-check-inline">
                                                 <input className="form-check-input" type="radio" {...register('pick')}
-                                                       disabled={pickLocked}
-                                                       id="exampleRadios1" value={`${game.away}_${game.gameID}`} />
+                                                       disabled={currentWeeklyPick?.locked}
+                                                       id="exampleRadios1" value={`${game.teamIDAway}-${game.gameID}`} />
                                                 <label className="form-check-label"
-                                                       htmlFor={`${game.away}_${game.gameID}`}>
+                                                       htmlFor={`${game.teamIDAway}-${game.gameID}`}>
                                                     {
                                                         game.away
                                                     }
@@ -72,10 +89,10 @@ const Picks = ({currentSelectedLeague}) => {
                                             </div>
                                             <div className="form-check form-check-inline">
                                                 <input className="form-check-input" type="radio" {...register('pick')}
-                                                       disabled={pickLocked}
-                                                       id="exampleRadios1" value={`${game.home}_${game.gameID}`} />
+                                                       disabled={currentWeeklyPick?.locked}
+                                                       id="exampleRadios1" value={`${game.teamIDHome}-${game.gameID}`} />
                                                 <label className="form-check-label"
-                                                       htmlFor={`${game.home}_${game.gameID}`}>
+                                                       htmlFor={`${game.teamIDHome}-${game.gameID}`}>
                                                     {
                                                         game.home
                                                     }

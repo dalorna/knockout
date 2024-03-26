@@ -46,7 +46,17 @@
       "earlyPoint": true
     }
   ],
-  "pick": [],
+  "pick": [
+    {
+      "id": "f1b1b3b4-1b3b-4b1b-8b1b-1b3b1b3b1b3b",
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "week": 1,
+      "leagueSeasonId": "a15116cc-8982-48c7-aee3-31c4678089f6",
+      "locked": false,
+      "gameId": "1",
+      "teamId": "1"
+    }
+  ],
   "schedule": [],
   "member": [],
   "leagueMembers": [],
@@ -161,27 +171,6 @@
       "id": "eff3688c-0e8f-48dc-8d74-5b15d8701bb5",
       "seasonId": 2,
       "leagueId": "e3b6925a-7503-4321-8a1a-00ded637aafc",
-      "privateCode": "",
-      "locked": false
-    },
-    {
-      "id": "29cf892c-2614-40ee-a3d9-d87ed88bb936",
-      "seasonId": 2,
-      "leagueId": "b1862117-b3d9-42ee-8e06-b49b84877364",
-      "privateCode": "",
-      "locked": false
-    },
-    {
-      "id": "49f90b22-7093-4f7d-be46-8cb8a5a0063e",
-      "seasonId": 2,
-      "leagueId": "03470533-d8c4-4815-ae93-3ad0175642da",
-      "privateCode": "",
-      "locked": false
-    },
-    {
-      "id": "cf9c3b68-e9be-41aa-b648-dbaba836e6e9",
-      "seasonId": 2,
-      "leagueId": "1bfa9823-166b-478e-b83a-1dba141db3b6",
       "privateCode": "",
       "locked": false
     },

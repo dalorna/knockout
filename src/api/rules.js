@@ -6,18 +6,6 @@ export const getRuleByLeagueId = (leagueId) => axios.get(`${baseUrl}/rule?league
 export const saveRule = (rule) => axios.post(`${baseUrl}/rule`, rule);
 export const updateRule = (rule) => axios.put(`${baseUrl}/rule/${rule.id}`, rule);
 export const deleteRule = (rule) => axios.delete(`${baseUrl}/rule/${rule.id}`);
-export const saveRules = async (rules) => {
-    for(const rule of rules) {
-        await saveRule(rule)
-    }
-}
-export const updateRules = async (rules) => {
-    for(const rule of rules) {
-        await updateRule(rule)
-    }
-} 
-export const deleteRules = async (rules) => {
-    for(const rule of rules) {
-        await deleteRule(rule)
-    }
-}
+export const getUserPicks = (userId, leagueSeasonId, weekId) => axios.get(`${baseUrl}/pick?userId=${userId}&leagueSeasonId=${leagueSeasonId}&weekId=${weekId}`);
+export const savePick = (pick) => axios.post(`${baseUrl}/pick`, pick);
+export const updatePick = (pick) => axios.put(`${baseUrl}/pick/${pick.id}`, pick);

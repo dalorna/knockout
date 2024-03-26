@@ -5,10 +5,12 @@ import toast from 'react-hot-toast';
 export const SavePickModal = ({actionRef}) => {
     const [modal, modalRef] = useModalInstance();
     const [pick, setPick] = useState(null);
+    const [week, setWeek] = useState(null);
 
     useImperativeHandle(actionRef, () => ({
         show: (details) => {
             setPick(details.pick);
+            setWeek(details.week);
             modal.show();
         },
         hide: () => modal.hide()

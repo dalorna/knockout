@@ -121,6 +121,7 @@ const SideMenu = () => {
     </div>
     <div>
       <Routes>
+        <Route path="/" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
         <Route path="/home" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
         <Route path="manage/:leagueId?/:ruleId?" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
         <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
