@@ -70,3 +70,21 @@ export const getSeasonWeeklySchedule = async (season) => {
     };
     return await axios.request(options);
 }
+
+export const getNFLTeams = async () => {
+    const options = {
+        method: 'GET',
+        url: `https://${nflApiHost}/getNFLTeams`,
+        params: {
+            rosters: false,
+            schedules: false,
+            topPerformers: false,
+            teamStats: false
+        },
+        headers: {
+            'X-RapidAPI-Key': nflApiKey,
+            'X-RapidAPI-Host': nflApiHost
+        }
+    };
+    return await axios.request(options);
+}

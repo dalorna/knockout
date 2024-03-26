@@ -1,13 +1,13 @@
 import {useCurrentLeagueSeason, useCurrentPickLeagueSeasonWeek, useWeeklySchedule} from '../../state/season';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {generateUUID} from '../../utils/helpers';
 import {useUser} from '../../state/user';
-import {useCurrentSeason} from '../../state/rule';
+import {useCurrentSeason, useTeams} from '../../state/rule';
 
 const validationSchema = yup.object().shape({
     pick: yup.string().required("must make a pick")
@@ -16,15 +16,17 @@ const validationSchema = yup.object().shape({
 
 const Picks = ({currentSelectedLeague}) => {
     // TODO: get Current Week and Year
-    // TODO: save pick
     const week = 1;
     const year = '2023';
     const userId = useUser();
     const season = useCurrentSeason(year);
-    const leagueSeason = useCurrentLeagueSeason(currentSelectedLeague.value.id, season.data[0].id)
+    const selectedLeagueValue = currentSelectedLeague.value ?? JSON.parse(localStorage.getItem('selectedLeague')) 
+    const leagueSeason = useCurrentLeagueSeason(selectedLeagueValue.id, season.data[0].id)
     const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason.data[0].id, week);
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
+    const teams = useTeams();
+    const [selectedTeam, setSelectedTeam] = useState({});
     
     const {
         register,
@@ -33,13 +35,24 @@ const Picks = ({currentSelectedLeague}) => {
     } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            pick: null
+            pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null
         },
         mode: 'onChange'
     })
+
+    useEffect(() => {
+        if (currentWeeklyPick && teams) {
+            const t = teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)
+            setSelectedTeam(t);
+        }
+
+    }, [teams, selectedTeam])
+    
+    
     const handleOnSubmit = (data) => {
+        const currentPickId = currentWeeklyPick.data[0]?.id;
         const pick = {
-            id: currentWeeklyPick?.id ?? generateUUID(),
+            id: currentPickId ?? generateUUID(),
             userId: userId,
             week: week,
             leagueSeasonId: leagueSeason.data[0].id,
@@ -50,7 +63,9 @@ const Picks = ({currentSelectedLeague}) => {
         createModalRef.current.show(
             {
                 pick: pick,
-                week: currentWeeklySchedule.find(f => f.gameID === pick.gameId)
+                week: currentWeeklySchedule.find(f => f.gameID === pick.gameId),
+                teams: teams.data.body,
+                currentPickId: currentPickId
             }
         )
     }
@@ -58,10 +73,12 @@ const Picks = ({currentSelectedLeague}) => {
     return <>
         <div className="page container py-4 py-sm-5">
             <div className="mb-2 p-2 bg-primary text-white rounded text-center">
-                <h2>Picks - {currentSelectedLeague.value.name}</h2>
+                <h2>Picks - {selectedLeagueValue.name}</h2>
             </div>
-            <div className="mb-1 p-3 bg-success shadow-sm rounded text-success bg-white mx-3">
-                pick for the week:
+            <div className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger' }`} >
+                {
+                    `Current Pick for the week ${ currentWeeklyPick.data[0] ? `${selectedTeam?.teamCity} ${selectedTeam?.teamName} ` : 'has not been selected'}`
+                }
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
                 <div className="row p-2 shadow-sm rounded bg-white mx-3" style={{maxHeight: '47vh', overflow: 'auto'}}>
@@ -78,7 +95,7 @@ const Picks = ({currentSelectedLeague}) => {
                                         <div className="card-text mb-2 text-muted">
                                             <div className="form-check form-check-inline">
                                                 <input className="form-check-input" type="radio" {...register('pick')}
-                                                       disabled={currentWeeklyPick?.locked}
+                                                       disabled={currentWeeklyPick.data[0]?.locked}
                                                        id="exampleRadios1" value={`${game.teamIDAway}-${game.gameID}`} />
                                                 <label className="form-check-label"
                                                        htmlFor={`${game.teamIDAway}-${game.gameID}`}>
@@ -89,7 +106,7 @@ const Picks = ({currentSelectedLeague}) => {
                                             </div>
                                             <div className="form-check form-check-inline">
                                                 <input className="form-check-input" type="radio" {...register('pick')}
-                                                       disabled={currentWeeklyPick?.locked}
+                                                       disabled={currentWeeklyPick.data[0]?.locked}
                                                        id="exampleRadios1" value={`${game.teamIDHome}-${game.gameID}`} />
                                                 <label className="form-check-label"
                                                        htmlFor={`${game.teamIDHome}-${game.gameID}`}>
@@ -106,7 +123,7 @@ const Picks = ({currentSelectedLeague}) => {
                     }
                 </div>
                 <div className="p-3 shadow-sm rounded bg-body-secondary mx-3 mt-5 text-end">
-                    <button type="submit" className="btn btn-primary" aria-label="Save Pick" disabled={!isValid}>
+                    <button type="submit" className="btn btn-primary" aria-label="Save Pick" disabled={!isValid || currentWeeklyPick.data[0]?.locked}>
                         Save Pick
                     </button>
                 </div>

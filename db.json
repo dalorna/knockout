@@ -47,15 +47,7 @@
     }
   ],
   "pick": [
-    {
-      "id": "f1b1b3b4-1b3b-4b1b-8b1b-1b3b1b3b1b3b",
-      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
-      "week": 1,
-      "leagueSeasonId": "a15116cc-8982-48c7-aee3-31c4678089f6",
-      "locked": false,
-      "gameId": "1",
-      "teamId": "1"
-    }
+
   ],
   "schedule": [],
   "member": [],

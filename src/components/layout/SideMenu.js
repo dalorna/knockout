@@ -32,11 +32,16 @@ const SideMenu = () => {
   
   useEffect(() => {
     setAllLeagues(leagues);
+    let selectedLeagueStorage = localStorage.getItem('selectedLeague');
+    if (selectedLeagueStorage) {
+      currentSelectedLeague.value = JSON.parse(selectedLeagueStorage);
+    }
   }, [])
 
   const setSelectedLeague = (league) => {
     currentSelectedLeague.value = league;
-    setLeague(league.name)
+    setLeague(league.name);
+    localStorage.setItem('selectedLeague', JSON.stringify(league));
   }
   
   const getDisableMessage = () => {
