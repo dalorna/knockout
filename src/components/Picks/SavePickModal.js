@@ -45,6 +45,7 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
             toast.error('Your pick was not saved correctly')   ;         
         }
         finally {
+            // afterSubmit(pick);
             modal.hide();
         }
 

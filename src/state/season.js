@@ -1,4 +1,11 @@
-import {atomFamily, useRecoilValue, useRecoilRefresher_UNSTABLE, useRecoilCallback, useResetRecoilState} from 'recoil';
+import {
+    atomFamily,
+    useRecoilValue,
+    useRecoilRefresher_UNSTABLE,
+    useRecoilCallback,
+    useResetRecoilState,
+    selectorFamily
+} from 'recoil';
 import {getSeasonWeeklySchedule} from '../api/nfl';
 import {getUserPicks} from '../api/rules';
 import {getLeagueSeason} from '../api/league';
@@ -27,32 +34,23 @@ export const useWeeklySchedule = (year, week) => {
 
 const pickAtomFamily = atomFamily({
     key: 'pick',
-    default: async ({userId, leagueSeasonId, weekId}) => {
-        try {
-            console.log('pickAtomFamily')
-            return await getUserPicks(userId, leagueSeasonId, weekId);
-        } catch {
-            return null;
+    default: selectorFamily({
+        key: 'pick/default',
+        get: ({userId, leagueSeasonId, weekId}) => async () => {
+            try {
+                return await getUserPicks(userId, leagueSeasonId, weekId);
+            } catch {
+                return {};
+            }
         }
-    }
+    })
 })
 
 export const useCurrentPickLeagueSeasonWeek = (userId, leagueSeasonId, weekId) => {
     return useRecoilValue(pickAtomFamily({userId, leagueSeasonId, weekId}));
 }
 
-
-export const usePickRefresh = () => useRecoilCallback(({refresh, reset , snapshot}) => async ({userId, leagueSeasonId, weekId}) => {
-  refresh(pickAtomFamily({userId, leagueSeasonId, weekId}));
-  reset(pickAtomFamily({userId, leagueSeasonId, weekId}));
-  const r1 = await snapshot.getPromise(pickAtomFamily({userId, leagueSeasonId, weekId}));
-  console.log('r1', r1);
-})
-
 export const useCurrentPickRefresh = (userId, leagueSeasonId, weekId) => {
-/*    console.log('refresh userId: ', userId);
-    console.log('refresh leagueSeasonId: ', leagueSeasonId);
-    console.log('refresh weekId: ', weekId);*/
     return useRecoilRefresher_UNSTABLE(pickAtomFamily({userId, leagueSeasonId, weekId}))
 }
 

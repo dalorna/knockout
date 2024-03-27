@@ -2,11 +2,11 @@ import {
     useCurrentLeagueSeason,
     useCurrentPickLeagueSeasonWeek,
     useWeeklySchedule,
-    usePickRefresh
+    useCurrentPickRefresh
 } from '../../state/season';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
-import {useState, useRef, useEffect} from 'react';
+import { useRef } from 'react';
 import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -28,11 +28,10 @@ const Picks = ({currentSelectedLeague}) => {
     const selectedLeagueValue = currentSelectedLeague.value ?? JSON.parse(localStorage.getItem('selectedLeague')) 
     const leagueSeason = useCurrentLeagueSeason(selectedLeagueValue.id, season.data[0].id)
     const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason.data[0].id, week);
-    const pickRefresh = usePickRefresh();
+    const refresher = useCurrentPickRefresh(userId, leagueSeason.data[0].id, week);
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
     const teams = useTeams();
-    const [selectedTeam, setSelectedTeam] = useState({});
     
     const {
         register,
@@ -45,22 +44,13 @@ const Picks = ({currentSelectedLeague}) => {
         },
         mode: 'onChange'
     })
-
-    useEffect(() => {
-        if (currentWeeklyPick && teams) {
-            const t = teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)
-            setSelectedTeam(t);
-        }
-
-    }, [teams, selectedTeam])
-    
     
     const handleOnSubmit = (data) => {
         const currentPickId = currentWeeklyPick.data[0]?.id;
         const pick = {
             id: currentPickId ?? generateUUID(),
             userId: userId,
-            week: week,
+            weekId: week,
             leagueSeasonId: leagueSeason.data[0].id,
             locked: false,
             gameId: data.pick.split('-')[1],
@@ -76,11 +66,19 @@ const Picks = ({currentSelectedLeague}) => {
         )
     }
     
+    
     const refreshPick = async () => {
-        await pickRefresh({userId: userId, leagueSeasonId: leagueSeason.data[0].id, weekId: week});
-        console.log('currentWeeklyPick', currentWeeklyPick);
+        refresher();
     }
 
+    const getSelectedTeamName = () => {
+        if (currentWeeklyPick.data[0]?.teamId) {
+            return teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)?.teamCity + ' ' + teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)?.teamName;
+        } else {
+            return 'has not been selected';
+        }
+    }
+    
     return <>
         <div className="page container py-4 py-sm-5">
             <div className="mb-2 p-2 bg-primary text-white rounded text-center">
@@ -88,7 +86,7 @@ const Picks = ({currentSelectedLeague}) => {
             </div>
             <div className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger' }`} >
                 {
-                    `Current Pick for the week ${ currentWeeklyPick.data[0] ? `${selectedTeam?.teamCity} ${selectedTeam?.teamName} ` : 'has not been selected'}`
+                    `Current Pick for the week ${ week } is ${getSelectedTeamName()} ${currentWeeklyPick.data[0]?.locked ? 'Locked' : 'Not Locked'}`
                 }
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>

@@ -47,6 +47,15 @@
     }
   ],
   "pick": [
+    {
+      "id": "39aaf030-0f19-4fec-a68b-e97b8540689d",
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "weekId": 1,
+      "leagueSeasonId": "a15116cc-8982-48c7-aee3-31c4678089f6",
+      "locked": true,
+      "gameId": "20230907_DET@KC",
+      "teamId": "16"
+    }
   ],
   "schedule": [],
   "member": [],

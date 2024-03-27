@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router';
 import Home from './Home';
 import Manage from '../Manage/Manage';
@@ -19,6 +19,7 @@ import Rules from '../Rules/Rules';
 import SimpleModal from '../../utils/simpleModal';
 import {useCurrentLeagues} from '../../state/rule';
 import Join from '../Join/Join';
+import {Loading} from '../../utils/loading';
 
 const currentSelectedLeague = signal(null);
 
@@ -26,6 +27,7 @@ const SideMenu = () => {
   const leagues = useCurrentLeagues();
   const navigate = useNavigate();
   const [allLeagues, setAllLeagues] = useState([]);
+  const [currentLeague, setCurrentLeague] = useState(null);
   const [show, setShow] = useState(false);
   const modalProps = { modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)};
   
@@ -34,12 +36,14 @@ const SideMenu = () => {
     let selectedLeagueStorage = localStorage.getItem('selectedLeague');
     if (selectedLeagueStorage) {
       currentSelectedLeague.value = JSON.parse(selectedLeagueStorage);
+      setCurrentLeague(JSON.parse(selectedLeagueStorage));
     }
   }, [])
 
   const setSelectedLeague = (league) => {
     currentSelectedLeague.value = league;
     localStorage.setItem('selectedLeague', JSON.stringify(league));
+    setCurrentLeague(league);
   }
   
   const getDisableMessage = () => {
@@ -58,7 +62,7 @@ const SideMenu = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Dropdown>
-                  <DropdownButton title={currentSelectedLeague?.value?.name ?? 'Select league'} variant="dark" id="leagueDropDown">
+                  <DropdownButton title={currentLeague?.name ?? 'Select league'} variant="dark" id="leagueDropDown">
                     {
                       allLeagues.map(league => <Dropdown.Item key={league.id} onClick={() => setSelectedLeague(league)} >{league.name}</Dropdown.Item>)
                     }
@@ -120,17 +124,20 @@ const SideMenu = () => {
       </SideNav>
     </div>
     <div>
-      <Routes>
-        <Route path="/" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
-        <Route path="/home" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
-        <Route path="manage/:leagueId?/:ruleId?" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
-        <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
-        <Route path="schedule" element={<Schedule />} />
-        <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
-        <Route path="picks" element={<Picks currentSelectedLeague={currentSelectedLeague} />} />
-        <Route path="rules" element={<Rules currentSelectedLeague={currentSelectedLeague} />} />
-        <Route path="join" element={<Join />} />
-      </Routes>
+
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
+          <Route path="/home" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
+          <Route path="manage/:leagueId?/:ruleId?" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="schedule" element={<Schedule />} />
+          <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="picks" element={<Picks currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="rules" element={<Rules currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="join" element={<Join />} />
+        </Routes>
+      </Suspense>
     </div>
     <SimpleModal props={modalProps} show={show} />
   </>
