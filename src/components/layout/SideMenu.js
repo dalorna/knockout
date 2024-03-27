@@ -6,7 +6,7 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import {useNavigate} from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { signal } from '@preact/signals';
-import {Dropdown} from 'react-bootstrap';
+import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router';
 import Home from './Home';
@@ -26,7 +26,6 @@ const SideMenu = () => {
   const leagues = useCurrentLeagues();
   const navigate = useNavigate();
   const [allLeagues, setAllLeagues] = useState([]);
-  const [league, setLeague] = useState('Select League');
   const [show, setShow] = useState(false);
   const modalProps = { modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)};
   
@@ -40,7 +39,6 @@ const SideMenu = () => {
 
   const setSelectedLeague = (league) => {
     currentSelectedLeague.value = league;
-    setLeague(league.name);
     localStorage.setItem('selectedLeague', JSON.stringify(league));
   }
   
@@ -60,14 +58,11 @@ const SideMenu = () => {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Dropdown>
-                  <Dropdown.Toggle variant="dark" id="league-dropdown">
-                    {league}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu id="leagueDropDown">
+                  <DropdownButton title={currentSelectedLeague?.value?.name ?? 'Select league'} variant="dark" id="leagueDropDown">
                     {
                       allLeagues.map(league => <Dropdown.Item key={league.id} onClick={() => setSelectedLeague(league)} >{league.name}</Dropdown.Item>)
                     }
-                  </Dropdown.Menu>
+                  </DropdownButton>
                 </Dropdown>
                 {/*<Nav.Link href="/home">Home</Nav.Link>*/}
                 <Nav.Link href="#link">Log Out</Nav.Link>

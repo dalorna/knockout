@@ -1,4 +1,9 @@
-import {useCurrentLeagueSeason, useCurrentPickLeagueSeasonWeek, useWeeklySchedule} from '../../state/season';
+import {
+    useCurrentLeagueSeason,
+    useCurrentPickLeagueSeasonWeek,
+    useWeeklySchedule,
+    usePickRefresh
+} from '../../state/season';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
 import {useState, useRef, useEffect} from 'react';
@@ -23,6 +28,7 @@ const Picks = ({currentSelectedLeague}) => {
     const selectedLeagueValue = currentSelectedLeague.value ?? JSON.parse(localStorage.getItem('selectedLeague')) 
     const leagueSeason = useCurrentLeagueSeason(selectedLeagueValue.id, season.data[0].id)
     const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason.data[0].id, week);
+    const pickRefresh = usePickRefresh();
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
     const teams = useTeams();
@@ -68,6 +74,11 @@ const Picks = ({currentSelectedLeague}) => {
                 currentPickId: currentPickId
             }
         )
+    }
+    
+    const refreshPick = async () => {
+        await pickRefresh({userId: userId, leagueSeasonId: leagueSeason.data[0].id, weekId: week});
+        console.log('currentWeeklyPick', currentWeeklyPick);
     }
 
     return <>
@@ -129,7 +140,7 @@ const Picks = ({currentSelectedLeague}) => {
                 </div>
             </form>
         </div>
-        <SavePickModal actionRef={createModalRef}/>
+        <SavePickModal actionRef={createModalRef} afterSubmit={refreshPick}/>
     </>
 }
 export default Picks;

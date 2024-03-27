@@ -3,9 +3,8 @@ import {useEffect, useImperativeHandle, useState} from 'react';
 import toast from 'react-hot-toast';
 import moment from 'moment/moment';
 import {savePick, updatePick } from '../../api/rules';
-import {useCurrentPickLeagueSeasonWeek} from '../../state/season';
 
-export const SavePickModal = ({actionRef}) => {
+export const SavePickModal = ({actionRef, afterSubmit}) => {
     const [modal, modalRef] = useModalInstance();
     const [pick, setPick] = useState({});
     const [week, setWeek] = useState({});
@@ -40,6 +39,7 @@ export const SavePickModal = ({actionRef}) => {
             } else {
                 await savePick(pick);
             }
+            afterSubmit(pick);
             toast.success('Pick is Locked and Saved');
         } catch {
             toast.error('Your pick was not saved correctly')   ;         
