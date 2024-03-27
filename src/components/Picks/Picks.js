@@ -6,7 +6,7 @@ import {
 } from '../../state/season';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
-import { useRef } from 'react';
+import {useEffect, useRef} from 'react';
 import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,7 +36,8 @@ const Picks = ({currentSelectedLeague}) => {
     const {
         register,
         handleSubmit,
-        formState: { isValid}
+        formState: { isValid},
+        reset
     } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
@@ -44,7 +45,16 @@ const Picks = ({currentSelectedLeague}) => {
         },
         mode: 'onChange'
     })
+
+    useEffect(() => {
+        reset( {pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null})
+    }, [reset, currentWeeklyPick])
     
+    const setDefault = () => {
+        const p = currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null;
+        console.log('p', p);
+        return p;
+    }
     const handleOnSubmit = (data) => {
         const currentPickId = currentWeeklyPick.data[0]?.id;
         const pick = {

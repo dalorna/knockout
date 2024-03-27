@@ -55,6 +55,15 @@
       "locked": true,
       "gameId": "20230907_DET@KC",
       "teamId": "16"
+    },
+    {
+      "id": "e04a6823-4f77-4636-9d01-4a092b9b0602",
+      "userId": "cfc555e0-4c96-4b1e-b50e-b858bd600686",
+      "weekId": 1,
+      "leagueSeasonId": "ee28b9bc-67d3-4160-8267-71a01dbec5c9",
+      "locked": true,
+      "gameId": "20230910_CAR@ATL",
+      "teamId": "2"
     }
   ],
   "schedule": [],
