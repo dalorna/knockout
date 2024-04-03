@@ -7,6 +7,9 @@ const Home = ({leagues, setLeagues}) => {
     const user = useCurrentUser();
     const season = useCurrentSeason();
     const createModalRef = useRef();
+    const yellow = '#f7f786';
+    const red = '#ff0000';
+    const green = '#026311';
     
     const create =() => {
         createModalRef.current.show(
@@ -30,27 +33,28 @@ const Home = ({leagues, setLeagues}) => {
                 <button className="btn btn-primary" onClick={create}>Create League</button>
             </div>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-success mx-3 mt-5">
+        <div className="row p-3 shadow-sm rounded bg-dark text-white mx-3 mt-5">
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li>
-                    create season table, rules only locked for season
-                </li>
-                <li>
                     League Edit screen or Delete League...
+                </li>
+                <li style={{color: red}}>
+                    cap league with number of players if no private code 100 Max
+                </li>
+                <li style={{color: green}}>
+                    Join league screen, pick from leagues or enter a private code
                 </li>
                 <li>
                     Margin of victory to determine winner option?
                 </li>
                 <li>Who's still in, and or who is in the lead</li>
-                <li style={{color: '#f7f786'}}>Create Picks UI</li>
-                <li style={{color: '#f7f786'}}>Some Sort of selection for the next week, with message to select by a certain
-                    time
+                <li style={{color: yellow}}>Some Sort of selection for the next week, with message to select by a certain
+                    time on home page
                 </li>
                 <li>We need to show the create league for a user in the role of manager</li>
                 <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
-                <li>Login Page</li>
-                <li>Set up nfl feed</li>
+                <li style={{color: red}}>Login Page</li>
                 <li>league standings, view other leagues (public leagues)</li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>
