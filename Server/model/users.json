@@ -1,0 +1,37 @@
+[
+  {
+    "username": "rango_3",
+    "password": "$2b$10$FKlR0lAQ3gfi9QQeRUnmSOg9XTEgsbDlm6iUVy5MrtCqUVlqxpXoe",
+    "roles": {
+      "User": 2001,
+      "Admin": 5150
+    }
+  },
+  {
+    "username": "rango_4",
+    "password": "$2b$10$oSO7aQVtrdlrfoLtPHg1suGBBuUSto02yN0Z6M1of3BB4i3aVY3vu",
+    "roles": {
+      "User": 2001
+    },
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhbmdvXzQiLCJpYXQiOjE3MTIzNzE0MjgsImV4cCI6MTcxMjQ1NzgyOH0.k88DW8kcKb7n5fTZ189Z1owYiCIs6zZ17e4i67RMe4Q"
+  },
+  {
+    "username": "rango1",
+    "password": "$2b$10$q2VCT5eVl3yG3797/jz6zefa3BsebwrbJHM/Px34dTAsTBwFJS8H.",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhbmdvMSIsImlhdCI6MTcxMjM3MjYzNSwiZXhwIjoxNzEyNDU5MDM1fQ.BDNpMM8DxRAftVL3-qCtYl6PyevfbPdZxnb4P8wK49U",
+    "roles": {
+      "User": 2001,
+      "Editor": 1984,
+      "Admin": 5150
+    }
+  },
+  {
+    "username": "rango2",
+    "password": "$2b$10$EMskBY8TvOFBCKkdfzXrMeaSw83rb0zCZR9Cc5IPtKE30VFd0CN7G",
+    "roles": {
+      "User": 2001,
+      "Editor": 1984
+    },
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhbmdvMiIsImlhdCI6MTcxMjM3Mjk4NiwiZXhwIjoxNzEyNDU5Mzg2fQ.SSFQaog-SRwnWulWXGVMW9hSTlgAxmr_R7ABMCytASs"
+  }
+]

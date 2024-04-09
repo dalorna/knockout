@@ -1,0 +1,2 @@
+### test league
+GET http://localhost:3500/league/6614644eb0ac40d41852ae22
