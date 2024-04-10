@@ -14,7 +14,7 @@ const validationSchema = yup.object().shape({
     pick: yup.string().required("must make a pick")
 }).required()
 
-const Picks = ({currentSelectedLeague}) => {
+const Picks = () => {
     // TODO: get Current Week and Year
     const week = 1;
     const year = '2023';
@@ -95,7 +95,7 @@ const Picks = ({currentSelectedLeague}) => {
                         {
                             currentWeeklySchedule.map((game, i) => {
                                 return (
-                                        <GameCard game={game} teams={teams} register={register}
+                                        <GameCard key={i} game={game} teams={teams} register={register}
                                                               currentWeeklyPick={currentWeeklyPick}/>
                                 )
                             })
