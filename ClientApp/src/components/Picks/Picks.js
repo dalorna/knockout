@@ -2,7 +2,7 @@ import {useCurrentPickLeagueSeasonWeek, useCurrentPickRefresh} from '../../state
 import {useWeeklySchedule} from '../../state/nfl';
 import {useForm} from 'react-hook-form';
 import moment from 'moment';
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -23,7 +23,6 @@ const Picks = ({currentSelectedLeague}) => {
     const selectedLeagueValue = JSON.parse(localStorage.getItem('selectedLeague'));
     const leagueSeason = useSeasonLeague(selectedLeagueValue._id);
     const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason[0].data._id, week);
-    console.log('currentWeeklyPick: ', currentWeeklyPick);
     const refresher = useCurrentPickRefresh(userId, leagueSeason[0].data._id, week);
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
@@ -45,10 +44,7 @@ const Picks = ({currentSelectedLeague}) => {
     useEffect(() => {
         reset( {pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null})
     }, [reset, currentWeeklyPick])
-    
-/*    const setDefault = () => {
-        return currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null;
-    }*/
+
     const handleOnSubmit = (data) => {
         const currentPickId = currentWeeklyPick.data[0]?._id;
         const pick = {
@@ -84,59 +80,31 @@ const Picks = ({currentSelectedLeague}) => {
     }
     
     return <>
-        <div className="page container py-4 py-sm-5">
-            <div className="mb-2 p-2 bg-primary text-white rounded text-center">
-                <h2>Picks - {selectedLeagueValue.name}</h2>
-            </div>
-            <div className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger' }`} >
+        <div className="page-container py-1 font-algerian">
+            <h4 className="mb-1 p-3 text-black text-center ">
+                Picks - {selectedLeagueValue.name}
+            </h4>
+            <div className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger' }`}  >
                 {
                     `Current Pick for the week ${ week } is ${getSelectedTeamName()} ${currentWeeklyPick.data[0]?.locked ? 'Locked' : 'Not Locked'}`
                 }
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
-                <div className="row p-2 shadow-sm rounded bg-white mx-3" style={{maxHeight: '47vh', overflow: 'auto'}}>
-                    {
-                        currentWeeklySchedule.map(game => {
-                            return (
-                                <div key={game.gameID} className="card">
-                                    <div className="card-body">
-                                        <div className="card-subtitle mb-2 text-muted">
-                                            {
-                                                `${game.away} vs ${game.home} ${moment(game.gameDate, "YYYYMMDD").format('MMM Do YYYY')}, @${game.gameTime}`
-                                            }
-                                        </div>
-                                        <div className="card-text mb-2 text-muted">
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" {...register('pick')}
-                                                       disabled={currentWeeklyPick.data[0]?.locked}
-                                                       id="exampleRadios1" value={`${game.teamIDAway}-${game.gameID}`} />
-                                                <label className="form-check-label"
-                                                       htmlFor={`${game.teamIDAway}-${game.gameID}`}>
-                                                    {
-                                                        game.away
-                                                    }
-                                                </label>
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" {...register('pick')}
-                                                       disabled={currentWeeklyPick.data[0]?.locked}
-                                                       id="exampleRadios1" value={`${game.teamIDHome}-${game.gameID}`} />
-                                                <label className="form-check-label"
-                                                       htmlFor={`${game.teamIDHome}-${game.gameID}`}>
-                                                    {
-                                                        game.home
-                                                    }
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                <div className="row p-2 shadow-sm rounded bg-white mx-3" style={{maxHeight: '75vh', overflow: 'auto'}}>
+                    <div className="glass-container" >
+                        {
+                            currentWeeklySchedule.map((game, i) => {
+                                return (
+                                        <GameCard game={game} teams={teams} register={register}
+                                                              currentWeeklyPick={currentWeeklyPick}/>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-                <div className="p-3 shadow-sm rounded bg-body-secondary mx-3 mt-5 text-end">
-                    <button type="submit" className="btn btn-primary" aria-label="Save Pick" disabled={!isValid || currentWeeklyPick.data[0]?.locked}>
+                <div className="p-1 shadow-sm rounded bg-white mx-3 mt-1 text-center">
+                    <button type="submit" className="btn btn-primary" aria-label="Save Pick"
+                            disabled={!isValid || currentWeeklyPick.data[0]?.locked}>
                         Save Pick
                     </button>
                 </div>
@@ -146,3 +114,43 @@ const Picks = ({currentSelectedLeague}) => {
     </>
 }
 export default Picks;
+
+const GameCard = ({game, teams, register, currentWeeklyPick}) => {
+    return ( <div key={game.gameId} className={"glass " + (game.gameID === currentWeeklyPick.data[0].gameId ? ' picked': '')} style={{'--r': '2'}}
+             data-text={`${game.away} vs ${game.home}`}>
+            <div style={{display: 'grid', gridTemplateColumns: 'auto', padding: '5px', marginTop: '10px'}} className="font-algerian" >
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input"
+                           type="radio" {...register('pick')}
+                           disabled={currentWeeklyPick.data[0]?.locked}
+                           id="exampleRadios1"
+                           value={`${game.teamIDAway}-${game.gameID}`}/>
+                    <span>{teams.data.body.find(f => f.teamID === game.teamIDAway)?.teamCity}</span>
+                    <img
+                        alt=""
+                        className="icon" style={{marginBottom: '-8px'}}
+                        src={teams.data.body.find(f => f.teamID === game.teamIDAway)?.nflComLogo1}/>
+
+
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input"
+                           type="radio" {...register('pick')}
+                           disabled={currentWeeklyPick.data[0]?.locked}
+                           id="exampleRadios1"
+                           value={`${game.teamIDHome}-${game.gameID}`}/>
+                    <span>{teams.data.body.find(f => f.teamID === game.teamIDHome)?.teamCity}</span>
+                    <img
+                        alt=""
+                        className="icon" style={{marginBottom: '-8px'}}
+                        src={teams.data.body.find(f => f.teamID === game.teamIDHome)?.nflComLogo1}/>
+                </div>
+                <div style={{marginTop: '10px'}}>
+                    {
+                        ` ${moment(game.gameDate, "YYYYMMDD").format('MMM Do YYYY')}, @${game.gameTime}`
+                    }
+                </div>
+            </div>
+        </div>
+    )
+}

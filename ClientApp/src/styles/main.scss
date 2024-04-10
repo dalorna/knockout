@@ -136,7 +136,7 @@ button {
   margin-left: 0.25rem;
 }
 
-.errmsg {
+.errMsg {
   background-color: lightpink;
   color: firebrick;
   font-weight: bold;
@@ -146,4 +146,74 @@ button {
 
 .line {
   display: inline-block;
+}
+
+.page-container {
+  max-width: 1500px;
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x)* .5);
+  padding-left: calc(var(--bs-gutter-x)* .5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.glass-container {
+  position: relative;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: auto auto auto auto auto auto;
+  align-items: center;
+  height: 575px;
+}
+
+.glass-container .glass {
+  position: relative;
+  width: 220px;
+  height: 180px;
+  background: linear-gradient(#fff, transparent);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 25px 25px rgba(0,0,0,0.25);
+  backdrop-filter: blur();
+  transition: .5s;
+  border-radius: 10px;
+  margin-left: 15px;
+  transform: rotate(calc(var(--r) * 1deg));
+}
+
+.glass-container .glass:hover {
+  transform: rotate(0deg);
+  border-left: 1px solid #114701;
+  border-top: 1px solid #114701;
+  border-right: 1px solid #114701;
+}
+
+.glass-container .glass::before {
+  content: attr(data-text);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Algerian;
+  border-top: solid 1px black;
+}
+
+.glass-container .glass i {
+  font-size: 4em;
+}
+
+.glass-container .glass.picked {
+  background: linear-gradient(#4f4f4f, transparent);
+  transform: rotate(0deg);
+}
+
+.font-algerian {
+  font-family: Algerian;
 }

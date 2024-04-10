@@ -18,13 +18,10 @@ export const useSeasonLeague = (leagueId) => {
     const season = useCurrentSeason();
     return useRecoilState(seasonLeagueFamily({seasonId: season.data[0].id, leagueId}))
 }
-
 export const useSeasonLeagueRefresher = (leagueId) => {
     const season = useCurrentSeason();
     return useRecoilRefresher_UNSTABLE(seasonLeagueFamily({seasonId: season.data[0].id, leagueId}));
 }
-
-
 const leagueFamily = atomFamily({
     key: 'league',
     default: async (userId) => {
@@ -59,7 +56,6 @@ export const useCurrentSeason = () => {
             "over": false
         }]}
 }
-
 const teamsFamily = atomFamily({
     key: 'nfl/teams',
     default: async () => {
@@ -70,7 +66,6 @@ const teamsFamily = atomFamily({
         }
     }
 })
-
 export const useTeams = () => {
     return useRecoilValue(teamsFamily());
 }
