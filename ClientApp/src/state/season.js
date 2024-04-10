@@ -2,8 +2,6 @@ import {
     atomFamily,
     useRecoilValue,
     useRecoilRefresher_UNSTABLE,
-    useRecoilCallback,
-    useResetRecoilState,
     selectorFamily
 } from 'recoil';
 import {getSeasonWeeklySchedule} from '../api/nfl';
