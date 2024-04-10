@@ -2,7 +2,7 @@ import {useModalInstance} from '../../utils/simpleModal';
 import {useEffect, useImperativeHandle, useState} from 'react';
 import toast from 'react-hot-toast';
 import moment from 'moment/moment';
-import {savePick, updatePick } from '../../api/rules';
+import {savePick, updatePick } from '../../api/picks';
 
 export const SavePickModal = ({actionRef, afterSubmit}) => {
     const [modal, modalRef] = useModalInstance();

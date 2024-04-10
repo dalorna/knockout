@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { nflApiHost, nflApiKey } from '../utils/constants';
 
-
 export const getScore = async () => {
     const options = {
         method: 'GET',
@@ -42,7 +41,6 @@ export const getScore = async () => {
         console.error(error);
     }
 }
-
 export const getDailySchedule = async () => {
     const options = {
         method: 'GET',
@@ -53,7 +51,6 @@ export const getDailySchedule = async () => {
         }
     };
 }
-
 export const getSeasonWeeklySchedule = async (season) => {    
     const options = {
         method: 'GET',
@@ -70,7 +67,6 @@ export const getSeasonWeeklySchedule = async (season) => {
     };
     return await axios.request(options);
 }
-
 export const getNFLTeams = async () => {
     const options = {
         method: 'GET',

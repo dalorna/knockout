@@ -1,4 +1,5 @@
-import {useCurrentPickLeagueSeasonWeek, useCurrentPickRefresh, useWeeklySchedule} from '../../state/season';
+import {useCurrentPickLeagueSeasonWeek, useCurrentPickRefresh} from '../../state/picks';
+import {useWeeklySchedule} from '../../state/nfl';
 import {useForm} from 'react-hook-form';
 import moment from 'moment';
 import {useEffect, useRef} from 'react';
@@ -7,12 +8,11 @@ import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {generateUUID} from '../../utils/helpers';
 import {useUser} from '../../state/user';
-import {useSeasonLeague, useTeams} from '../../state/rule';
+import {useSeasonLeague, useTeams} from '../../state/season';
 
 const validationSchema = yup.object().shape({
     pick: yup.string().required("must make a pick")
 }).required()
-
 
 const Picks = ({currentSelectedLeague}) => {
     // TODO: get Current Week and Year

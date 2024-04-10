@@ -9,7 +9,7 @@ import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {Suspense, useEffect, useState} from 'react';
 import SimpleModal from '../../utils/simpleModal';
-import {useCurrentLeagues} from '../../state/rule';
+import {useCurrentLeagues} from '../../state/season';
 import {Route, Routes} from 'react-router';
 import Home from './Home';
 import {Loading} from '../../utils/loading';

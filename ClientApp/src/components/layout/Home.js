@@ -1,5 +1,5 @@
 import React, { useRef} from 'react';
-import { useCurrentSeason } from '../../state/rule';
+import {useCurrentSeason} from '../../state/season';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 import {useRecoilState} from 'recoil';

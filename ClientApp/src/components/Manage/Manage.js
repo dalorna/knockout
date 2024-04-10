@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useRef, useState, useEffect} from 'react';
 import { Tooltip } from 'react-tooltip';
-import {useCurrentSeason, useSeasonLeagueRefresher} from '../../state/rule';
+import {useCurrentSeason, useSeasonLeagueRefresher} from '../../state/season';
 import { SaveRulesModal } from './SaveRulesModal';
 import { loser, survivor } from '../../utils/constants';
 import {getLeagueSeasonByLeagueIdSeasonId} from '../../api/league';
@@ -14,7 +14,6 @@ const Manage = ({currentSelectedLeague}) => {
     const [isDisabled, setIsDisabled] = useState([false, false, false, false]);
     const [locked, setLocked] = useState(false);
     const createModalRef = useRef();
-
 
     const defaultValues = {
         canSeePick: false,
@@ -93,7 +92,7 @@ const Manage = ({currentSelectedLeague}) => {
     }
     
     return(<>
-            <div className="page container py-4 py-sm-5 form-background-color">
+        <div className="page container py-4 py-sm-5 form-background-color">
                 <div className="mb-2 p-5 bg-info text-white rounded">
                     <div className="text-center">
                         <h4>{`Manage - ${selectedLeague?.name}`}</h4>
@@ -270,8 +269,6 @@ const Manage = ({currentSelectedLeague}) => {
                     }
                 </form>
             </div>
-            
-        
         <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit} afterSubmit={refreshRules}/>
     </>);
 }

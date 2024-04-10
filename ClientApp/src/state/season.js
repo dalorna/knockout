@@ -1,68 +1,76 @@
-import {
-    atomFamily,
-    useRecoilValue,
-    useRecoilRefresher_UNSTABLE,
-    selectorFamily
-} from 'recoil';
-import {getSeasonWeeklySchedule} from '../api/nfl';
-import {getUserPicks} from '../api/rules';
-import {getLeagueSeason} from '../api/league';
+import {atomFamily, useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue} from 'recoil';
+import {getLeagues, getLeagueSeasonByLeagueIdSeasonId} from '../api/league';
+import { getCurrentSeason } from '../api/league';
+import {currentUserAtom, useUser} from './user';
+import { getNFLTeams } from '../api/nfl';
 
-const nflSeasonFamily = atomFamily({
-    key: 'nfl/season',
-    default: async (year) => {
-        try{
-            return year && await getSeasonWeeklySchedule(year);
-        } catch {
-            return null;
-        }
-    }
-}) 
-
-export const useNFLSeason = (year) => {
-    return  useRecoilValue(nflSeasonFamily(year))
-}
-
-export const useWeeklySchedule = (year, week) => {
-    const nflSchedule = useNFLSeason(year);
-    const weekly = Object.groupBy(nflSchedule.data.body, ({gameWeek}) => gameWeek);
-    const weeklySchedule = Object.keys(weekly).map((key) => weekly[key]);
-    return weeklySchedule[week - 1];
-}
-
-const pickAtomFamily = atomFamily({
-    key: 'pick',
-    default: selectorFamily({
-        key: 'pick/default',
-        get: ({userId, leagueSeasonId, weekId}) => async () => {
-            try {
-                return await getUserPicks(userId, leagueSeasonId, weekId);
-            } catch {
-                return { data: []};
-            }
-        }
-    })
-})
-
-export const useCurrentPickLeagueSeasonWeek = (userId, leagueSeasonId, weekId) => {
-    return useRecoilValue(pickAtomFamily({userId, leagueSeasonId, weekId}));
-}
-
-export const useCurrentPickRefresh = (userId, leagueSeasonId, weekId) => {
-    return useRecoilRefresher_UNSTABLE(pickAtomFamily({userId, leagueSeasonId, weekId}))
-}
-
-const leagueSeasonFamily = atomFamily({
-    key: 'leagueSeason',
-    default: async ({id}) => {
+const seasonLeagueFamily = atomFamily({
+    key: 'season/seasonLeague',
+    default: async ({seasonId, leagueId}) => {
         try {
-            return id && await getLeagueSeason(id);
+            return seasonId && leagueId && await getLeagueSeasonByLeagueIdSeasonId(seasonId, leagueId)
+        } catch  {
+            return [];
+        }
+    }
+})
+export const useSeasonLeague = (leagueId) => {
+    const season = useCurrentSeason();
+    return useRecoilState(seasonLeagueFamily({seasonId: season.data[0].id, leagueId}))
+}
+
+export const useSeasonLeagueRefresher = (leagueId) => {
+    const season = useCurrentSeason();
+    return useRecoilRefresher_UNSTABLE(seasonLeagueFamily({seasonId: season.data[0].id, leagueId}));
+}
+
+
+const leagueFamily = atomFamily({
+    key: 'league',
+    default: async (userId) => {
+        try {
+            return userId && await getLeagues(userId)
         } catch {
             return null;
         }
     }
 })
+export const useCurrentLeagues = () => {
+    const [currentUser,] = useRecoilState(currentUserAtom);
+    const userId = currentUser.id;
+    const leagues = useRecoilValue(leagueFamily(userId));
+    return leagues?.data ?? [];
+}
+const seasonFamily = atomFamily({
+    key: 'leagueSeason',
+    default: async (year) => {
+        try {
+            return year && getCurrentSeason(year)
+        } catch {
+            return null;
+        }
+    }
+})
+export const useCurrentSeason = () => {
+    // return useRecoilValue(seasonFamily((new Date()).getFullYear()))
+    return {data: [ {
+            "id": 2,
+            "year": "2024",
+            "over": false
+        }]}
+}
 
-export const useCurrentLeagueSeason = (id) => {
-    return useRecoilValue(leagueSeasonFamily({id}));
+const teamsFamily = atomFamily({
+    key: 'nfl/teams',
+    default: async () => {
+        try {
+            return getNFLTeams();
+        } catch {
+            return null
+        }
+    }
+})
+
+export const useTeams = () => {
+    return useRecoilValue(teamsFamily());
 }

@@ -1,5 +1,5 @@
-import {useCurrentSeason} from '../../state/rule';
-import {useNFLSeason} from '../../state/season';
+import {useCurrentSeason} from '../../state/season';
+import {useNFLSeason} from '../../state/nfl';
 import moment from 'moment';
 
 const Schedule = () => {
