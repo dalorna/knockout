@@ -1,7 +1,7 @@
 import {atomFamily, useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue} from 'recoil';
 import {getLeagues, getLeagueSeasonByLeagueIdSeasonId} from '../api/league';
 import { getCurrentSeason } from '../api/league';
-import {currentUserAtom, useUser} from './user';
+import {currentUserAtom} from './user';
 import { getNFLTeams } from '../api/nfl';
 
 const seasonLeagueFamily = atomFamily({
