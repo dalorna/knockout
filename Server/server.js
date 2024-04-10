@@ -45,6 +45,7 @@ app.use('/logout', require('./routes/logout'));
 // app.use(verifyJWT);
 app.use('/league', require('./routes/api/league'));
 app.use('/leagueSeason', require('./routes/api/leagueSeason'));
+app.use('/pick', require('./routes/api/pick'));
 
 app.all('*', (req, res) => {
     res.status(404);

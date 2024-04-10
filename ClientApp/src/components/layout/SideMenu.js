@@ -102,6 +102,10 @@ const SideMenu = () => {
             <NavIcon><i className="fa fa-fw fa-briefcase" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Manage</NavText>
           </NavItem>
+          <NavItem disabled={!currentSelectedLeague.value} onClick={getDisableMessage} eventKey="picks" data-tooltip-id="manage-tip" data-tooltip-content="Picks this week" data-tooltip-variant="info">
+            <NavIcon><i className="fa fa-fw fa-clipboard" style={{fontSize: '1.5em'}}/></NavIcon>
+            <NavText>Picks</NavText>
+          </NavItem>
           <NavItem eventKey="members" data-tooltip-id="manage-tip" data-tooltip-content="League Memebers" disabled={!currentSelectedLeague.value} onClick={getDisableMessage}
                    data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-users" style={{fontSize: '1.5em'}}/></NavIcon>
@@ -114,10 +118,6 @@ const SideMenu = () => {
           <NavItem disabled={!currentSelectedLeague.value} onClick={getDisableMessage} eventKey="standings" data-tooltip-id="manage-tip" data-tooltip-content="League Standings" data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-line-chart" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Standings</NavText>
-          </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={getDisableMessage} eventKey="picks" data-tooltip-id="manage-tip" data-tooltip-content="Picks this week" data-tooltip-variant="info">
-            <NavIcon><i className="fa fa-fw fa-clipboard" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Picks</NavText>
           </NavItem>
           <NavItem disabled={!currentSelectedLeague.value} onClick={getDisableMessage} eventKey="rules" data-tooltip-id="manage-tip" data-tooltip-content="League Rules" data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-list-alt" style={{fontSize: '1.5em'}}/></NavIcon>

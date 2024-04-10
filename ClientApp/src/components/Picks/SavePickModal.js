@@ -11,21 +11,23 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
     const [teams, setTeams] = useState([]);
     const [selectedTeam, setSelectedTeam] = useState({});
     const [currentPickId, setCurrentPickId] = useState(null);
-    
+    const [selectedLeagueValue, setSelectedLeagueValue] = useState(null);
+
     useEffect(() => {
-        if (week.teamIDHome === pick.teamId ) {
+        if (week.teamIDHome === pick.teamId) {
             setSelectedTeam(teams.find(f => f.teamID === week.teamIDHome));
         } else {
             setSelectedTeam(teams.find(f => f.teamID === week.teamIDAway));
         }
-    }, [teams])
+    }, [teams, pick])
 
     useImperativeHandle(actionRef, () => ({
         show: (details) => {
             setPick(details.pick);
             setWeek(details.week);
-            setTeams(details.teams)
-            setCurrentPickId(details.currentPickId)
+            setTeams(details.teams);
+            setCurrentPickId(details.currentPickId);
+            setSelectedLeagueValue(details.selectedLeagueValue);
             modal.show();
         },
         hide: () => modal.hide()
@@ -40,11 +42,10 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
                 await savePick(pick);
             }
             afterSubmit(pick);
-            toast.success('Pick is Locked and Saved');
+            toast.success(`Pick is ${lockPick ? ' Locked and Saved' : ' Saved'} `);
         } catch {
-            toast.error('Your pick was not saved correctly')   ;         
-        }
-        finally {
+            toast.error('Your pick was not saved correctly');
+        } finally {
             modal.hide();
         }
 
@@ -55,22 +56,30 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{width: '500px'}}>
                     <div className="modal-header text-primary-emphasis bg-dark-subtle justify-content-center">
-                        <span style={{marginTop: '5px'}}><h5>Save Pick</h5></span>
-                        <span className="mx-2"><img alt={week.teamIDHome === pick.teamId ? week.home : week.away} className="icon"
-                                   src={selectedTeam?.nflComLogo1}/></span>
-
+                        <h5>{selectedLeagueValue?.description}</h5>
                     </div>
                     <div className="modal-body">
                         {
                             week && (
                                 <>
                                     <div className="mb-1">
-                                        {
-                                            `${week.away} vs ${week.home} ${moment(week.gameDate, 'YYYYMMDD').format('MMM Do YYYY')}, @${week.gameTime}`
-                                        }
+                                        <div>
+                                            {
+                                                `${week.away} vs ${week.home} ${moment(week.gameDate, 'YYYYMMDD').format('MMM Do YYYY')}, @${week.gameTime}`
+                                            }
+                                        </div>
+                                        <div>
+                                            <label>{`Your ${week.gameWeek} pick is the ${selectedTeam?.teamCity} ${selectedTeam?.teamName}`}</label>
+                                            <img
+                                                alt={week.teamIDHome === pick.teamId ? week.home : week.away}
+                                                className="icon" style={{marginBottom: '4px'}}
+                                                src={selectedTeam?.nflComLogo1}/>
+                                        </div>
+
+
                                     </div>
                                     <div>
-                                        {`This will LOCK in your pick of ${selectedTeam?.teamCity} ${selectedTeam?.teamName} as you ${week.gameWeek} pick. Are you sure you want to Save?`}
+                                        {`You may save your pick or LOCK your pick for the week. Are you sure you want to Save?`}
                                     </div>
                                 </>
                             )
@@ -83,7 +92,7 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
                             Cancel
                         </button>
                         <button type="submit" className="btn btn-secondary btn-margin-right btn-standard-width"
-                                onClick={() => onSave (false)}>Save
+                                onClick={() => onSave(false)}>Save
                         </button>
                         <button type="submit" className="btn btn-secondary btn-margin-right btn-standard-width"
                                 onClick={() => onSave(true)}>Lock Pick

@@ -1,18 +1,13 @@
-import {
-    useCurrentLeagueSeason,
-    useCurrentPickLeagueSeasonWeek,
-    useWeeklySchedule,
-    useCurrentPickRefresh
-} from '../../state/season';
-import { useForm } from 'react-hook-form';
+import {useCurrentPickLeagueSeasonWeek, useCurrentPickRefresh, useWeeklySchedule} from '../../state/season';
+import {useForm} from 'react-hook-form';
 import moment from 'moment';
 import {useEffect, useRef} from 'react';
 import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 import {generateUUID} from '../../utils/helpers';
 import {useUser} from '../../state/user';
-import {useCurrentSeason, useTeams} from '../../state/rule';
+import {useSeasonLeague, useTeams} from '../../state/rule';
 
 const validationSchema = yup.object().shape({
     pick: yup.string().required("must make a pick")
@@ -25,10 +20,11 @@ const Picks = ({currentSelectedLeague}) => {
     const year = '2023';
     const userId = useUser();
     // const season = useCurrentSeason(year);
-    const selectedLeagueValue = currentSelectedLeague.value ?? JSON.parse(localStorage.getItem('selectedLeague')) 
-    const leagueSeason = useCurrentLeagueSeason('fixMe')
-    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason.data[0].id, week);
-    const refresher = useCurrentPickRefresh(userId, leagueSeason.data[0].id, week);
+    const selectedLeagueValue = JSON.parse(localStorage.getItem('selectedLeague'));
+    const leagueSeason = useSeasonLeague(selectedLeagueValue._id);
+    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason[0].data._id, week);
+    console.log('currentWeeklyPick: ', currentWeeklyPick);
+    const refresher = useCurrentPickRefresh(userId, leagueSeason[0].data._id, week);
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
     const teams = useTeams();
@@ -41,7 +37,7 @@ const Picks = ({currentSelectedLeague}) => {
     } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null
+           pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick?.data[0].gameId : null
         },
         mode: 'onChange'
     })
@@ -50,18 +46,16 @@ const Picks = ({currentSelectedLeague}) => {
         reset( {pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null})
     }, [reset, currentWeeklyPick])
     
-    const setDefault = () => {
-        const p = currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null;
-        console.log('p', p);
-        return p;
-    }
+/*    const setDefault = () => {
+        return currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null;
+    }*/
     const handleOnSubmit = (data) => {
-        const currentPickId = currentWeeklyPick.data[0]?.id;
+        const currentPickId = currentWeeklyPick.data[0]?._id;
         const pick = {
             id: currentPickId ?? generateUUID(),
             userId: userId,
             weekId: week,
-            leagueSeasonId: leagueSeason.data[0].id,
+            leagueSeasonId: leagueSeason[0].data._id,
             locked: false,
             gameId: data.pick.split('-')[1],
             teamId: data.pick.split('-')[0]
@@ -71,12 +65,12 @@ const Picks = ({currentSelectedLeague}) => {
                 pick: pick,
                 week: currentWeeklySchedule.find(f => f.gameID === pick.gameId),
                 teams: teams.data.body,
-                currentPickId: currentPickId
+                currentPickId: currentPickId,
+                selectedLeagueValue
             }
         )
     }
-    
-    
+
     const refreshPick = async () => {
         refresher();
     }

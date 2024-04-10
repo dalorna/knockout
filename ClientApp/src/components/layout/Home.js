@@ -42,7 +42,7 @@ const Home = ({leagues, setLeagues}) => {
                     League Edit screen or Delete League...
                 </li>
                 <li style={{color: red}}>
-                    Refresh on a page doesn't select the correct menu item, (broken page as well)
+                    Refresh on a page doesn't select the correct menu item
                 </li>
                 <li style={{color: red}}>
                     cap league with number of players if no private code 100 Max
@@ -73,9 +73,6 @@ const Home = ({leagues, setLeagues}) => {
         <div className="row p-3 shadow-sm rounded bg-danger-subtle mx-3 mt-5">
             <h6>Bugs</h6>
             <ol className="features text-start">
-                <li>
-                    refresh save of rules
-                </li>
                 <li>
                     add scroll to Home page div
                 </li>

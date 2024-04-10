@@ -33,7 +33,7 @@ const updateLeague = async (req, res) => {
     }
     const league = await League.findOne({ _id: req.body.id }).exec();
     if (!league) {
-        return res.status(204).json({"message": `No Employee matches ID ${req.body.id}`});
+        return res.status(204).json({"message": `No League matches ID ${req.body.id}`});
     }
     if (req.body?.name) league.name = req.body.name;
     if (req.body?.description) league.description = req.body.description;

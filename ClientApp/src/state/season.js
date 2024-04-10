@@ -40,7 +40,7 @@ const pickAtomFamily = atomFamily({
             try {
                 return await getUserPicks(userId, leagueSeasonId, weekId);
             } catch {
-                return {};
+                return { data: []};
             }
         }
     })
