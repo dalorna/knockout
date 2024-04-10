@@ -9,14 +9,12 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
     const [rules, setRules] = useState(null);
     const [league, setLeague] = useState(null);
     const [seasonId, setSeasonId] = useState(null);
-    const [locked, setLocked] = useState(false);
 
     useImperativeHandle(
         actionsRef,
         () => ({
             show: (details) => {
                 setLeague(details.league);
-                setLocked(details.locked);
                 setSeasonId(details.seasonId);
                 setRules(details.rules);
                 modal.show();
@@ -30,7 +28,7 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
         try {
             const leagueSeason = await getLeagueSeasonByLeagueIdSeasonId(seasonId, league._id);
             if (leagueSeason.data) {
-                leagueSeason.data.locked = locked;
+                leagueSeason.data.locked = isSubmit;
                 leagueSeason.data.rules.canSeePick = rules.canSeePick;
                 leagueSeason.data.rules.earlyPoint = rules.earlyPoint;
                 leagueSeason.data.rules.elimination = rules.elimination;
@@ -43,7 +41,7 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
                     seasonId,
                     leagueId: league._id,
                     privateCode: league.privateCode,
-                    locked,
+                    locked: isSubmit,
                     rules: {
                         canSeePick: rules.canSeePick,
                         earlyPoint: rules.earlyPoint,
@@ -55,7 +53,7 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
                 }
                 await saveLeagueSeason(newLeagueSeason);
             }
-            afterSubmit();
+            afterSubmit(isSubmit);
             toast.success('League Successfully Saved');
         } catch (err) {
             toast.error(err.message)

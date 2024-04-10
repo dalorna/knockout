@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useRef, useState, useEffect} from 'react';
-import {effect, useSignalEffect} from '@preact/signals';
 import { Tooltip } from 'react-tooltip';
-import {useCurrentSeason, useSeasonLeague, useSeasonLeagueRefresher} from '../../state/rule';
+import {useCurrentSeason, useSeasonLeagueRefresher} from '../../state/rule';
 import { SaveRulesModal } from './SaveRulesModal';
 import { loser, survivor } from '../../utils/constants';
 import {getLeagueSeasonByLeagueIdSeasonId} from '../../api/league';
@@ -12,8 +11,11 @@ const Manage = ({currentSelectedLeague}) => {
     const selectedLeague = JSON.parse(localStorage.getItem('selectedLeague'));
     const refresher = useSeasonLeagueRefresher(selectedLeague.value?._id);
     const [isSubmit, setIsSubmit] = useState(false);
-    const [isDisabled, setIsDisabled] = useState([false, false, false, false])
+    const [isDisabled, setIsDisabled] = useState([false, false, false, false]);
+    const [locked, setLocked] = useState(false);
     const createModalRef = useRef();
+
+
     const defaultValues = {
         canSeePick: false,
         gameType: "",
@@ -32,7 +34,6 @@ const Manage = ({currentSelectedLeague}) => {
         defaultValues: defaultValues
     })
     const gameType = watch('gameType');
-    const locked = watch('locked')
 
     useEffect(() => {
         const load = async () => {
@@ -40,6 +41,10 @@ const Manage = ({currentSelectedLeague}) => {
         };
         load().then((res) => {
             if(res?.data?.rules) {
+                if (res.data.rules.elimination === 'hardCore') {
+                    setHardCore();
+                }
+                setLocked(res.data.locked);
                 reset(res.data.rules);
             } else {
                 reset(defaultValues);
@@ -59,14 +64,14 @@ const Manage = ({currentSelectedLeague}) => {
         createModalRef.current.show(
             {
                 league: selectedLeague,
-                locked: isSubmit,
                 seasonId: season.data[0].id,
                 rules: rules
             }
         )
     };
-    const refreshRules = async () => {
+    const refreshRules = async (locked) => {
         refresher();
+        setLocked(locked);
     }
     const onHardCoreClick = () => {
         setValue('canSeePick', false);
