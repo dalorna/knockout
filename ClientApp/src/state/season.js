@@ -7,10 +7,8 @@ import {
     useRecoilValue
 } from 'recoil';
 import {getLeagues, getLeaguesByLeagueId, getLeaguesByMember, getLeagueSeasonByLeagueIdSeasonId} from '../api/league';
-import { getCurrentSeason } from '../api/league';
 import {currentUserAtom} from './user';
 import { getNFLTeams } from '../api/nfl';
-import axios from '../api/axios';
 
 const seasonLeagueFamily = atomFamily({
     key: 'season/seasonLeague',
