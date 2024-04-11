@@ -4,16 +4,18 @@ import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
+import {JoinLeagueModal} from './JoinLeagueModal';
 
 const Home = ({leagues, setLeagues}) => {
     const [currentUser,] = useRecoilState(currentUserAtom);
     const season = useCurrentSeason();
     const createModalRef = useRef();
+    const joinModalRef = useRef();
     const yellow = '#f7f786';
     const red = '#ff0000';
     const green = '#026311';
     
-    const create =() => {
+    const create = () => {
         createModalRef.current.show(
             {
                 user: currentUser,
@@ -21,21 +23,29 @@ const Home = ({leagues, setLeagues}) => {
             }
         )
     }
+    const join = () => {
+        joinModalRef.current.show(
+            {
+                user: currentUser
+            }
+        )
+    }
     const refresher = (league) => {
         setLeagues([...leagues, league]);
         toast.success('League Successfully Saved')
     }
-    return <div className="page container py-4 py-sm-5 text-center overflow-auto">
+    return <div className="container py-1 text-center overflow-auto">
         <div className="row p-2 shadow-sm rounded bg-white mx-3">
             <h3>{`Welcome ${currentUser?.firstName} ${currentUser?.lastName}`}</h3>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-dark-subtle mx-3 mt-5">
+        <div className="row p-3 shadow-sm rounded bg-dark-subtle mx-3 mt-1">
             <h5>Create New League</h5>
             <div>
-                <button className="btn btn-primary" onClick={create}>Create League</button>
+                <button className="btn btn-primary mx-3" onClick={create}>Create League</button>
+                <button className="btn btn-primary" onClick={join}>Join League</button>
             </div>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-dark text-white mx-3 mt-5">
+        <div className="row p-3 shadow-sm rounded bg-dark text-white mx-3 mt-1 overflow-auto">
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li>
@@ -56,32 +66,31 @@ const Home = ({leagues, setLeagues}) => {
                 <li>
                     Margin of victory to determine winner option?
                 </li>
-                <li>Who's still in, and or who is in the lead</li>
+                <li style={{color: yellow}}>Who's still in, and or who is in the lead (standings)</li>
                 <li style={{color: yellow}}>Some Sort of selection for the next week, with message to select by a
                     certain
                     time on home page
                 </li>
                 <li>We need to show the create league for a user in the role of manager</li>
                 <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
-                <li style={{color: red}}>Login Page</li>
                 <li>league standings, view other leagues (public leagues)</li>
+                <li>Fix Logout</li>
+                <li>Sign up Toast and navigate to sign in</li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>
 
             </ol>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-danger-subtle mx-3 mt-5">
+        <div className="row p-3 shadow-sm rounded bg-danger-subtle mx-3 mt-1 overflow-auto">
             <h6>Bugs</h6>
             <ol className="features text-start">
-                <li>
-                    add scroll to Home page div
-                </li>
                 <li>
                     Toast messages everywhere
                 </li>
             </ol>
         </div>
         <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season.data[0]} />
+        <JoinLeagueModal actionsRef={joinModalRef} />
     </div>
 }
 export default Home;

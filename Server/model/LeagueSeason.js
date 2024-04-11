@@ -13,7 +13,8 @@ const leagueSeasonSchema = new Schema({
         ties: { type: Boolean, default: true},
         earlyPoint: { type: Boolean, default: false},
         cantPickSame: {type: Boolean, default: false}
-    }
+    },
+    members: [{userId: String, username: String}]
 })
 
 module.exports = mongoose.model('LeagueSeason', leagueSeasonSchema);

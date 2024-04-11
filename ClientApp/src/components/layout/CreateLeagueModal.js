@@ -1,5 +1,5 @@
 import {useModalInstance} from '../../utils/simpleModal';
-import {useImperativeHandle, useState, useEffect} from 'react';
+import {useImperativeHandle, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import {saveLeague, saveLeagueSeason} from '../../api/league';
 import { ErrorFeedback, generateUUID } from '../../utils/helpers';

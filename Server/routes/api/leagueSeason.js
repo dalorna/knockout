@@ -10,7 +10,11 @@ router.route('/')
 router.route('/:id')
     .get(leagueSeasonController.getLeaguesSeason)
     .delete(leagueSeasonController.deleteLeagueSeasonById);
+
 router.route('/:seasonId/:leagueId')
     .get(leagueSeasonController.getLeaguesSeasonByLeagueIdSeasonId);
+
+router.route('/join')
+    .post(leagueSeasonController.joinLeague);
 
 module.exports = router;

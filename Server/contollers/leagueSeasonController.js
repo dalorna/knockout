@@ -93,10 +93,54 @@ const deleteLeagueSeasonById = async (req, res) => {
 
 }
 
+const joinLeague = async (req, res) => {
+    if (!req?.body?.leagueId) {
+        return res.status(400).json({"message": `League Season id is required`});
+    }
+    if (!req?.body?.member) {
+        return res.status(400).json({"message": `No Members attached`});
+    }
+    let leagueSeason;
+    try {
+        leagueSeason = await LeagueSeason.findOne({ leagueId: req.body.leagueId }).exec();
+        if (!leagueSeason) {
+            leagueSeason = await LeagueSeason.findOne({ privateCode: req.body.leagueId }).exec();
+            if (!leagueSeason) {
+                res.statusMessage = "No League Found";
+                return res.sendStatus(400).end();
+            }
+        }
+    } catch (e) {
+        res.statusMessage = "Error Attempting to save";
+        return res.sendStatus(500).end();
+    }
+
+    try {
+        const currentMember = leagueSeason.members.find(m => m.userId === req.body.member.userId);
+        if (!currentMember) {
+            if(leagueSeason.members && leagueSeason.members.length > 0) {
+                leagueSeason.members.push(req.body.member)
+            } else {
+                leagueSeason.members = [req.body.member];
+            }
+            const result = await leagueSeason.save();
+            res.status(201).json(result);
+        } else {
+            res.statusMessage = "You've already joined this league"
+            return res.sendStatus(204).end();
+        }
+
+    } catch (err) {
+        res.statusMessage = "Error Attempting to save";
+        res.status(500).end();
+    }
+}
+
 module.exports = {
     getLeaguesSeason,
     createLeagueSeason,
     updateLeagueSeason,
     deleteLeagueSeasonById,
-    getLeaguesSeasonByLeagueIdSeasonId
+    getLeaguesSeasonByLeagueIdSeasonId,
+    joinLeague
 }
