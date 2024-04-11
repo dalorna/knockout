@@ -63,6 +63,9 @@ const Home = ({leagues, setLeagues}) => {
                 <li style={{color: red}}>
                     Join League appears in drop down... (refresh cache)
                 </li>
+                <li style={{color: red}}>
+                    Fix seasons
+                </li>
                 <li style={{color: yellow}}>
                     Join league screen, pick from leagues or enter a private code
                 </li>
