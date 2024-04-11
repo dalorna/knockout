@@ -1,19 +1,19 @@
 import React, { useRef} from 'react';
-import {useCurrentSeason} from '../../state/season';
+import {useCurrentSeason, useRefreshLeague} from '../../state/season';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
 import {JoinLeagueModal} from './JoinLeagueModal';
 
-const Home = ({leagues, setLeagues}) => {
+const Home = ({leagues, setLeagues, refreshSideMenu}) => {
     const [currentUser,] = useRecoilState(currentUserAtom);
     const season = useCurrentSeason();
     const createModalRef = useRef();
     const joinModalRef = useRef();
+    const handleRefresh = useRefreshLeague();
     const yellow = '#f7f786';
     const red = '#ff0000';
-    const green = '#026311';
     
     const create = () => {
         createModalRef.current.show(
@@ -33,6 +33,11 @@ const Home = ({leagues, setLeagues}) => {
     const refresher = (league) => {
         setLeagues([...leagues, league]);
         toast.success('League Successfully Saved')
+    }
+
+    const joinRefresher = () => {
+        handleRefresh({member: {userId: currentUser.id}});
+        refreshSideMenu();
     }
     return <div className="container py-1 text-center overflow-auto">
         <div className="row p-2 shadow-sm rounded bg-white mx-3">
@@ -94,7 +99,7 @@ const Home = ({leagues, setLeagues}) => {
             </ol>
         </div>
         <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season.data[0]} />
-        <JoinLeagueModal actionsRef={joinModalRef} />
+        <JoinLeagueModal actionsRef={joinModalRef} afterSubmit={joinRefresher}  />
     </div>
 }
 export default Home;

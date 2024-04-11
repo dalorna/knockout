@@ -51,10 +51,12 @@ export const JoinLeagueModal = ({actionsRef, afterSubmit}) => {
             if (result.status === 204) {
                 toast.error(result.statusText);
             } else {
+                // refreshLeagues();
+                afterSubmit();
                 toast.success('League Successfully Joined');
             }
         } catch (e) {
-            toast.error(result.statusText);
+            toast.error(result?.statusText ?? e?.message);
         } finally {
             setValue('code', '');
             modal.hide();

@@ -9,7 +9,7 @@ import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {Suspense, useEffect, useState} from 'react';
 import SimpleModal from '../../utils/simpleModal';
-import {useCurrentLeagues} from '../../state/season';
+import {useCurrentLeagues, useCurrentLeaguesRefresher} from '../../state/season';
 import {Route, Routes} from 'react-router';
 import Home from './Home';
 import {Loading} from '../../utils/loading';
@@ -23,6 +23,7 @@ import Join from '../Join/Join';
 import useAuth from '../../state/useAuth';
 import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
+import {generateUUID} from '../../utils/helpers';
 
 const currentSelectedLeague = signal(null);
 
@@ -34,6 +35,7 @@ const SideMenu = () => {
   const [allLeagues, setAllLeagues] = useState([]);
   const [currentLeague, setCurrentLeague] = useState(null);
   const [show, setShow] = useState(false);
+  const [refreshLeagues, setRefreshLeagues] = useState('')
   const [modalProps , setModalProps]= useState({ modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)});
   
   useEffect(() => {
@@ -51,7 +53,7 @@ const SideMenu = () => {
     } else {
       setCurrentLeague(null);
     }
-  }, [])
+  }, [refreshLeagues])
 
   const setSelectedLeague = (league) => {
     currentSelectedLeague.value = league;
@@ -83,6 +85,10 @@ const SideMenu = () => {
   const logout = async () => {
     setAuth({});
     navigate('/login');
+  }
+
+  const refreshHandler = () => {
+    setRefreshLeagues(generateUUID());
   }
   
   return<>
@@ -159,7 +165,7 @@ const SideMenu = () => {
     <div>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} />} />
+          <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} refreshSideMenu={refreshHandler} />} />
           <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
           {/*<Route path="/manage/:leagueId?/:ruleId?" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />*/}
           <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
