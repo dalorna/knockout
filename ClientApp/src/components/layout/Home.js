@@ -34,11 +34,11 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
         setLeagues([...leagues, league]);
         toast.success('League Successfully Saved')
     }
-
     const joinRefresher = () => {
         handleRefresh({member: {userId: currentUser.id}});
         refreshSideMenu();
     }
+
     return <div className="container py-1 text-center overflow-auto">
         <div className="row p-2 shadow-sm rounded bg-white mx-3">
             <h3>{`Welcome ${currentUser?.firstName} ${currentUser?.lastName}`}</h3>
@@ -64,9 +64,6 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </li>
                 <li style={{color: red}}>
                     Will need a profile page to set (address, city, state, zip) completely optional
-                </li>
-                <li style={{color: red}}>
-                    Join League appears in drop down... (refresh cache)
                 </li>
                 <li style={{color: red}}>
                     Fix seasons

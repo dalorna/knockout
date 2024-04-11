@@ -167,13 +167,12 @@ const SideMenu = () => {
         <Routes>
           <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} refreshSideMenu={refreshHandler} />} />
           <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
-          {/*<Route path="/manage/:leagueId?/:ruleId?" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />*/}
           <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
           <Route path="schedule" element={<Schedule />} />
           <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
           <Route path="picks" element={<Picks currentSelectedLeague={currentSelectedLeague} />} />
           <Route path="rules" element={<Rules currentSelectedLeague={currentSelectedLeague} />} />
-          <Route path="join" element={<Join />} />
+          <Route path="join" element={<Join refreshSideMenu={refreshHandler} />} />
         </Routes>
       </Suspense>
     </div>
