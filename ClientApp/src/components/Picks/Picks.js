@@ -7,7 +7,7 @@ import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {generateUUID} from '../../utils/helpers';
-import {currentUserAtom, useUser} from '../../state/user';
+import {currentUserAtom} from '../../state/user';
 import {useSeasonLeague, useTeams} from '../../state/season';
 import {useRecoilState} from 'recoil';
 
