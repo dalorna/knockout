@@ -60,7 +60,10 @@ const Home = ({leagues, setLeagues}) => {
                 <li style={{color: red}}>
                     Will need a profile page to set (address, city, state, zip) completely optional
                 </li>
-                <li style={{color: green}}>
+                <li style={{color: red}}>
+                    Join League appears in drop down... (refresh cache)
+                </li>
+                <li style={{color: yellow}}>
                     Join league screen, pick from leagues or enter a private code
                 </li>
                 <li>
@@ -74,8 +77,6 @@ const Home = ({leagues, setLeagues}) => {
                 <li>We need to show the create league for a user in the role of manager</li>
                 <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
                 <li>league standings, view other leagues (public leagues)</li>
-                <li>Fix Logout</li>
-                <li>Sign up Toast and navigate to sign in</li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>
 
