@@ -1,2 +1,18 @@
 ### test league
 GET http://localhost:3500/league/6614644eb0ac40d41852ae22
+### test members
+POST http://localhost:3500/leagueSeason/members
+Content-Type: application/json
+
+{
+  "member": {
+    "userId": "6617e05bb8f33a77085ba49f"
+  }
+}
+### test get leagues by league ids
+POST http://localhost:3500/league/member
+Content-Type: application/json
+
+{
+  "leagueIds": ["6615853e3f27850c2ab6fdc0"]
+}

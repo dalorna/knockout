@@ -13,4 +13,7 @@ router.route('/:userId')
 router.route('/:id')
     .delete(leagueController.deleteLeagueById);
 
+router.route('/member')
+    .post(leagueController.getLeaguesByLeagueIds)
+
 module.exports = router;

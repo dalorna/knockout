@@ -7,8 +7,9 @@ import {SavePickModal} from './SavePickModal';
 import * as yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {generateUUID} from '../../utils/helpers';
-import {useUser} from '../../state/user';
+import {currentUserAtom, useUser} from '../../state/user';
 import {useSeasonLeague, useTeams} from '../../state/season';
+import {useRecoilState} from 'recoil';
 
 const validationSchema = yup.object().shape({
     pick: yup.string().required("must make a pick")
@@ -18,12 +19,12 @@ const Picks = () => {
     // TODO: get Current Week and Year
     const week = 1;
     const year = '2023';
-    const userId = useUser();
+    const [currentUser,] = useRecoilState(currentUserAtom);
     // const season = useCurrentSeason(year);
     const selectedLeagueValue = JSON.parse(localStorage.getItem('selectedLeague'));
     const leagueSeason = useSeasonLeague(selectedLeagueValue._id);
-    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(userId, leagueSeason[0].data._id, week);
-    const refresher = useCurrentPickRefresh(userId, leagueSeason[0].data._id, week);
+    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(currentUser.id, leagueSeason[0].data._id, week);
+    const refresher = useCurrentPickRefresh(currentUser.id, leagueSeason[0].data._id, week);
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
     const teams = useTeams();
@@ -49,7 +50,7 @@ const Picks = () => {
         const currentPickId = currentWeeklyPick.data[0]?._id;
         const pick = {
             id: currentPickId ?? generateUUID(),
-            userId: userId,
+            userId: currentUser.id,
             weekId: week,
             leagueSeasonId: leagueSeason[0].data._id,
             locked: false,
@@ -116,7 +117,7 @@ const Picks = () => {
 export default Picks;
 
 const GameCard = ({game, teams, register, currentWeeklyPick}) => {
-    return ( <div key={game.gameId} className={"glass " + (game.gameID === currentWeeklyPick.data[0].gameId ? ' picked': '')} style={{'--r': '2'}}
+    return ( <div key={game.gameID} className={"glass " + (game.gameID === currentWeeklyPick?.data[0]?.gameId ? ' picked': '')} style={{'--r': '2'}}
              data-text={`${game.away} vs ${game.home}`}>
             <div style={{display: 'grid', gridTemplateColumns: 'auto', padding: '5px', marginTop: '10px'}} className="font-algerian" >
                 <div className="form-check form-check-inline">

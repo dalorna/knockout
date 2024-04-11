@@ -56,7 +56,7 @@ export const JoinLeagueModal = ({actionsRef, afterSubmit}) => {
         } catch (e) {
             toast.error(result.statusText);
         } finally {
-            // setValue('code', '');
+            setValue('code', '');
             modal.hide();
         }
 

@@ -92,7 +92,6 @@ const deleteLeagueSeasonById = async (req, res) => {
     }
 
 }
-
 const joinLeague = async (req, res) => {
     if (!req?.body?.leagueId) {
         return res.status(400).json({"message": `League Season id is required`});
@@ -135,6 +134,22 @@ const joinLeague = async (req, res) => {
         res.status(500).end();
     }
 }
+const getLeaguesByMember = async (req, res) => {
+    if (!req?.body?.member) {
+        return res.status(400).json({"message": `No Members attached`});
+    }
+    try {
+        const result = await LeagueSeason.find({
+            'members.userId': req.body.member.userId
+        }).exec();
+        res.status(200).json(result);
+
+    } catch (err) {
+        res.statusMessage = "Error Getting Leagues";
+        res.status(500).end();
+    }
+
+}
 
 module.exports = {
     getLeaguesSeason,
@@ -142,5 +157,6 @@ module.exports = {
     updateLeagueSeason,
     deleteLeagueSeasonById,
     getLeaguesSeasonByLeagueIdSeasonId,
-    joinLeague
+    joinLeague,
+    getLeaguesByMember
 }

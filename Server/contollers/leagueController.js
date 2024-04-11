@@ -63,9 +63,22 @@ const deleteLeagueById = async (req, res) => {
 
 }
 
+const getLeaguesByLeagueIds = async (req, res) => {
+    if (!req?.body?.leagueIds){
+        return res.status(400).json({"message": `No League Ids`})
+    }
+    try {
+        const leagues = await League.find({ _id: {$in: req.body.leagueIds } }).exec();
+        res.status(200).json(leagues)
+    } catch (err) {
+        res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
+    }
+}
+
 module.exports = {
     getLeaguesByUserId,
     createNewLeague,
     updateLeague,
-    deleteLeagueById
+    deleteLeagueById,
+    getLeaguesByLeagueIds
 }

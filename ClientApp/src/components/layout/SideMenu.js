@@ -20,10 +20,12 @@ import Standings from '../Standings/Standings';
 import Picks from '../Picks/Picks';
 import Rules from '../Rules/Rules';
 import Join from '../Join/Join';
+import useAuth from '../../state/useAuth';
 
 const currentSelectedLeague = signal(null);
 
 const SideMenu = () => {
+  const { setAuth } = useAuth();
   const leagues = useCurrentLeagues();
   const navigate = useNavigate();
   const [allLeagues, setAllLeagues] = useState([]);
@@ -59,6 +61,11 @@ const SideMenu = () => {
       setShow(true);
     }
   }
+
+  const logout = async () => {
+    setAuth({});
+    navigate('/login');
+  }
   
   return<>
     <div>
@@ -77,7 +84,7 @@ const SideMenu = () => {
                   </DropdownButton>
                 </Dropdown>
                 {/*<Nav.Link href="/home">Home</Nav.Link>*/}
-                <Nav.Link href="#link">Log Out</Nav.Link>
+                <Nav.Link onClick={() => logout()}>Log Out</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </div>
