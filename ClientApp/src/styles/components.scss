@@ -20,12 +20,63 @@
   box-shadow: 5px 5px 5px rgba(0,0,0,.1),
   15px 15px 15px rgba(0,0,0,0.1),
   20px 20px 15px rgba(0,0,0,0.1),
-  30px 30px 15px rgba(0,0,0,0.1),
-  inset 1px 1px 2px #fff;
+  30px 30px 15px rgba(0,0,0,0.1);
 }
 
 .flex-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.side-nav-1 {
+  position: absolute;
+  top: 56px;
+  bottom: 0;
+  left: 0;
+  z-index: 1006;
+  width: 150px;
+  background: #aeaaba;
+}
+
+.side-nav-3D
+{
+  position: relative;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-nav-3D button, .side-nav-3D a {
+  border-radius: 0 !important;
+  position: relative;
+  border: none;
+  padding: 10px 25px;
+  outline: none;
+  font-size: 1.1em;
+  color: #ffffff;
+  width: 150px;
+  background: linear-gradient(#dbdae1, #aeaaba);
+  box-shadow: 5px 5px 5px rgba(0,0,0,.1),
+  5px 15px 15px rgba(0,0,0,0.1),
+  5px 20px 15px rgba(0,0,0,0.1),
+  10px 30px 15px rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+
+.side-nav-3D:hover button {
+  background: linear-gradient(#000, #aeaaba);
+}
+
+.side-nav-3D:hover a {
+  background: linear-gradient(#000, #aeaaba);
+}
+
+.side-nav-3D.selected a {
+  background: linear-gradient(#000, #aeaaba);
+}
+
+.side-nav-3D.disabled button {
+  background: linear-gradient(red, #aeaaba);
 }

@@ -1,16 +1,16 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
-import SideNav, {NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav'
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import {useNavigate, useLocation} from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
+// import { Tooltip } from 'react-tooltip';
 import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {Suspense, useEffect, useState} from 'react';
 import SimpleModal from '../../utils/simpleModal';
 import {useCurrentLeagues} from '../../state/season';
 import {Route, Routes} from 'react-router';
+import { Link } from 'react-router-dom';
 import Home from './Home';
 import {Loading} from '../../utils/loading';
 import Manage from '../Manage/Manage';
@@ -61,30 +61,19 @@ const SideMenu = () => {
     localStorage.setItem('selectedLeague', JSON.stringify(league));
     setCurrentLeague(league);
   }
-  const showDisabledModal = () => {
-    if (canManage()) {
-      setModalProps(prev => {
-        prev.modalBody = 'Only the league creator may change the rules and manage the league.';
-        return prev;
-      })
-      setShow(true);
-    }
-    showNoLeague();
-  }
+
   const showNoLeagueModal = () => {
     showNoLeague();
   }
   const canManage = () => {
-    return !(currentSelectedLeague.value && (currentSelectedLeague.value?.userId === currentUser.id));
+    return (currentSelectedLeague.value && (currentSelectedLeague.value?.userId === currentUser.id));
   }
   const showNoLeague = () => {
-    if (!currentSelectedLeague.value?._id) {
-      setModalProps(prev => {
-        prev.modalBody = 'You Must pick a league before you can access the menu!';
-        return prev;
-      })
-      setShow(true);
-    }
+    setModalProps(prev => {
+      prev.modalBody = 'You Must pick a league before you can access the menu!';
+      return prev;
+    })
+    setShow(true);
   }
   const logout = async () => {
     setAuth({});
@@ -93,7 +82,20 @@ const SideMenu = () => {
   const refreshHandler = () => {
     setRefreshLeagues(generateUUID());
   }
-  
+
+  const selection = (path) => {
+    console.log('location', location);
+  }
+
+  const getClassName = (path, canDisable) => {
+    let style = 'side-nav-3D '
+    if (canDisable) {
+      style += (!currentSelectedLeague.value?._id ? ' disabled ' : '');
+    }
+    style +=  (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === path ? ' selected ' : '');
+    return style;
+  }
+
   return<>
     <div>
       <Navbar data-bs-theme="dark" expand="lg" className="bg-body-tertiary">
@@ -119,52 +121,32 @@ const SideMenu = () => {
       </Navbar>
     </div>
     <div>
-      <SideNav onSelect={selected => {
-        console.log('selected', selected);
-        navigate(`${selected}`)
-      }}>
-        <SideNav.Toggle/>
-        <SideNav.Nav defaultSelected="home">
-          <NavItem  eventKey="home" data-tooltip-id="home-tip" data-tooltip-content="Home"
-                    data-tooltip-variant="info">
-            <Tooltip id="home-tip" place="top"/>
-            <NavIcon><i className="fa fa-fw fa-home" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Manage</NavText>
-          </NavItem>            
-          <NavItem eventKey="manage" data-tooltip-id="manage-tip" data-tooltip-content="Manage League" disabled={canManage()} onClick={showDisabledModal}
-                   data-tooltip-variant="info">
-            <Tooltip id="manage-tip" place="top"/>
-            <NavIcon><i className="fa fa-fw fa-briefcase" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Manage</NavText>
-          </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal} eventKey="picks" data-tooltip-id="manage-tip" data-tooltip-content="Picks this week" data-tooltip-variant="info">
-            <NavIcon><i className="fa fa-fw fa-clipboard" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Picks</NavText>
-          </NavItem>
-          <NavItem eventKey="members" data-tooltip-id="manage-tip" data-tooltip-content="League Memebers" disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal}
-                   data-tooltip-variant="info">
-            <NavIcon><i className="fa fa-fw fa-users" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Members</NavText>
-          </NavItem>
-          <NavItem eventKey="schedule" data-tooltip-id="manage-tip" data-tooltip-content="NFL Schedule" data-tooltip-variant="info">
-            <NavIcon><i className="fa fa-fw fa-calendar-days" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Schedule</NavText>
-          </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal} eventKey="standings" data-tooltip-id="manage-tip" data-tooltip-content="League Standings" data-tooltip-variant="info">
-            <NavIcon><i className="fa fa-fw fa-line-chart" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Standings</NavText>
-          </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal} eventKey="rules" data-tooltip-id="manage-tip" data-tooltip-content="League Rules" data-tooltip-variant="info">
-            <NavIcon><i className="fa fa-fw fa-list-alt" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Rules</NavText>
-          </NavItem>
-          <NavItem eventKey="join" data-tooltip-id="join-tip" data-tooltip-content="Join a New league" data-tooltip-variant="info">
-            <Tooltip id="join-tip" place="top"/>
-            <NavIcon><i className="fa fa-fw fa-user-plus" style={{fontSize: '1.5em'}}/></NavIcon>
-            <NavText>Join a new league</NavText>
-          </NavItem>          
-        </SideNav.Nav>
-      </SideNav>
+      <div className="side-nav-1">
+        <div id="home" className={getClassName('home')}>
+          <Link className="find-me" to="home" onClick={() => selection('home')}>Home</Link>
+        </div>
+        {
+            canManage() && <div id="manage" className={getClassName('manage')}> <Link to="manage">Manage</Link></div>
+        }
+        <div id="picks"  className={getClassName('picks', true)}>
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Picks" path="picks" />
+        </div>
+        <div id="members" className={getClassName('members', true)}>
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Members" path="members" />
+        </div>
+        <div className={getClassName('schedule')}>
+          <Link to="schedule">Schedule</Link>
+        </div>
+        <div className={getClassName('standings', true)}>
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Standings" path="standings" />
+        </div>
+        <div className={getClassName('rules', true)}>
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Rules" path="rules" />
+        </div>
+        <div className={getClassName('join')}>
+          <Link to="join">Join</Link>
+        </div>
+      </div>
     </div>
     <div>
       <Suspense fallback={<Loading />}>
@@ -184,3 +166,13 @@ const SideMenu = () => {
   </>
 }
 export default SideMenu;
+
+const SafeLink = ({disabled, callback, text, path}) => {
+  return (
+      <>
+        {
+          disabled ? <button type="button" onClick={callback} >{text}</button> : <Link to={path}>{text}</Link>
+        }
+      </>
+  );
+}

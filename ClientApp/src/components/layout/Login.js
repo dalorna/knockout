@@ -5,6 +5,7 @@ import axios from '../../api/axios';
 const LOGIN_URL = '/auth';
 import {currentUserAtom} from '../../state/user';
 import {useRecoilState} from 'recoil';
+import '../../styles/login.scss';
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -63,37 +64,54 @@ const Login = () => {
 
     return (
         <main className="App">
-            <section>
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                <h1>Sign In</h1>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        ref={userRef}
-                        autoComplete="off"
-                        onChange={(e) => setUser(e.target.value)}
-                        value={user}
-                        required
-                    />
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        onChange={(e) => setPwd(e.target.value)}
-                        value={pwd}
-                        required
-                    />
-                    <button>Sign In</button>
-                </form>
-                <p>
-                    Need an Account?<br/>
-                    <span className="line">
-                        <a href="/register">Sign Up</a>
-                    </span>
-                </p>
-            </section>
+            <div className="container-login">
+                <div className="box-login">
+                    <div className="cover-login"></div>
+                    <div className="shadow-login"></div>
+                    <div className="content-login">
+                        <div className="form-login">
+                            <h3 className="logo-login">
+                                <i className="fa fa-key" />
+                            </h3>
+                            <h2>Sign In</h2>
+                            <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"}
+                               aria-live="assertive">{errMsg}</p>
+                            <form onSubmit={handleSubmit}>
+                                <div className="inputBox-login">
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        ref={userRef}
+                                        autoComplete="off"
+                                        onChange={(e) => setUser(e.target.value)}
+                                        value={user}
+                                        required
+                                    />
+                                    <i className="fa fa-user" />
+                                    <span>Username</span>
+                                </div>
+                                <div className="inputBox-login">
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        onChange={(e) => setPwd(e.target.value)}
+                                        value={pwd}
+                                        required
+                                    />
+                                    <i className="fa fa-lock" />
+                                    <span>Password</span>
+                                </div>
+                                <div className="links-login">
+                                    <a href="/register"> <i className="fa fa-user-plus" /> Sign Up</a>
+                                </div>
+                                <div className="inputBox-login">
+                                    <button style={{width: '100%'}}>Sign In</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     )
 }
