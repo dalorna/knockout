@@ -82,11 +82,6 @@ const SideMenu = () => {
   const refreshHandler = () => {
     setRefreshLeagues(generateUUID());
   }
-
-  const selection = (path) => {
-    console.log('location', location);
-  }
-
   const getClassName = (path, canDisable) => {
     let style = 'side-nav-3D '
     if (canDisable) {
@@ -123,7 +118,7 @@ const SideMenu = () => {
     <div>
       <div className="side-nav-1">
         <div id="home" className={getClassName('home')}>
-          <Link className="find-me" to="home" onClick={() => selection('home')}>Home</Link>
+          <Link className="find-me" to="home">Home</Link>
         </div>
         {
             canManage() && <div id="manage" className={getClassName('manage')}> <Link to="manage">Manage</Link></div>
