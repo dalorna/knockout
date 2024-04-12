@@ -103,11 +103,13 @@ const Picks = () => {
                         }
                     </div>
                 </div>
-                <div className="p-1 shadow-sm rounded bg-white mx-3 mt-1 text-center">
-                    <button type="submit" className="btn btn-primary" aria-label="Save Pick"
-                            disabled={!isValid || currentWeeklyPick.data[0]?.locked}>
-                        Save Pick
-                    </button>
+                <div className="p-1 shadow-sm rounded bg-white mx-3 mt-1 text-center flex-container">
+                    <div className="button-3D">
+                        <button type="submit" aria-label="Save Pick"
+                                disabled={!isValid || currentWeeklyPick.data[0]?.locked}>
+                            Save Pick
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

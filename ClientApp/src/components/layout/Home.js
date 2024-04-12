@@ -1,4 +1,5 @@
 import React, { useRef} from 'react';
+import '../../styles/components.scss';
 import {useCurrentSeason, useRefreshLeague} from '../../state/season';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
@@ -45,16 +46,23 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
         </div>
         <div className="row p-3 shadow-sm rounded bg-dark-subtle mx-3 mt-1">
             <h5>Create New League</h5>
-            <div>
-                <button className="btn btn-primary mx-3" onClick={create}>Create League</button>
-                <button className="btn btn-primary" onClick={join}>Join League</button>
+            <div className="flex-container">
+                <div className="button-3D">
+                    <button onClick={create}>Create League</button>
+                </div>
+                <div className="button-3D">
+                    <button onClick={join}>Join League</button>
+                </div>
             </div>
         </div>
         <div className="row p-3 shadow-sm rounded bg-dark text-white mx-3 mt-1 overflow-auto">
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li>
-                    League Edit screen or Delete League...
+                League Edit screen... leave league
+                </li>
+                <li>
+                  Delete League...  deactivate league
                 </li>
                 <li style={{color: red}}>
                     Refresh on a page doesn't select the correct menu item

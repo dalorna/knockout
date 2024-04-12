@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import SideNav, {NavItem, NavIcon, NavText} from '@trendmicro/react-sidenav'
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
@@ -32,6 +32,7 @@ const SideMenu = () => {
   const leagues = useCurrentLeagues();
   const [currentUser,] = useRecoilState(currentUserAtom);
   const navigate = useNavigate();
+  const location = useLocation();
   const [allLeagues, setAllLeagues] = useState([]);
   const [currentLeague, setCurrentLeague] = useState(null);
   const [show, setShow] = useState(false);
@@ -60,15 +61,23 @@ const SideMenu = () => {
     localStorage.setItem('selectedLeague', JSON.stringify(league));
     setCurrentLeague(league);
   }
-  
   const showDisabledModal = () => {
-    if (!(currentSelectedLeague.value?.userId === currentUser.id)) {
+    if (canManage()) {
       setModalProps(prev => {
         prev.modalBody = 'Only the league creator may change the rules and manage the league.';
         return prev;
       })
       setShow(true);
     }
+    showNoLeague();
+  }
+  const showNoLeagueModal = () => {
+    showNoLeague();
+  }
+  const canManage = () => {
+    return !(currentSelectedLeague.value && (currentSelectedLeague.value?.userId === currentUser.id));
+  }
+  const showNoLeague = () => {
     if (!currentSelectedLeague.value?._id) {
       setModalProps(prev => {
         prev.modalBody = 'You Must pick a league before you can access the menu!';
@@ -77,16 +86,10 @@ const SideMenu = () => {
       setShow(true);
     }
   }
-
-  const canManage = () => {
-    return !(currentSelectedLeague.value && (currentSelectedLeague.value?.userId === currentUser.id));
-  }
-
   const logout = async () => {
     setAuth({});
     navigate('/login');
   }
-
   const refreshHandler = () => {
     setRefreshLeagues(generateUUID());
   }
@@ -117,6 +120,7 @@ const SideMenu = () => {
     </div>
     <div>
       <SideNav onSelect={selected => {
+        console.log('selected', selected);
         navigate(`${selected}`)
       }}>
         <SideNav.Toggle/>
@@ -133,11 +137,11 @@ const SideMenu = () => {
             <NavIcon><i className="fa fa-fw fa-briefcase" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Manage</NavText>
           </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={showDisabledModal} eventKey="picks" data-tooltip-id="manage-tip" data-tooltip-content="Picks this week" data-tooltip-variant="info">
+          <NavItem disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal} eventKey="picks" data-tooltip-id="manage-tip" data-tooltip-content="Picks this week" data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-clipboard" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Picks</NavText>
           </NavItem>
-          <NavItem eventKey="members" data-tooltip-id="manage-tip" data-tooltip-content="League Memebers" disabled={!currentSelectedLeague.value} onClick={showDisabledModal}
+          <NavItem eventKey="members" data-tooltip-id="manage-tip" data-tooltip-content="League Memebers" disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal}
                    data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-users" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Members</NavText>
@@ -146,11 +150,11 @@ const SideMenu = () => {
             <NavIcon><i className="fa fa-fw fa-calendar-days" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Schedule</NavText>
           </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={showDisabledModal} eventKey="standings" data-tooltip-id="manage-tip" data-tooltip-content="League Standings" data-tooltip-variant="info">
+          <NavItem disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal} eventKey="standings" data-tooltip-id="manage-tip" data-tooltip-content="League Standings" data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-line-chart" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Standings</NavText>
           </NavItem>
-          <NavItem disabled={!currentSelectedLeague.value} onClick={showDisabledModal} eventKey="rules" data-tooltip-id="manage-tip" data-tooltip-content="League Rules" data-tooltip-variant="info">
+          <NavItem disabled={!currentSelectedLeague.value} onClick={showNoLeagueModal} eventKey="rules" data-tooltip-id="manage-tip" data-tooltip-content="League Rules" data-tooltip-variant="info">
             <NavIcon><i className="fa fa-fw fa-list-alt" style={{fontSize: '1.5em'}}/></NavIcon>
             <NavText>Rules</NavText>
           </NavItem>
