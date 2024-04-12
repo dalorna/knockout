@@ -243,32 +243,34 @@ const Manage = ({currentSelectedLeague}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-3 shadow-sm rounded bg-body-secondary mx-3 mt-5 text-end">
-                                <button
-                                    type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
-                                    data-tooltip-content="Save your setting for later"
-                                    className="btn btn-primary btn-margin-right"
-                                    aria-label="Save Form" disabled={locked}
-                                    onClick={() => setIsSubmit(false)}
-                                >
-                                    <Tooltip id="save-tip"/>
-                                    Save Rules
-                                </button>
-                                <button
-                                    type="submit" data-tooltip-id="submit-tip" data-tooltip-variant="info"
-                                    data-tooltip-content="This will finalize your league rules!"
-                                    className="btn btn-primary"
-                                    aria-label="Save Form" disabled={locked}
-                                    onClick={() => setIsSubmit(true)}
-                                >
-                                    <Tooltip id="submit-tip"/>
-                                    Submit Final Rules
-                                </button>
+                            <div className="p-3 shadow-sm rounded bg-body-secondary mx-3 mt-5 text-end flex-container">
+                                <div className="button-3D">
+                                    <button
+                                        type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
+                                        data-tooltip-content="Save your setting for later"
+                                        aria-label="Save Form" disabled={locked}
+                                        onClick={() => setIsSubmit(false)}
+                                    >
+                                        <Tooltip id="save-tip"/>
+                                        Save Rules
+                                    </button>
+                                </div>
+                                <div className="button-3D">
+                                    <button
+                                        type="submit" data-tooltip-id="submit-tip" data-tooltip-variant="info"
+                                        data-tooltip-content="This will finalize your league rules!"
+                                        aria-label="Save Form" disabled={locked}
+                                        onClick={() => setIsSubmit(true)}
+                                    >
+                                        <Tooltip id="submit-tip"/>
+                                        Submit Final Rules
+                                    </button>
+                                </div>
                             </div>
                         </>
                     }
                 </form>
-            </div>
+        </div>
         <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit} afterSubmit={refreshRules}/>
     </>);
 }

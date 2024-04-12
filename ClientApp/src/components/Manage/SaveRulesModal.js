@@ -77,15 +77,20 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
                             isSubmit ? submitRulesBody : saveRulesBody
                         }
                     </div>
-                    <div className="modal-footer bg-dark-subtle">
-                        <button type="button" className="btn btn-outline-secondary btn-standard-width"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">
-                            Cancel
-                        </button>
-                        <button type="submit" className="btn btn-secondary btn-margin-right btn-standard-width"
-                                onClick={saveCurrentRules}>Save
-                        </button>
+                    <div className="modal-footer bg-dark-subtle flex-container">
+
+                        <div className="button-3D">
+                            <button type="button"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                Cancel
+                            </button>
+                        </div>
+                        <div className="button-3D">
+                            <button type="submit"
+                                    onClick={saveCurrentRules}>Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
