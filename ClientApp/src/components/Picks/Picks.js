@@ -81,7 +81,7 @@ const Picks = () => {
     }
     
     return <>
-        <div className="page-container py-1 font-algerian">
+        <div className="page-container py-1">
             <h4 className="mb-1 p-3 text-black text-center ">
                 Picks - {selectedLeagueValue.name}
             </h4>
@@ -121,7 +121,7 @@ export default Picks;
 const GameCard = ({game, teams, register, currentWeeklyPick}) => {
     return ( <div key={game.gameID} className={"glass " + (game.gameID === currentWeeklyPick?.data[0]?.gameId ? ' picked': '')} style={{'--r': '2'}}
              data-text={`${game.away} vs ${game.home}`}>
-            <div style={{display: 'grid', gridTemplateColumns: 'auto', padding: '5px', marginTop: '10px'}} className="font-algerian" >
+            <div style={{display: 'grid', gridTemplateColumns: 'auto', padding: '5px', marginTop: '10px'}}>
                 <div className="form-check form-check-inline">
                     <input className="form-check-input"
                            type="radio" {...register('pick')}
