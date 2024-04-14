@@ -11,7 +11,7 @@ const Rules = () => {
                  className="grey-begin text-shadow-black">Rules
             </div>
         </div>
-        <div className="p-2 mx-3 mt-1 standard-background">
+        <div className="p-1 mx-3 mt-1 standard-background">
             <div className="text-center">
                 <h4 className="grey-begin text-shadow-black">Game Type</h4>
             </div>
@@ -30,7 +30,7 @@ const Rules = () => {
                 </p>
             </div>
         </div>
-        <div className="p-2 mx-3 mt-1 standard-background">
+        <div className="p-1 mx-3 mt-1 standard-background">
             <div className="text-center">
                 <h4 className="grey-begin text-shadow-black">Elimination Style</h4>
             </div>
@@ -61,7 +61,7 @@ const Rules = () => {
         </div>
         {
             leagueSeason[0].data.rules.elimination !== 'hardCore' &&
-            <div className="p-2 mx-3 mt-1 standard-background">
+            <div className="p-1 mx-3 mt-1 standard-background">
                 <div className="text-center">
                     <h4 className="grey-begin text-shadow-black">Early Point</h4>
                 </div>
@@ -78,7 +78,7 @@ const Rules = () => {
         }
         {
         leagueSeason[0].data.rules.gameType === 'loser' && <>
-                <div className="p-2 mx-3 mt-1 standard-background">
+                <div className="p-1 mx-3 mt-1 standard-background">
                     <div className="text-center">
                         <h4 className="grey-begin text-shadow-black">Pick the same team</h4>
                     </div>
@@ -92,7 +92,7 @@ const Rules = () => {
                         </p>
                     </div>
                 </div>
-                <div className="p-2 mx-3 mt-1 standard-background">
+                <div className="p-1 mx-3 mt-1 standard-background">
                     <div className="text-center">
                         <h4 className="grey-begin text-shadow-black">See other's picks</h4>
                     </div>
@@ -108,7 +108,7 @@ const Rules = () => {
                 </div>
             </>
         }
-        <div className="p-2 mx-3 mt-1 standard-background">
+        <div className="p-1 mx-3 mt-1 standard-background">
             <div className="text-center">
                 <h4 className="grey-begin text-shadow-black">Ties count as Loses</h4>
             </div>
