@@ -66,6 +66,18 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     protect the routes
                 </li>
                 <li className="chiefs-red">
+                    Login branding (name of site)
+                </li>
+                <li className="chiefs-red">
+                    3 fonts for the 3 sections (menu, header, content)
+                </li>
+                <li className="chiefs-red">
+                    background selectable to team colors
+                </li>
+                <li className="chiefs-red">
+                    register instructions bigger, background of sign-up hover effects (background)
+                </li>
+                <li className="chiefs-red">
                     Website Header reformat
                 </li>
                 <li className="chiefs-red">

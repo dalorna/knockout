@@ -4,7 +4,7 @@ const Join = () => {
             <div style={{fontSize: '3em'}}
                  className="grey-begin text-shadow-black">Join A New League
             </div>
-        </div>1
+        </div>
     </div>
 }
 
