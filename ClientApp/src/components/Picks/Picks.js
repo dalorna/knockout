@@ -67,11 +67,9 @@ const Picks = () => {
             }
         )
     }
-
     const refreshPick = async () => {
         refresher();
     }
-
     const getSelectedTeamName = () => {
         if (currentWeeklyPick.data[0]?.teamId) {
             return teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)?.teamCity + ' ' + teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)?.teamName;
@@ -82,22 +80,23 @@ const Picks = () => {
     
     return <>
         <div className="page-container py-1">
-            <h4 className="mb-1 p-3 text-black text-center ">
-                Picks - {selectedLeagueValue.name}
-            </h4>
-            <div className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger' }`}  >
+            <div className="text-center">
+                <div style={{fontSize: '2em'}} className="grey-begin text-shadow-black">Picks - {selectedLeagueValue.name}</div>
+            </div>
+            <div
+                className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger'}`}>
                 {
-                    `Current Pick for the week ${ week } is ${getSelectedTeamName()} ${currentWeeklyPick.data[0]?.locked ? 'Locked' : 'Not Locked'}`
+                    `Current Pick for the week ${week} is ${getSelectedTeamName()} ${currentWeeklyPick.data[0]?.locked ? 'Locked' : 'Not Locked'}`
                 }
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
                 <div className="row p-2 shadow-sm rounded bg-white mx-3" style={{maxHeight: '75vh', overflow: 'auto'}}>
-                    <div className="glass-container" >
+                    <div className="glass-container">
                         {
                             currentWeeklySchedule.map((game, i) => {
                                 return (
-                                        <GameCard key={i} game={game} teams={teams} register={register}
-                                                              currentWeeklyPick={currentWeeklyPick}/>
+                                    <GameCard key={i} game={game} teams={teams} register={register}
+                                              currentWeeklyPick={currentWeeklyPick}/>
                                 )
                             })
                         }

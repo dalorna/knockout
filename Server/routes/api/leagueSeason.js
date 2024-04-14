@@ -20,4 +20,7 @@ router.route('/join')
 router.route('/members')
     .post(leagueSeasonController.getLeaguesByMember);
 
+router.route('/members/users/:seasonId/:leagueId')
+    .get(leagueSeasonController.getLeagueMemberUsers);
+
 module.exports = router;

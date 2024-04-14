@@ -16,3 +16,5 @@ Content-Type: application/json
 {
   "leagueIds": ["6615853e3f27850c2ab6fdc0"]
 }
+###
+GET http://localhost:3500/leagueSeason/members/users/2/6615853e3f27850c2ab6fdc0

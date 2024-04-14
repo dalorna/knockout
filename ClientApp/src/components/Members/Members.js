@@ -1,31 +1,94 @@
-const Members = ({currentSelectedLeague}) => {
-    console.log('currentSelectedLeague', currentSelectedLeague);
-    return <div className="page container py-4 py-sm-5">
-        <h2>Members</h2>
+import {useCurrentLeagueMembersUsers, useSeasonLeague} from '../../state/season';
 
-        <button type="button" className="btn btn-secondary"
-             data-bs-toggle="tooltip" data-bs-placement="top"
-             data-bs-custom-class="custom-tooltip"
-             title="This top tooltip is themed via CSS variables.">
-            Custom tooltip
-        </button>
-        <button type="button" className="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="Tooltip on top">
-            Tooltip on top
-        </button>
-        <button type="button" className="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right"
-                title="Tooltip on right">
-            Tooltip on right
-        </button>
-        <button type="button" className="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                title="Tooltip on bottom">
-            Tooltip on bottom
-        </button>
-        <button type="button" className="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="left"
-                title="Tooltip on left">
-            Tooltip on left
-        </button>
+const Members = () => {
+    const selectedLeagueValue = JSON.parse(localStorage.getItem('selectedLeague'));
+    const leagueSeason = useSeasonLeague(selectedLeagueValue._id);
+    const users = useCurrentLeagueMembersUsers(selectedLeagueValue._id);
+
+    return <div className="page container py-1">
+        <div className="text-center">
+            <div style={{fontSize: '3em'}} className="grey-begin text-shadow-black">Members</div>
+        </div>
+        <div>
+            <div className="member-display commissioner" style={{marginLeft: 'auto', marginRight: 'auto', top: '-10px'}}>
+                <div className="chiefs-gold text-center">
+                    <h4 className="text-shadow-black">Commissioner</h4>
+                </div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td rowSpan="2"><i className="fa fa-user member chiefs-gold text-shadow-black"/></td>
+                        <td className="p-1">
+                            <div>
+                    <span>
+                        {
+                            `${users.data.find((user) => user._id === selectedLeagueValue.userId).username}: `
+                        }
+                    </span>
+                                <span>
+                        {
+                            `${users.data.find((user) => user._id === selectedLeagueValue.userId)?.firstName} ${users.data.find((user) => user._id === selectedLeagueValue.userId)?.lastName}`
+                        }
+                    </span>
+                            </div>
+                            <div>
+                    <span>
+                        {
+                            `${users.data.find((user) => user._id === selectedLeagueValue.userId).email}: `
+                        }
+                    </span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div className="member-grid">
+            {
+                leagueSeason[0].data.members.map((member, i) => {
+                    return (
+                        <MemberDisplayCard key={i} user={users.data.find((user) => user._id === member.userId)}/>
+                    )
+                })
+            }
+        </div>
     </div>
 }
 
 export default Members;
+
+const MemberDisplayCard = ({user}) => {
+    return (
+        <div className={`member-display`}>
+            <table>
+                <tbody>
+                    <tr>
+                        <td rowSpan="2" ><i className="fa fa-user member text-shadow-black"/></td>
+                        <td className="p-2">
+                            <div>
+                                <div className="cut-text d-inline">
+                                    {
+                                        `${user.username}: `
+                                    }
+                                </div>
+                                <div className="cut-text d-inline">
+                                    {
+                                        `${user?.firstName} ${user?.lastName}`
+                                    }
+                                </div>
+                            </div>
+                            <div>
+                                <div className="cut-email  d-inline">
+                                    {
+                                        `${user.email}`
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    );
+}

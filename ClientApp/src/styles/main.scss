@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
+$chiefs-red: #E31837;
+$chiefs-gold: #FFB81C;
+
+$base-grey-begin: #dbdae1;
+$base-grey-end: #aeaaba;
+
+
 body {
   margin: 0;
   font-family: 'Roboto', 'Oxygen',
@@ -7,7 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  background-color: #aeaaba;
+  background-color: $base-grey-end;
   overflow: hidden;
 }
 
@@ -178,4 +185,101 @@ a, a:visited {
 .glass-container .glass.picked {
   background: linear-gradient(#4f4f4f, transparent);
   transform: rotate(0deg);
+}
+
+.standard-background {
+  box-shadow: 5px 5px 5px rgba(0,0,0,.1), 15px 15px 15px rgba(0,0,0,0.1);
+  background: linear-gradient($base-grey-begin, $base-grey-end);
+}
+
+.chiefs-red {
+  color: $chiefs-red;
+}
+
+.chiefs-gold {
+  color: $chiefs-gold;
+}
+.grey-begin {
+  color: $base-grey-begin;
+}
+.grey-end {
+  color: $base-grey-end;
+}
+
+
+.member-display {
+  font-size: 1rem;
+  background: #dbdae1;
+  color: #B22222;
+  padding: 0.5rem;
+  position: relative;
+  width: 380px;
+  margin-left: 40px;
+  margin-bottom: 5px;
+  max-height: 75px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.1),
+  15px 15px 15px rgba(0,0,0,0.1),
+  20px 10px 20px rgba(0,0,0,0.1),
+  50px 50px 80px rgba(0,0,0,0.25);
+}
+.member-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  width: 10px;
+  height: 100%;
+  background: linear-gradient(rgba(255, 184, 28, .5), #ffffff, #e3e3e3);
+  filter: blur(1px);
+  z-index: 1;
+}
+.member-display::after {
+  content: '';
+  position: absolute;
+  top: -.5px;
+  right: -1px;
+  width: 10px;
+  height: 100%;
+  background: linear-gradient(#ffffff, #ffffff, rgba(227, 24, 55, .1));
+  filter: blur(1px);
+  z-index: 1;
+}
+
+.member-display.commissioner {
+  max-height: 200px;
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  overflow: auto;
+  width: 77vw;
+  height: 65vh;
+  box-shadow: 15px 15px 15px black;
+  padding: 10px;
+  border: solid 2px gray;
+  background: linear-gradient(rgba(227, 24, 55, .1), #ffffff, rgba(255, 184, 28, .5));
+}
+
+.text-shadow-black {
+  text-shadow: 2px 2px 2px black;
+}
+
+i.member {
+  font-size: 40px;
+  padding: 2px;
+}
+
+.cut-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 50px;
+  white-space: nowrap;
+}
+
+.cut-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 260px;
+  white-space: nowrap;
 }

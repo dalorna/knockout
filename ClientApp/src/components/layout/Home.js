@@ -41,10 +41,10 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
     }
 
     return <div className="container py-1 text-center overflow-auto">
-        <div className="row p-2 shadow-sm rounded bg-white mx-3">
-            <h3>{`Welcome ${currentUser?.firstName} ${currentUser?.lastName}`}</h3>
+        <div className="text-center">
+            <div style={{fontSize: '2em'}} className="grey-begin text-shadow-black">{`Welcome ${currentUser?.firstName} ${currentUser?.lastName}`}</div>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-dark-subtle mx-3 mt-1">
+        <div className="row p-3 mx-3 mt-1 standard-background">
             <h5>Create New League</h5>
             <div className="flex-container">
                 <div className="button-3D">
@@ -55,47 +55,59 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </div>
             </div>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-dark text-white mx-3 mt-1 overflow-auto">
+        <div className="row p-3 standard-background mx-3 mt-1 overflow-auto" style={{maxHeight: '60vh'}}>
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li>
-                League Edit screen... leave league
+                    League Edit screen... leave league
                 </li>
                 <li>
-                  Delete League...  deactivate league
+                    Delete League... deactivate league
                 </li>
-                <li style={{color: red}}>
-                    Refresh on a page doesn't select the correct menu item
+                <li className="chiefs-red">
+                    protect the routes
                 </li>
-                <li style={{color: red}}>
+                <li className="chiefs-red">
+                    Website Header reformat
+                </li>
+                <li className="chiefs-red">
+                    Manage reformat
+                </li>
+                <li className="chiefs-red">
+                    Members, rules, standing, join pages need created
+                </li>
+                <li className="chiefs-red">
                     cap league with number of players if no private code 100 Max
                 </li>
-                <li style={{color: red}}>
+                <li className="chiefs-red">
                     Will need a profile page to set (address, city, state, zip) completely optional
                 </li>
-                <li style={{color: red}}>
+                <li className="chiefs-red">
                     Fix seasons
                 </li>
-                <li style={{color: yellow}}>
+                <li className="chiefs-gold">
                     Join league screen, pick from leagues or enter a private code
                 </li>
                 <li>
                     Margin of victory to determine winner option?
                 </li>
-                <li style={{color: yellow}}>Who's still in, and or who is in the lead (standings)</li>
-                <li style={{color: yellow}}>Some Sort of selection for the next week, with message to select by a
+                <li className="chiefs-gold">Who's still in, and or who is in the lead (standings)</li>
+                <li className="chiefs-gold">Some Sort of selection for the next week, with message to select by a
                     certain
                     time on home page
                 </li>
                 <li>We need to show the create league for a user in the role of manager</li>
                 <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
                 <li>league standings, view other leagues (public leagues)</li>
+                <li>
+                    Footer
+                </li>
                 <li>Rules Engine</li>
                 <li>Identity Server</li>
 
             </ol>
         </div>
-        <div className="row p-3 shadow-sm rounded bg-danger-subtle mx-3 mt-1 overflow-auto">
+        <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
             <h6>Bugs</h6>
             <ol className="features text-start">
                 <li>
@@ -103,8 +115,8 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </li>
             </ol>
         </div>
-        <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season.data[0]} />
-        <JoinLeagueModal actionsRef={joinModalRef} afterSubmit={joinRefresher}  />
+        <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season.data[0]}/>
+        <JoinLeagueModal actionsRef={joinModalRef} afterSubmit={joinRefresher}/>
     </div>
 }
 export default Home;

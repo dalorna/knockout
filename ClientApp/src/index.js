@@ -6,9 +6,9 @@ import 'bootstrap';
 import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AuthProvider } from './state/AuthProvider';
-import Login from './components/layout/Login';
-import Register from './components/layout/Register';
-import Unauthorized from './components/layout/Unauthorized';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import Unauthorized from './components/Auth/Unauthorized';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -8,8 +8,10 @@ const Schedule = () => {
     const weekly = Object.groupBy(nflSchedule.data.body, ({gameWeek}) => gameWeek);
     const weeklySchedule = Object.keys(weekly).map((key) => weekly[key]);
 
-    return <div className="page container py-4 py-sm-5">
-        <h4>{`Schedule - ${season.data[0].year}`}</h4>
+    return <div className="page container py-1">
+        <div className="text-center">
+            <div style={{fontSize: '3em'}} className="grey-begin text-shadow-black">{`Schedule - ${season.data[0].year}`}</div>
+        </div>
         <div className="p-3 shadow-sm rounded bg-white mx-3 mt-5">
             <div className="accordion" id="accordionWeeklySchedule">
                 {
@@ -25,7 +27,8 @@ const Schedule = () => {
                                         {`Week ${i + 1}`}
                                     </button>
                                 </h2>
-                                <div id={`collapse${i}`} className={`accordion-collapse collapse ${i === 0 ? 'show' : ''} `}
+                                <div id={`collapse${i}`}
+                                     className={`accordion-collapse collapse ${i === 0 ? 'show' : ''} `}
                                      aria-labelledby={`heading${i}`} data-bs-parent="#accordionWeeklySchedule">
                                     <div className="accordion-body">
                                         {

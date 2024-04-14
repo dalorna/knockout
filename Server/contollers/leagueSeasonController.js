@@ -1,4 +1,6 @@
 const LeagueSeason = require('../model/LeagueSeason');
+const User = require('../model/User');
+const League = require('../model/League');
 
 const getLeaguesSeason = async (req, res) => {
     if (!req?.params?.id) {
@@ -151,6 +153,43 @@ const getLeaguesByMember = async (req, res) => {
 
 }
 
+const getLeagueMemberUsers = async (req, res) => {
+    if (!req?.params?.seasonId || !req?.params?.leagueId) {
+        res.statusMessage = 'LeagueId and SeasonId are required';
+        return res.sendStatus(400).json({"message": `LeagueId and SeasonId are required`});
+    }
+
+    try {
+        const league = await League.findOne({
+            _id: req.params.leagueId
+        }).exec();
+
+        const leagueSeason = await LeagueSeason.findOne({
+            leagueId: req.params.leagueId,
+            seasonId: req.params.seasonId
+        }).exec();
+
+        if (league?.userId && leagueSeason?.members?.length > 0) {
+            const members = leagueSeason.members.map(m => m.userId);
+            console.log('league.userId', league.userId);
+            members.push(league.userId);
+            const users = await User.find({
+                _id: {$in: members}
+            }).exec();
+
+            res.status(200).json(users);
+        } else {
+            res.statusMessage = "No league or users found";
+            res.status(204).end();
+        }
+
+    } catch (err) {
+        res.statusMessage = "Error Getting users";
+        res.status(500).end();
+    }
+}
+
+
 module.exports = {
     getLeaguesSeason,
     createLeagueSeason,
@@ -158,5 +197,6 @@ module.exports = {
     deleteLeagueSeasonById,
     getLeaguesSeasonByLeagueIdSeasonId,
     joinLeague,
-    getLeaguesByMember
+    getLeaguesByMember,
+    getLeagueMemberUsers
 }

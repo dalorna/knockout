@@ -6,7 +6,13 @@ import {
     useRecoilState,
     useRecoilValue
 } from 'recoil';
-import {getLeagues, getLeaguesByLeagueId, getLeaguesByMember, getLeagueSeasonByLeagueIdSeasonId} from '../api/league';
+import {
+    getLeagueMemberUsers,
+    getLeagues,
+    getLeaguesByLeagueId,
+    getLeaguesByMember,
+    getLeagueSeasonByLeagueIdSeasonId
+} from '../api/league';
 import {currentUserAtom} from './user';
 import { getNFLTeams } from '../api/nfl';
 
@@ -63,11 +69,6 @@ const leagueMemberFamily = atomFamily({
     })
 })
 
-export const useCurrentLeaguesRefresher = () => {
-    const [currentUser,] = useRecoilState(currentUserAtom);
-    return useRecoilRefresher_UNSTABLE(leagueMemberFamily({member: {userId: currentUser.id}}));
-}
-
 export const useRefreshLeague = () =>
     useRecoilCallback(
         ({ refresh, reset }) =>
@@ -90,6 +91,13 @@ export const useCurrentLeagues = () => {
     leaguesToSelectFrom.push(...(joinedLeagues?.data ?? []));
     return leaguesToSelectFrom;
 }
+
+export const useCurrentLeagueMembersUsers = (leagueId) => {
+    const season = useCurrentSeason();
+    return useRecoilValue(leaguesMemberUsersFamily({seasonId: season.data[0].id, leagueId}))
+}
+
+
 /*const seasonFamily = atomFamily({
     key: 'leagueSeason',
     default: async (year) => {
@@ -121,3 +129,14 @@ const teamsFamily = atomFamily({
 export const useTeams = () => {
     return useRecoilValue(teamsFamily());
 }
+
+const leaguesMemberUsersFamily = atomFamily({
+    key: 'league/members/users',
+    default: async ({seasonId, leagueId}) => {
+        try {
+            return seasonId && leagueId && await getLeagueMemberUsers(seasonId, leagueId);
+        } catch {
+            return [];
+        }
+    }
+})
