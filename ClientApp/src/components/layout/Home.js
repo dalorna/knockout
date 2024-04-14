@@ -13,8 +13,6 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
     const createModalRef = useRef();
     const joinModalRef = useRef();
     const handleRefresh = useRefreshLeague();
-    const yellow = '#f7f786';
-    const red = '#ff0000';
     
     const create = () => {
         createModalRef.current.show(

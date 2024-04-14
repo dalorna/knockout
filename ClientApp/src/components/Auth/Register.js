@@ -287,11 +287,9 @@ const Register = () => {
                             <p>
                                 Already registered?<br/>
                                 <span className="line">
-                        <a href="Login">Sign In</a>
+                        <a href="/login">Sign In</a>
                         </span>
                             </p>
-
-
                         </div>
                     </div>
                 </div>
