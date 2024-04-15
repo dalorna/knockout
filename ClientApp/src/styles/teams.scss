@@ -1,0 +1,430 @@
+$base-grey-begin: #dbdae1;
+
+
+$arizona-red: rgb(151,35,63);
+$arizona-black: rgb(0,0,0);
+$arizona-red-gradient: rgba(151,35,63,.5);
+$arizona-black-gradient: rgba(0,0,0,.5);
+
+$atlanta-red: rgb(167,25,48);
+$atlanta-black: rgb(0,0,0);
+$atlanta-red-gradient: rgba(167,25,48,.5);
+$atlanta-black-gradient: rgba(0,0,0,.5);
+
+$baltimore-purple: rgb(26,25,95);
+$baltimore-black: rgb(0,0,0);
+$baltimore-purple-gradient: rgba(26,25,95,.5);
+$baltimore-black-gradient: rgba(0,0,0,.5);
+
+$buffalo-blue: rgb(0,51,141);
+$buffalo-red: rgb(198,12,48);
+$buffalo-blue-gradient: rgba(0,51,141,.5);
+$buffalo-red-gradient: rgba(198,12,48,.5);
+
+$carolina-blue: rgb(0,133,202);
+$carolina-silver: rgb(191,192,191);
+$carolina-blue-gradient: rgba(0,133,202,.5);
+$carolina-silver-gradient: rgba(191,192,191,.5);
+
+$chicago-navy: rgb(11,22,42);
+$chicago-orange: rgb(200,56,3);
+$chicago-navy-gradient: rgba(11,22,42,.5);
+$chicago-orange-gradient: rgba(200,56,3,.5);
+
+$cincinnati-orange: rgb(251,79,20);
+$cincinnati-black: rgb(0,0,0);
+$cincinnati-orange-gradient: rgba(251,79,20,.5);
+$cincinnati-black-gradient: rgba(0,0,0,.5);
+
+$cleveland-orange: rgb(255,60,0);
+$cleveland-brown: rgb(49,29,0);
+$cleveland-orange-gradient: rgba(255,60,0,.5);
+$cleveland-brown-gradient: rgba(49,29,0,.5);
+
+$dallas-blue: rgb(0,53,148);
+$dallas-silver: rgb(134,147,151);
+$dallas-blue-gradient: rgba(0,53,148,.5);
+$dallas-silver-gradient: rgba(134,147,151,.5);
+
+$denver-navy: rgb(0,34,68);
+$denver-orange: rgb(251,79,20);
+$denver-navy-gradient: rgba(0,34,68,.5);
+$denver-orange-gradient: rgba(251,79,20,.5);
+
+$detroit-blue: rgb(0,118,182);
+$detroit-silver: rgb(176,183,188);
+$detroit-blue-gradient: rgba(0,118,182,.5);
+$detroit-silver-gradient: rgba(176,183,188,.5);
+
+$greenBay-green: rgb(24,48,40);
+$greenBay-yellow: rgb(255,184,28);
+$greenBay-green-gradient: rgba(24,48,40,.5);
+$greenBay-yellow-gradient: rgba(255,184,28,.5);
+
+$houston-blue: rgb(3,32,47);
+$houston-red: rgb(167,25,48);
+$houston-blue-gradient: rgba(3,32,47,.5);
+$houston-red-gradient: rgba(167,25,48,.5);
+
+$indianapolis-blue: rgb(0,44,95);
+$indianapolis-gray: rgb(162,170,173);
+$indianapolis-blue-gradient: rgba(0,44,95,.5);
+$indianapolis-gray-gradient: rgba(162,170,173,.5);
+
+$jacksonville-teal: rgb(0,103,120);
+$jacksonville-gold: rgb(159,121,44);
+$jacksonville-teal-gradient: rgba(0,103,120,.5);
+$jacksonville-gold-gradient: rgba(159,121,44,.5);
+
+$kansasCity-red: rgb(227,24,55);
+$kansasCity-gold: rgb(255,184,28);
+$kansasCity-red-gradient: rgba(227,24,55,.5);
+$kansasCity-gold-gradient: rgba(255,184,28,.5);
+
+$lasVegas-silver: rgb(165,172,175);
+$lasVegas-black: rgb(0,0,0);
+$lasVegas-silver-gradient: rgba(165,172,175,.5);
+$lasVegas-black-gradient: rgba(0,0,0,.5);
+
+$losAngelesChargers-blue: rgb(0,128,198);
+$losAngelesChargers-gold: rgb(255,184,28);
+$losAngelesChargers-blue-gradient: rgba(0,128,198,.5);
+$losAngelesChargers-gold-gradient: rgba(255,194,14,.5);
+
+$losAngelesRams-blue: rgb(0,53,148);
+$losAngelesRams-gold: rgb(255,163,0);
+$losAngelesRams-blue-gradient: rgba(0,53,148,.5);
+$losAngelesRams-gold-gradient: rgba(255,163,0,.5);
+
+$miami-blue: rgb(0,142,151);
+$miami-orange: rgb(252,76,2);
+$miami-blue-gradient: rgba(0,142,151,.5);
+$miami-orange-gradient: rgba(252,76,2,.5);
+
+$minnesota-purple: rgb(79,38,131);
+$minnesota-gold: rgb(255,198,47);
+$minnesota-purple-gradient: rgba(79,38,131,.5);
+$minnesota-gold-gradient: rgba(255,198,47,.5);
+
+$newEngland-blue: rgb(0,34,68);
+$newEngland-red: rgb(198,12,48);
+$newEngland-blue-gradient: rgba(0,34,68,.5);
+$newEngland-red-gradient: rgba(198,12,48,.5);
+
+$newOrleans-gold: rgb(211,188,141);
+$newOrleans-black: rgb(16, 24, 31);
+$newOrleans-gold-gradient: rgba(211,188,141,.5);
+$newOrleans-black-gradient: rgba(16, 24, 31,.5);
+
+$newYorkGiants-blue: rgb(1,35,82);
+$newYorkGiants-red: rgb(163,13,45);
+$newYorkGiants-blue-gradient: rgba(1,35,82,.5);
+$newYorkGiants-red-gradient: rgba(163,13,45,.5);
+
+$newYorkJets-green: rgb(0,63,45);
+$newYorkJets-black: rgb(0,0,0);
+$newYorkJets-green-gradient: rgba(0,63,45,.5);
+$newYorkJets-black-gradient: rgba(0,0,0,.5);
+
+$philadelphia-green: rgb(0,76,84);
+$philadelphia-silver: rgb(165,172,175);
+$philadelphia-green-gradient: rgba(0,76,84,.5);
+$philadelphia-silver-gradient: rgba(165,172,175,.5);
+
+$pittsburgh-gold: rgb(255,182,18);
+$pittsburgh-black: rgb(16,24,32);
+$pittsburgh-gold-gradient: rgba(255,182,18,.5);
+$pittsburgh-black-gradient: rgba(16,24,32,.5);
+
+$sanFrancisco-red: rgb(170,0,0);
+$sanFrancisco-gold: rgb(173,153,93);
+$sanFrancisco-red-gradient: rgba(170,0,0,.5);
+$sanFrancisco-gold-gradient: rgba(173,153,93,.5);
+
+$seattle-navy: rgb(0,34,68);
+$seattle-green: rgb(105,190,40);
+$seattle-navy-gradient: rgba(0,34,68,.5);
+$seattle-green-gradient: rgba(105,190,40,.5);
+
+$tampaBay-red: rgb(213,10,10);
+$tampaBay-orange: rgb(255,121,0);
+$tampaBay-red-gradient: rgba(213,10,10,.5);
+$tampaBay-orange-gradient: rgba(255,121,0,.5);
+
+$tennessee-navy: rgb(12,35,64);
+$tennessee-blue: rgb(75,146,219);
+$tennessee-navy-gradient: rgba(12,35,64,.5);
+$tennessee-blue-gradient: rgba(75,146,219,.5);
+
+$washington-red: rgb(90,20,20);
+$washington-gold: rgb(255,182,18);
+$washington-red-gradient: rgba(90,20,20,.5);
+$washington-gold-gradient: rgba(255,182,18,.5);
+
+
+.arizona-color {
+  background: -webkit-linear-gradient($arizona-red, $arizona-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.atlanta-color  {
+  background: -webkit-linear-gradient($atlanta-red, $atlanta-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.baltimore-color  {
+  background: -webkit-linear-gradient($baltimore-purple, $baltimore-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.buffalo-color  {
+  background: -webkit-linear-gradient($buffalo-blue, $buffalo-red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.carolina-color  {
+  background: -webkit-linear-gradient($carolina-blue,  $carolina-silver);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.chicago-color  {
+  background: -webkit-linear-gradient($chicago-navy,  $chicago-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cincinnati-color  {
+  background: -webkit-linear-gradient($cincinnati-orange, $cincinnati-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cleveland-color  {
+  background: -webkit-linear-gradient($cleveland-orange, $cleveland-brown);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dallas-color  {
+  background: -webkit-linear-gradient($dallas-blue,  $dallas-silver);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.denver-color  {
+  background: -webkit-linear-gradient($denver-navy, $denver-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.detroit-color  {
+  background: -webkit-linear-gradient($detroit-blue,  $detroit-silver);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.greenBay-color  {
+  background: -webkit-linear-gradient($greenBay-green, $greenBay-yellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.houston-color  {
+  background: -webkit-linear-gradient($houston-blue, $houston-red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.indianapolis-color  {
+  background: -webkit-linear-gradient($indianapolis-blue, $indianapolis-gray);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.jacksonville-color  {
+  background: -webkit-linear-gradient($jacksonville-teal, $jacksonville-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.kansasCity-color  {
+  background: -webkit-linear-gradient($kansasCity-red, $kansasCity-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lasVegas-color {
+  background: -webkit-linear-gradient($lasVegas-silver, $lasVegas-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.losAngelesChargers-color {
+  background: -webkit-linear-gradient($losAngelesChargers-blue, $losAngelesChargers-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.losAngelesRams-color {
+  background: -webkit-linear-gradient($losAngelesRams-blue, $losAngelesRams-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.miami-color {
+  background: -webkit-linear-gradient($miami-blue, $miami-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.minnesota-color {
+  background: -webkit-linear-gradient($minnesota-purple, $minnesota-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.newEngland-color {
+  background: -webkit-linear-gradient($newEngland-blue, $newEngland-red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.newOrleans-color {
+  background: -webkit-linear-gradient($newOrleans-gold, $newOrleans-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.newYorkGiants-color {
+  background: -webkit-linear-gradient($newYorkGiants-blue, $newYorkGiants-red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.newYorkJets-color {
+  background: -webkit-linear-gradient($newYorkJets-green, $newYorkJets-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.philadelphia-color {
+  background: -webkit-linear-gradient($philadelphia-green, $philadelphia-silver);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.pittsburgh-color {
+  background: -webkit-linear-gradient($pittsburgh-gold, $pittsburgh-black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sanFrancisco-color {
+  background: -webkit-linear-gradient($sanFrancisco-red, $sanFrancisco-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.seattle-color {
+  background: -webkit-linear-gradient($seattle-navy, $seattle-green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tampaBay-color {
+  background: -webkit-linear-gradient($tampaBay-red, $tampaBay-orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tennessee-color {
+  background: -webkit-linear-gradient($tennessee-navy, $tennessee-blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.washington-color {
+  background: -webkit-linear-gradient($washington-red, $washington-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.arizona {
+  background: linear-gradient($arizona-red, #fff, $arizona-black);
+}
+.atlanta {
+  background: linear-gradient($atlanta-red, #fff, $atlanta-black);
+}
+.baltimore {
+  background: linear-gradient($baltimore-purple, #fff, $baltimore-black);
+}
+.buffalo {
+  background: linear-gradient($buffalo-blue, #fff, $buffalo-red);
+}
+.carolina {
+  background: linear-gradient($carolina-blue, #fff, $carolina-silver);
+}
+.chicago {
+  background: linear-gradient($chicago-navy, #fff, $chicago-orange);
+}
+.cincinnati {
+  background: linear-gradient($cincinnati-orange, #fff, $cincinnati-black);
+}
+.cleveland {
+  background: linear-gradient($cleveland-orange, #fff, $cleveland-brown);
+}
+.dallas {
+  background: linear-gradient($dallas-blue, #fff, $dallas-silver);
+}
+.denver {
+  background: linear-gradient($denver-navy, #fff, $denver-orange);
+}
+.detroit {
+  background: linear-gradient($detroit-blue, #fff, $detroit-silver);
+}
+.greenBay {
+  background: linear-gradient($greenBay-green, #fff, $greenBay-yellow);
+}
+.houston {
+  background: linear-gradient($houston-blue, #fff, $houston-red);
+}
+.indianapolis {
+  background: linear-gradient($indianapolis-blue, #fff, $indianapolis-gray);
+}
+.jacksonville {
+  background: linear-gradient($jacksonville-teal, #fff, $jacksonville-gold);
+}
+.kansasCity {
+  background: linear-gradient($kansasCity-red, #fff, $kansasCity-gold);
+}
+.lasVegas {
+  background: linear-gradient($lasVegas-silver, #fff, $lasVegas-black);
+}
+.losAngelesChargers {
+  background: linear-gradient($losAngelesChargers-blue, #fff, $losAngelesChargers-gold);
+}
+.losAngelesRams {
+  background: linear-gradient($losAngelesRams-blue, #fff, $losAngelesRams-gold);
+}
+.miami {
+  background: linear-gradient($miami-blue, #fff, $miami-orange);
+}
+.minnesota {
+  background: linear-gradient($minnesota-purple, #fff, $minnesota-gold);
+}
+.newEngland {
+  background: linear-gradient($newEngland-blue, #fff, $newEngland-red);
+}
+.newOrleans {
+  background: linear-gradient($newOrleans-gold, #fff, $newOrleans-black);
+}
+.newYorkGiants {
+  background: linear-gradient($newYorkGiants-blue, #fff, $newYorkGiants-red);
+}
+.newYorkJets {
+  background: linear-gradient($newYorkJets-green, #fff, $newYorkJets-black);
+}
+.philadelphia {
+  background: linear-gradient($philadelphia-green, #fff, $philadelphia-silver);
+}
+.pittsburgh {
+  background: linear-gradient($pittsburgh-gold, #fff, $pittsburgh-black);
+}
+.sanFrancisco {
+  background: linear-gradient($sanFrancisco-red, #fff, $sanFrancisco-gold);
+}
+.seattle {
+  background: linear-gradient($seattle-navy, #fff, $seattle-green);
+}
+.tampaBay {
+  background: linear-gradient($tampaBay-red, #fff, $tampaBay-orange);
+}
+.tennessee {
+  background: linear-gradient($tennessee-navy, #fff, $tennessee-blue);
+}
+.washington {
+  background: linear-gradient($washington-red, #fff, $washington-gold);
+}
+
+
+.team-grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  overflow: hidden;
+  width: 77vw;
+  height: 32vh;
+  padding: 10px;
+}

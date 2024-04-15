@@ -1,0 +1,142 @@
+$accent: white;
+$primary: white;
+
+%glyphcon {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+}
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #FFD360;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+//RADIO BUTTON BEGINS
+
+//-----------------------------------------
+
+//Hides default radio.
+input[type="radio"].football {
+  display: block;
+  @extend %glyphcon;
+}
+
+//Hover effect for Checkmark.
+input[type="radio"].football:hover + label .outer .inner:before {
+  opacity: .2;
+  display: inline-block;
+  position: absolute;
+  transform: scale(1);
+  transition: all .3s ease;
+}
+//Effect when box is checked.
+input[type="radio"].football:checked label .inner:before {
+  opacity: 1;
+  transform: scale(1.5);
+  transition: all .2s ease;
+}
+//Effect when box is checked.
+input[type="radio"].football:checked + label .outer .inner:before {
+  opacity: 1;
+  transform: scale(1.5);
+  transition: all .3s ease;
+  -webkit-transition-delay: .75s;
+}
+//Color change and ripple animation around checkbox.
+input[type="radio"].football:focus + label .outer {
+  transform: translate(0.09em, 0.09em);
+  box-shadow: 0 0 0 0 rgba(200, 200, 200, 0.1);
+  border: 2px solid $accent;
+  -webkit-transition-delay: .75s;
+  -webkit-animation: boom 1s ease-out;
+  -webkit-animation-delay: .75s;
+}
+//Text color change and underline when clicked.
+input[type="radio"].football:focus + label .inlet .text__effect {
+  transition: all .2s ease-out;
+  -webkit-transition-delay: .75s;
+  color:$accent;
+  // border-bottom:1px solid $accent;
+  // border-bottom-height: 20px;
+}
+//Adds pointer cursor to text when hovered.
+input[type="radio"].football + label .inlet .text__effect {
+  cursor: pointer;
+  left: -53px;
+  position: absolute;
+  width: 190px;
+  top: 1px;
+}
+//Sends paperplane into button.
+input[type="radio"].football:focus + label .outer .inner:after {
+  opacity: 1;
+  -webkit-transform: translate(140px, -150px) scale(.01);
+  transition: all 1s ease;
+}
+//Checkbox circle.
+.outer {
+  width: 15px;
+  height: 15px;
+  border: 2px solid $primary;
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  margin: 5px 5px 0 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  top: 0;
+  & .inner:before:hover {
+    opacity: 1;
+  }
+}
+//Checkmark & paperplane.
+.inner {
+  position: relative;
+  font-family: FontAwesome;
+  //Checkmark.
+  &:before {
+    content: "\f00c";
+    @extend %glyphcon;
+    top: 50%;
+    left: 7px;
+    color: $accent;
+    transform: scale(0) translateY(-50%);
+    zoom: 50%;
+  }
+  //Paperplane.
+  &:after {
+    content: '\f44e';
+    // font: var(--fa-football);
+    @extend %glyphcon;
+    left: -140px;
+    bottom: -180px;
+    font-size: 2em;
+    transform: scale(3);
+    color: $accent;
+  }
+}
+//Label text. Wrapped in span to control border-bottom.
+.inlet {
+  position: relative;
+  top: -27px;
+  left: 80px;
+  color: $primary;
+}
+
+//Animation.
+@keyframes boom {
+  0% {
+    box-shadow: 0 0 0 15px rgba(100, 100, 100, 0.25);
+    100% {
+      box-shadow: 0 0 0 15px rgba(100, 100, 100, 0.0);
+    }
+  }
+}

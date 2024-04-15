@@ -79,18 +79,18 @@ const Picks = () => {
     }
     
     return <>
-        <div className="page-container py-1">
+        <div className="container py-1">
             <div className="text-center">
                 <div style={{fontSize: '2em'}} className="grey-begin text-shadow-black">Picks - {selectedLeagueValue.name}</div>
             </div>
             <div
-                className={`mb-1 p-3 bg-success shadow-sm rounded bg-white mx-3  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger'}`}>
+                className={`mb-1 p-3 mx-3  standard-background  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger'}`}>
                 {
                     `Current Pick for the week ${week} is ${getSelectedTeamName()} ${currentWeeklyPick.data[0]?.locked ? 'Locked' : 'Not Locked'}`
                 }
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
-                <div className="row p-2 shadow-sm rounded bg-white mx-3" style={{maxHeight: '75vh', overflow: 'auto'}}>
+                <div className="row p-2 mx-3  standard-background" style={{maxHeight: '75vh', overflow: 'auto'}}>
                     <div className="glass-container">
                         {
                             currentWeeklySchedule.map((game, i) => {
@@ -102,7 +102,7 @@ const Picks = () => {
                         }
                     </div>
                 </div>
-                <div className="p-1 shadow-sm rounded bg-white mx-3 mt-1 text-center flex-container">
+                <div className="p-2 mx-3 mt-1 text-center flex-container  standard-background">
                     <div className="button-3D">
                         <button type="submit" aria-label="Save Pick"
                                 disabled={!isValid || currentWeeklyPick.data[0]?.locked}>

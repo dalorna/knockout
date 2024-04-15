@@ -171,7 +171,6 @@ const getLeagueMemberUsers = async (req, res) => {
 
         if (league?.userId && leagueSeason?.members?.length > 0) {
             const members = leagueSeason.members.map(m => m.userId);
-            console.log('league.userId', league.userId);
             members.push(league.userId);
             const users = await User.find({
                 _id: {$in: members}

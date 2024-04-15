@@ -1,19 +1,19 @@
-import {useCurrentLeagueMembersUsers, useSeasonLeague} from '../../state/season';
+import {useSeasonLeague} from '../../state/season';
 
 const Rules = () => {
     const selectedLeague = JSON.parse(localStorage.getItem('selectedLeague'));
     const leagueSeason = useSeasonLeague(selectedLeague._id);
+    const favorite = JSON.parse(localStorage.getItem('favoriteTeam'));
 
-    console.log('rules: ', leagueSeason[0].data.rules);
-    return <div className="page container py-1 text-shadow-black text-white">
-        <div className="text-center">
+    return <div className="page container py-1 text-white">
+        <div className="text-center text-shadow-black">
             <div style={{fontSize: '3em'}}
                  className="grey-begin text-shadow-black">Rules
             </div>
         </div>
         <div className="p-1 mx-3 mt-1 standard-background">
             <div className="text-center">
-                <h4 className="grey-begin text-shadow-black">Game Type</h4>
+                <h4 className={`${favorite?.favoriteTeam}-color`}>Game Type</h4>
             </div>
             <ol>
                 <li>Knockout Survivor - You must pick a winner each week</li>
@@ -32,7 +32,7 @@ const Rules = () => {
         </div>
         <div className="p-1 mx-3 mt-1 standard-background">
             <div className="text-center">
-                <h4 className="grey-begin text-shadow-black">Elimination Style</h4>
+                <h4 className={`${favorite?.favoriteTeam}-color`}>Elimination Style</h4>
             </div>
             <ol>
                 <li>HardCore - You are eliminated after your first lose</li>
@@ -63,7 +63,7 @@ const Rules = () => {
             leagueSeason[0].data.rules.elimination !== 'hardCore' &&
             <div className="p-1 mx-3 mt-1 standard-background">
                 <div className="text-center">
-                    <h4 className="grey-begin text-shadow-black">Early Point</h4>
+                    <h4 className={`${favorite?.favoriteTeam}-color`}>Early Point</h4>
                 </div>
                 <div>
                     <p>You commissioner has chosen:&nbsp;&nbsp;
@@ -80,7 +80,7 @@ const Rules = () => {
         leagueSeason[0].data.rules.gameType === 'loser' && <>
                 <div className="p-1 mx-3 mt-1 standard-background">
                     <div className="text-center">
-                        <h4 className="grey-begin text-shadow-black">Pick the same team</h4>
+                        <h4 className={`${favorite?.favoriteTeam}-color`}>Pick the same team</h4>
                     </div>
                     <div>
                         <p>You commissioner has chosen:&nbsp;&nbsp;
@@ -94,7 +94,7 @@ const Rules = () => {
                 </div>
                 <div className="p-1 mx-3 mt-1 standard-background">
                     <div className="text-center">
-                        <h4 className="grey-begin text-shadow-black">See other's picks</h4>
+                        <h4 className={`${favorite?.favoriteTeam}-color`}>See other's picks</h4>
                     </div>
                     <div>
                         <p>You commissioner has chosen:&nbsp;&nbsp;
@@ -110,7 +110,7 @@ const Rules = () => {
         }
         <div className="p-1 mx-3 mt-1 standard-background">
             <div className="text-center">
-                <h4 className="grey-begin text-shadow-black">Ties count as Loses</h4>
+                <h4 className={`${favorite?.favoriteTeam}-color`}>Ties count as Loses</h4>
             </div>
             <div>
                 <p>You commissioner has chosen:&nbsp;&nbsp;

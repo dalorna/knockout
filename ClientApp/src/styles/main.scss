@@ -6,6 +6,10 @@ $chiefs-gold: #FFB81C;
 $base-grey-begin: #dbdae1;
 $base-grey-end: #aeaaba;
 
+$kansasCity-red: rgb(227,24,55);
+$kansasCity-gold: rgb(255,184,28);
+$kansasCity-red-gradient: rgba(227,24,55,.5);
+$kansasCity-gold-gradient: rgba(255,184,28,.5);
 
 body {
   margin: 0;
@@ -16,11 +20,6 @@ body {
   min-height: 100vh;
   background-color: $base-grey-end;
   overflow: hidden;
-}
-
-div nav.sidenav---sidenav---_2tBP {
-  top: 70px;
-  background-color: var(--bs-primary);
 }
 
 .form-background-color {
@@ -144,7 +143,7 @@ a, a:visited {
 
 .glass-container .glass {
   position: relative;
-  width: 220px;
+  width: 190px;
   height: 180px;
   background: linear-gradient(#fff, transparent);
   border-left: 1px solid rgba(255,255,255,0.1);
@@ -187,9 +186,16 @@ a, a:visited {
   transform: rotate(0deg);
 }
 
-.standard-background {
+/*.standard-background {
   box-shadow: 5px 5px 5px rgba(0,0,0,.1), 15px 15px 15px rgba(0,0,0,0.1);
   background: linear-gradient($base-grey-begin, $base-grey-end);
+}*/
+
+.standard-background  {
+  box-shadow: 5px 5px 5px black;
+  border: solid 2px gray;
+  background: $base-grey-begin;
+  overflow: hidden;
 }
 
 .chiefs-red {
@@ -258,11 +264,15 @@ a, a:visited {
   box-shadow: 15px 15px 15px black;
   padding: 10px;
   border: solid 2px gray;
-  background: linear-gradient(rgba(227, 24, 55, .1), #ffffff, rgba(255, 184, 28, .5));
+  background: $base-grey-begin;
 }
 
 .text-shadow-black {
   text-shadow: 2px 2px 2px black;
+}
+
+.text-shadow-white {
+  text-shadow: 2px 2px 2px white;
 }
 
 i.member {
@@ -288,3 +298,4 @@ i.member {
   font-size: 1.25em;
   color: $chiefs-gold;
 }
+

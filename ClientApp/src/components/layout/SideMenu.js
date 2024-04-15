@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import {useNavigate, useLocation} from 'react-router-dom';
-// import { Tooltip } from 'react-tooltip';
+import '../../styles/teams.scss';
 import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {Suspense, useEffect, useState} from 'react';
@@ -20,6 +20,7 @@ import Standings from '../Standings/Standings';
 import Picks from '../Picks/Picks';
 import Rules from '../Rules/Rules';
 import Join from '../Join/Join';
+import Profile from '../Profile/Profile';
 import useAuth from '../../state/useAuth';
 import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
@@ -38,6 +39,7 @@ const SideMenu = () => {
   const [show, setShow] = useState(false);
   const [refreshLeagues, setRefreshLeagues] = useState('')
   const [modalProps , setModalProps]= useState({ modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)});
+  // const favorite = JSON.parse(localStorage.getItem('favoriteTeam'));
   
   useEffect(() => {
     setAllLeagues(leagues);
@@ -56,12 +58,18 @@ const SideMenu = () => {
     }
   }, [refreshLeagues])
 
+  useEffect(() => {
+    const favorite = localStorage.getItem('favoriteTeam');
+    if (favorite) {
+      document.body.classList.add(JSON.parse(favorite).favoriteTeam);
+    }
+  }, [])
+
   const setSelectedLeague = (league) => {
     currentSelectedLeague.value = league;
     localStorage.setItem('selectedLeague', JSON.stringify(league));
     setCurrentLeague(league);
   }
-
   const showNoLeagueModal = () => {
     showNoLeague();
   }
@@ -83,7 +91,7 @@ const SideMenu = () => {
     setRefreshLeagues(generateUUID());
   }
   const getClassName = (path, canDisable) => {
-    let style = 'side-nav-3D '
+    let style = `side-nav-3D`
     if (canDisable) {
       style += (!currentSelectedLeague.value?._id ? ' disabled ' : '');
     }
@@ -121,38 +129,46 @@ const SideMenu = () => {
           <Link className="find-me" to="home">Home</Link>
         </div>
         {
-            canManage() && <div id="manage" className={getClassName('manage')}> <Link to="manage">Manage</Link></div>
+            canManage() && <div id="manage" className={getClassName('manage')}><Link to="manage">Manage</Link></div>
         }
-        <div id="picks"  className={getClassName('picks', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Picks" path="picks" />
+        <div id="picks" className={getClassName('picks', true)}>
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Picks"
+                    path="picks"/>
         </div>
         <div id="members" className={getClassName('members', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Members" path="members" />
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Members"
+                    path="members"/>
         </div>
         <div className={getClassName('schedule')}>
           <Link to="schedule">Schedule</Link>
         </div>
         <div className={getClassName('standings', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Standings" path="standings" />
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Standings"
+                    path="standings"/>
         </div>
         <div className={getClassName('rules', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Rules" path="rules" />
+          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Rules"
+                    path="rules"/>
         </div>
         <div className={getClassName('join')}>
           <Link to="join">Join</Link>
         </div>
+        <div className={getClassName('profile')}>
+          <Link to="profile">Profile</Link>
+        </div>
       </div>
     </div>
     <div>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading/>}>
         <Routes>
           <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} refreshSideMenu={refreshHandler} />} />
           <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
-          <Route path="members" element={<Members currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="members" element={<Members />} />
           <Route path="schedule" element={<Schedule />} />
           <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
-          <Route path="picks" element={<Picks currentSelectedLeague={currentSelectedLeague} />} />
-          <Route path="rules" element={<Rules currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="picks" element={<Picks />} />
+          <Route path="rules" element={<Rules  />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="join" element={<Join refreshSideMenu={refreshHandler} />} />
         </Routes>
       </Suspense>

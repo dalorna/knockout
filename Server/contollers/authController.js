@@ -57,7 +57,6 @@ const handleLogin = async (req, res) => {
 
 const handleGetUser = async (req, res) => {
     const userId = req.query.id;
-    console.log('userId (handleGetUser): ', userId);
     if (!userId) {
         return res.status(400).json({'message' : `User Id is required`});
     }
