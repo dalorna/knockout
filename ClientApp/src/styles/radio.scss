@@ -100,7 +100,7 @@ input[type="radio"].football:focus + label .outer .inner:after {
 //Checkmark & football.
 .inner {
   position: relative;
-  font-family: FontAwesome;
+  font-family: FontAwesome, serif;
   //Checkmark.
   &:before {
     content: "\f00c";
