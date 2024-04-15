@@ -7,7 +7,6 @@ import '../../styles/teams.scss';
 import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {Suspense, useEffect, useState} from 'react';
-import SimpleModal from '../../utils/simpleModal';
 import {useCurrentLeagues} from '../../state/season';
 import {Route, Routes} from 'react-router';
 import { Link } from 'react-router-dom';
@@ -15,16 +14,17 @@ import Home from './Home';
 import {Loading} from '../../utils/loading';
 import Manage from '../Manage/Manage';
 import Members from '../Members/Members';
-import Schedule from '../Schedule/Schedule';
 import Standings from '../Standings/Standings';
 import Picks from '../Picks/Picks';
 import Rules from '../Rules/Rules';
 import Join from '../Join/Join';
 import Profile from '../Profile/Profile';
+import Unauthorized from '../Auth/Unauthorized';
 import useAuth from '../../state/useAuth';
 import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
 import {generateUUID} from '../../utils/helpers';
+import SimpleModal from '../../utils/simpleModal';
 
 const currentSelectedLeague = signal(null);
 
@@ -139,9 +139,6 @@ const SideMenu = () => {
           <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Members"
                     path="members"/>
         </div>
-        <div className={getClassName('schedule')}>
-          <Link to="schedule">Schedule</Link>
-        </div>
         <div className={getClassName('standings', true)}>
           <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Standings"
                     path="standings"/>
@@ -164,12 +161,12 @@ const SideMenu = () => {
           <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} refreshSideMenu={refreshHandler} />} />
           <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
           <Route path="members" element={<Members />} />
-          <Route path="schedule" element={<Schedule />} />
           <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
           <Route path="picks" element={<Picks />} />
           <Route path="rules" element={<Rules  />} />
           <Route path="profile" element={<Profile />} />
           <Route path="join" element={<Join refreshSideMenu={refreshHandler} />} />
+          <Route path="*" element={<Unauthorized />} />
         </Routes>
       </Suspense>
     </div>
