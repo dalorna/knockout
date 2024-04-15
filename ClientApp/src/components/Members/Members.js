@@ -7,7 +7,7 @@ const Members = () => {
 
     return <div className="page container py-1">
         <div className="text-center">
-            <div style={{fontSize: '3em'}} className="grey-begin text-shadow-black">Members</div>
+            <div className="header-fontSize grey-begin text-shadow-black">Members</div>
         </div>
         <div>
             <div className="member-display commissioner" style={{marginLeft: 'auto', marginRight: 'auto', top: '-10px'}}>

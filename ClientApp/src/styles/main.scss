@@ -197,6 +197,13 @@ a, a:visited {
   background: $base-grey-begin;
   overflow: hidden;
 }
+.standard-background .manage-card {
+  width: 295px;
+}
+.standard-background.manage-card {
+  height: 105px;
+  padding: 10px;
+}
 
 .chiefs-red {
   color: $chiefs-red;
@@ -299,3 +306,6 @@ i.member {
   color: $chiefs-gold;
 }
 
+.header-fontSize {
+  font-size: 3em;
+}

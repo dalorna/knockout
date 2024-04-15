@@ -10,7 +10,7 @@ const Schedule = () => {
 
     return <div className="page container py-1">
         <div className="text-center">
-            <div style={{fontSize: '3em'}} className="grey-begin text-shadow-black">{`Schedule - ${season.data[0].year}`}</div>
+            <div className="header-fontSize grey-begin text-shadow-black">{`Schedule - ${season.data[0].year}`}</div>
         </div>
         <div className="p-3 shadow-sm rounded bg-white mx-3 mt-5">
             <div className="accordion" id="accordionWeeklySchedule">

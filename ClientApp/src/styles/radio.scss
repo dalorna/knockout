@@ -75,12 +75,101 @@ input[type="radio"].football + label .inlet .text__effect {
   width: 190px;
   top: 1px;
 }
+
+input[type="radio"].football.manage-card + label .inlet .text__effect {
+  width: 230px !important;
+}
+
 //Sends football into button.
 input[type="radio"].football:focus + label .outer .inner:after {
   opacity: 1;
   -webkit-transform: translate(140px, -150px) scale(.01);
   transition: all 1s ease;
 }
+
+
+
+
+
+input[type="checkbox"].football {
+  display: block;
+  @extend %glyphcon;
+}
+
+//Hover effect for Checkmark.
+input[type="checkbox"].football:hover + label .outer-checkbox .inner:before {
+  opacity: .2;
+  display: inline-block;
+  position: absolute;
+  transform: scale(1);
+  transition: all .3s ease;
+}
+//Effect when box is checked.
+input[type="checkbox"].football:checked label .inner:before {
+  opacity: 1;
+  transform: scale(1.5);
+  transition: all .2s ease;
+}
+//Effect when box is checked.
+input[type="checkbox"].football:checked + label .outer-checkbox .inner:before {
+  opacity: 1;
+  transform: scale(1.5);
+  transition: all .3s ease;
+  -webkit-transition-delay: .75s;
+}
+//Color change and ripple animation around checkbox.
+input[type="checkbox"].football:focus + label .outer-checkbox {
+  transform: translate(0.09em, 0.09em);
+  box-shadow: 0 0 0 0 rgba(200, 200, 200, 0.1);
+  border: 2px solid $accent;
+  -webkit-transition-delay: .75s;
+  -webkit-animation: boom 1s ease-out;
+  -webkit-animation-delay: .75s;
+}
+//Text color change and underline when clicked.
+input[type="checkbox"].football:focus + label .inlet .text__effect {
+  transition: all .2s ease-out;
+  -webkit-transition-delay: .75s;
+  color:$accent;
+  // border-bottom:1px solid $accent;
+  // border-bottom-height: 20px;
+}
+//Adds pointer cursor to text when hovered.
+input[type="checkbox"].football + label .inlet .text__effect {
+  cursor: pointer;
+  left: -53px;
+  position: absolute;
+  width: 190px;
+  top: 1px;
+}
+
+//Sends football into button.
+input[type="checkbox"].football:focus + label .outer-checkbox .inner:after {
+  opacity: 1;
+  -webkit-transform: translate(140px, -150px) scale(.01);
+  transition: all 1s ease;
+}
+//Checkbox circle.
+.outer-checkbox {
+  width: 15px;
+  height: 15px;
+  border: 2px solid $primary;
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  margin: 5px 5px 0 5px;
+  cursor: pointer;
+  top: 0;
+  & .inner:before:hover {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+
 //Checkbox circle.
 .outer {
   width: 15px;

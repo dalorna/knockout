@@ -66,13 +66,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     protect the routes
                 </li>
                 <li className="chiefs-red">
-                    Login branding (name of site)
-                </li>
-                <li className="chiefs-red">
                     3 fonts for the 3 sections (menu, header, content)
-                </li>
-                <li className="chiefs-red">
-                    background selectable to team colors
                 </li>
                 <li className="chiefs-red">
                     register instructions bigger, background of sign-up hover effects (background)
@@ -84,7 +78,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     Manage reformat
                 </li>
                 <li className="chiefs-red">
-                    Members, rules, standing, join pages need created
+                    standing, join pages need created
                 </li>
                 <li className="chiefs-red">
                     cap league with number of players if no private code 100 Max

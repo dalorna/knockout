@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import useAuth from '../../state/useAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
@@ -6,10 +6,12 @@ const LOGIN_URL = '/auth';
 import {currentUserAtom} from '../../state/user';
 import {useRecoilState} from 'recoil';
 import '../../styles/login.scss';
+import '../../styles/teams.scss';
 
 const Login = () => {
     const { setAuth } = useAuth();
     const [, setCurrentUser ] = useRecoilState(currentUserAtom);
+    const favorite = JSON.parse(localStorage.getItem('favoriteTeam'));
 
     const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ const Login = () => {
 
     useEffect(() => {
         userRef.current.focus();
+        document.body.classList.remove(...document.body.classList);
     }, [])
 
     useEffect(() => {
@@ -64,6 +67,9 @@ const Login = () => {
 
     return (
         <main className="App">
+            <div className="text-center title-branding">
+                <div className={`text-shadow-title ${favorite?.favoriteTeam}-color`}>Welcome to Survivor Knockout</div>
+            </div>
             <div className="container-login">
                 <div className="box-login">
                     <div className="cover-login"></div>
@@ -71,7 +77,7 @@ const Login = () => {
                     <div className="content-login">
                         <div className="form-login">
                             <h3 className="logo-login">
-                                <i className="fa fa-key" />
+                                <i className="fa fa-key"/>
                             </h3>
                             <h2>Sign In</h2>
                             <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"}
@@ -87,7 +93,7 @@ const Login = () => {
                                         value={user}
                                         required
                                     />
-                                    <i className="fa fa-user" />
+                                    <i className="fa fa-user"/>
                                     <span>Username</span>
                                 </div>
                                 <div className="inputBox-login">
@@ -98,11 +104,11 @@ const Login = () => {
                                         value={pwd}
                                         required
                                     />
-                                    <i className="fa fa-lock" />
+                                    <i className="fa fa-lock"/>
                                     <span>Password</span>
                                 </div>
                                 <div className="links-login">
-                                    <a href="/register"> <i className="fa fa-user-plus" /> Sign Up</a>
+                                    <a href="/register"> <i className="fa fa-user-plus"/> Sign Up</a>
                                 </div>
                                 <div className="inputBox-login">
                                     <button style={{width: '100%'}}>Sign In</button>

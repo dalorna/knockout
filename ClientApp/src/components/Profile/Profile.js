@@ -24,7 +24,7 @@ const Profile = () => {
     return (
         <div className="container py-1 text-white">
             <div className="text-center text-shadow-black">
-                <div style={{fontSize: '3em'}} className="grey-begin">Profile
+                <div className="header-fontSize grey-begin">Profile
                 </div>
             </div>
             <div className="standard-background">

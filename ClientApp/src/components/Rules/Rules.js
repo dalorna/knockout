@@ -7,8 +7,7 @@ const Rules = () => {
 
     return <div className="page container py-1 text-white">
         <div className="text-center text-shadow-black">
-            <div style={{fontSize: '3em'}}
-                 className="grey-begin text-shadow-black">Rules
+            <div className="header-fontSize grey-begin text-shadow-black">Rules
             </div>
         </div>
         <div className="p-1 mx-3 mt-1 standard-background">
