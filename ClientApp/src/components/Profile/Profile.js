@@ -1,6 +1,6 @@
 import {useTeams} from '../../state/season';
 import '../../styles/radio.scss';
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 
 const Profile = () => {
     const teams = useTeams();
@@ -33,7 +33,7 @@ const Profile = () => {
                 </div>
                 <div className="team-grid">
                     {
-                        teams.data.body.map((team, i) => {
+                        teams.data.body.map(team => {
                             return (
                                 <div key={team.teamID}>
                                     <input type="radio" className="football" value={teamsCSS[team.teamID - 1]}

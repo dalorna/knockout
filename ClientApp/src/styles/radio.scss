@@ -75,7 +75,7 @@ input[type="radio"].football + label .inlet .text__effect {
   width: 190px;
   top: 1px;
 }
-//Sends paperplane into button.
+//Sends football into button.
 input[type="radio"].football:focus + label .outer .inner:after {
   opacity: 1;
   -webkit-transform: translate(140px, -150px) scale(.01);
@@ -97,7 +97,7 @@ input[type="radio"].football:focus + label .outer .inner:after {
     opacity: 1;
   }
 }
-//Checkmark & paperplane.
+//Checkmark & football.
 .inner {
   position: relative;
   font-family: FontAwesome;
@@ -111,16 +111,15 @@ input[type="radio"].football:focus + label .outer .inner:after {
     transform: scale(0) translateY(-50%);
     zoom: 50%;
   }
-  //Paperplane.
+  //football.
   &:after {
     content: '\f44e';
-    // font: var(--fa-football);
     @extend %glyphcon;
     left: -140px;
     bottom: -180px;
     font-size: 2em;
     transform: scale(3);
-    color: $accent;
+    color: saddlebrown;
   }
 }
 //Label text. Wrapped in span to control border-bottom.
