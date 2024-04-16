@@ -18,3 +18,5 @@ Content-Type: application/json
 }
 ###
 GET http://localhost:3500/leagueSeason/members/users/2/6615853e3f27850c2ab6fdc0
+###
+GET http://localhost:3500/leagueSeason/join/open/0?userId=6617e05bb8f33a77085ba49f

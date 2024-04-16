@@ -35,7 +35,8 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
                 leagueSeason.data.rules.gameType = rules.gameType;
                 leagueSeason.data.rules.ties = rules.ties;
                 leagueSeason.data.rules.cantPickSame = rules.cantPickSame
-                await updateLeagueSeason(leagueSeason.data);
+                const result = await updateLeagueSeason(leagueSeason.data);
+                console.log('result', result);
             } else {
                 const newLeagueSeason = {
                     seasonId,

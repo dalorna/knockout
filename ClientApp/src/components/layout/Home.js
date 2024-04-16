@@ -72,16 +72,13 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     register instructions bigger, background of sign-up hover effects (background)
                 </li>
                 <li className="chiefs-red">
-                    Website Header reformat
-                </li>
-                <li className="chiefs-red">
-                    Manage reformat
+                    Website Header reformat (Nav top)
                 </li>
                 <li className="chiefs-red">
                     standing, join pages need created
                 </li>
                 <li className="chiefs-red">
-                    cap league with number of players if no private code 100 Max
+                    cap league with number of players if no private code 50 Max (max needs implemented)
                 </li>
                 <li className="chiefs-red">
                     Will need a profile page to set (address, city, state, zip) completely optional

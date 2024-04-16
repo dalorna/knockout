@@ -58,6 +58,14 @@ const Profile = () => {
                     }
                 </div>
             </div>
+            <div className="standard-background mt-2">
+                <div className="text-center">
+                    <h5 className={`${favoriteTeam?.favoriteTeam ? favoriteTeam?.favoriteTeam + '-color' : ''}`}>Coming
+                        Soon !</h5>
+                </div>
+                <div>Change Password</div>
+                <div>Change Email Address</div>
+            </div>
         </div>
     )
 }

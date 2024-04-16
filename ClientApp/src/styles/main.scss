@@ -309,3 +309,39 @@ i.member {
 .header-fontSize {
   font-size: 3em;
 }
+
+.loadingOverlay {
+  position: absolute;
+  background: rgba(10, 14, 11, .5);
+  z-index: 50000;
+  height: 93%;
+  width: 92%;
+  top: 32px;
+  left: 149px;
+
+}
+
+.disabled-button {
+  color: red !important;
+  border-left: 1px solid rgba(255,0,0,0.1) !important;
+  border-top: 1px solid rgba(255,0,0,0.1) !important;
+  border-right: 1px solid rgba(255,0,0,0.1) !important;
+  box-shadow: 5px 5px 5px rgba(255,0,0,0.25) !important;
+}
+
+.card-join {
+  width: 390px;
+  padding: 3px;
+  margin: 15px 0 15px 30px;
+  float: left;
+}
+
+.rules-list {
+  font-size: .75em;
+}
+
+.modal-body-standard {
+  background: white;
+  border-top: solid 1px gray;
+  border-bottom: solid 1px gray;
+}

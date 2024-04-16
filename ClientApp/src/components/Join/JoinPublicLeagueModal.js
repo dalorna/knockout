@@ -1,25 +1,21 @@
 import {useModalInstance} from '../../utils/simpleModal';
 import {useImperativeHandle, useState} from 'react';
-import { useForm } from 'react-hook-form';
 import {joinLeague} from '../../api/league';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import {ErrorFeedback} from '../../utils/helpers';
 import toast from 'react-hot-toast';
 
-const validationSchema = Yup.object().shape({
-    code: Yup.string().required('League name is required')
-});
-
-export const JoinLeagueModal = ({actionsRef, afterSubmit}) => {
+export const JoinPublicLeagueModal = ({actionsRef, afterSubmit}) => {
     const [modal, modalRef] = useModalInstance();
     const [user, setUser] = useState(null);
+    const [league, setLeague] = useState(null);
+    const [season, setSeason] = useState(null);
 
     useImperativeHandle(
         actionsRef,
         () => ({
             show: (details) => {
-                setUser(details.user)
+                setUser(details.currentUser);
+                setLeague(details.league);
+                setSeason(details.season);
                 modal.show();
             },
             hide: () => modal.hide(),
@@ -27,23 +23,11 @@ export const JoinLeagueModal = ({actionsRef, afterSubmit}) => {
         [modal]
     );
 
-    const {
-        handleSubmit,
-        register,
-        setValue,
-        formState: {errors, isValid}
-    } = useForm({
-        resolver: yupResolver(validationSchema),
-        defaultValues: {
-            code: ''
-        }
-    });
-
-    const onHandleSubmit = async (data) => {
+    const onJoinLeague = async () => {
         let result;
         try {
             result = await joinLeague({
-                leagueId: data.code,
+                leagueId: league._id,
                 member: {
                     userId: user.id,
                     username: user.username
@@ -51,14 +35,12 @@ export const JoinLeagueModal = ({actionsRef, afterSubmit}) => {
             if (result.status === 204) {
                 toast.error(result.statusText);
             } else {
-                // refreshLeagues();
                 afterSubmit();
                 toast.success('League Successfully Joined');
             }
         } catch (e) {
             toast.error(result?.statusText ?? e?.message);
         } finally {
-            setValue('code', '');
             modal.hide();
         }
 
@@ -68,31 +50,40 @@ export const JoinLeagueModal = ({actionsRef, afterSubmit}) => {
         <div className="modal fade" tabIndex="-1" ref={modalRef}>
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{width: '500px'}}>
-                    <div className="modal-header text-primary-emphasis bg-dark-subtle justify-content-center">
+                    <div className="modal-header text-primary-emphasis bg-dark-subtle justify-content-center" >
                         <h5>Join New League</h5>
                     </div>
                     <div className="modal-body">
-                        <p className="text-primary-emphasis">
-                            If you don't have a private code from a friend, and would like to join an Open league, select the Join button in the menu
-                        </p>
-                        <form onSubmit={handleSubmit(onHandleSubmit)}>
-                            <div className="form-group text-start">
-                                <label htmlFor="code" className="text-primary-emphasis">Private
-                                    Code:</label>
-                                <input type="text" className="form-control" {...register('code')} id="code"/>
-                                <ErrorFeedback error={errors.name}/>
-                            </div>
-                            <div>
-                                <button type="button" className="btn btn-outline-secondary btn-standard-width"
+                        <div>
+                            <label>
+                                {`League Name: ${league?.name}`}
+                            </label>
+                        </div>
+                        <div>
+                            {
+                                league?.description &&
+                                <label>
+                                    {`League Description: ${league?.description}`}
+                                </label>
+                            }
+                        </div>
+                        <div>
+                            <label>{`Season: ${season?.year}`}</label>
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                            <div className="button-3D">
+                                <button type="button" style={{marginLeft: '-100px'}}
                                         data-bs-dismiss="modal"
                                         aria-label="Close">
                                     Cancel
                                 </button>
-                                <button type="submit" disabled={!isValid}
+                            </div>
+                            <div className="button-3D">
+                                <button type="submit" onClick={onJoinLeague}
                                         className="btn btn-secondary btn-standard-width mx-2">Join
                                 </button>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>

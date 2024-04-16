@@ -13,7 +13,6 @@ const getLeaguesSeason = async (req, res) => {
         res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
     }
 }
-
 const getLeaguesSeasonByLeagueIdSeasonId = async (req, res) => {
     if (!req?.params?.seasonId || !req?.params?.leagueId) {
         return res.status(400).json({"message": `SeasonId and League Id are required`})
@@ -61,7 +60,7 @@ const updateLeagueSeason = async (req, res) => {
         return res.status(204).json({"message": `No Employee matches ID ${req.body._id}`});
     }
     if (req.body?.privateCode) leagueSeason.name = req.body.privateCode;
-    if (req.body?.locked) leagueSeason.description = req.body.locked;
+    leagueSeason.locked = req.body.locked;
     if (req.body?.rules) {
         leagueSeason.rules.canSeePick = req.body.rules?.canSeePick;
         leagueSeason.rules.gameType = req.body.rules?.gameType;
@@ -104,6 +103,7 @@ const joinLeague = async (req, res) => {
     let leagueSeason;
     try {
         leagueSeason = await LeagueSeason.findOne({ leagueId: req.body.leagueId }).exec();
+        console.log('here 2');
         if (!leagueSeason) {
             leagueSeason = await LeagueSeason.findOne({ privateCode: req.body.leagueId }).exec();
             if (!leagueSeason) {
@@ -118,6 +118,7 @@ const joinLeague = async (req, res) => {
 
     try {
         const currentMember = leagueSeason.members.find(m => m.userId === req.body.member.userId);
+        console.log('here 1');
         if (!currentMember) {
             if(leagueSeason.members && leagueSeason.members.length > 0) {
                 leagueSeason.members.push(req.body.member)
@@ -152,7 +153,6 @@ const getLeaguesByMember = async (req, res) => {
     }
 
 }
-
 const getLeagueMemberUsers = async (req, res) => {
     if (!req?.params?.seasonId || !req?.params?.leagueId) {
         res.statusMessage = 'LeagueId and SeasonId are required';
@@ -187,7 +187,47 @@ const getLeagueMemberUsers = async (req, res) => {
         res.status(500).end();
     }
 }
+const getOpenLeagues = async (req, res) => {
+    if (!req?.params?.page || !req?.query?.userId) {
+        return res.status(400).json({"message": `Page and member id are required`});
+    }
+    console.log('member', req.query.userId)
+    const recordsPerPage = 3;
+    const page = req.params.page;
+    const skip = recordsPerPage * page;
 
+    try {
+        const leagueSeasons = await LeagueSeason.find(
+            {
+                locked: true,
+                privateCode: 'false',
+                'members.userId': {$ne: req.query.userId},
+                'members.24': {$exists: false}
+            },
+            null,
+            {
+                skip: skip,
+                limit: recordsPerPage,
+                sort: {_id: 1}
+            }).exec();
+        const count = await LeagueSeason.countDocuments({
+            locked: true,
+            privateCode: 'false',
+            'members.userId': {$ne: req.query.userId},
+            'members.24': {$exists: false}
+        }).exec()
+        const leagueIds = leagueSeasons.map(m => m.leagueId);
+        const leagues = await League.find({
+         _id: {$in: leagueIds }
+        }).exec();
+        const result = {leagueSeasons, leagues, count};
+        res.status(200).json(result);
+    } catch (err) {
+        res.statusMessage = err.message; //"Error Getting Leagues";
+        res.status(500).end();
+    }
+
+}
 
 module.exports = {
     getLeaguesSeason,
@@ -197,5 +237,6 @@ module.exports = {
     getLeaguesSeasonByLeagueIdSeasonId,
     joinLeague,
     getLeaguesByMember,
-    getLeagueMemberUsers
+    getLeagueMemberUsers,
+    getOpenLeagues
 }

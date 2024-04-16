@@ -12,4 +12,5 @@ export const joinLeague = (member) => axios.post('/leagueSeason/join', member);
 export const getLeaguesByMember = (member) => axios.post('/leagueSeason/members', member);
 export const getLeaguesByLeagueId = (leagueIds) => axios.post('/league/member', leagueIds);
 export const getLeagueMemberUsers = (seasonId, leagueId) =>
-    axios.get(`/leagueSeason/members/users/${seasonId}/${leagueId}`)
+    axios.get(`/leagueSeason/members/users/${seasonId}/${leagueId}`);
+export const getOpenLeagues = (page, userId) => axios.get(`/leagueSeason/join/open/${page}?userId=${userId}`)

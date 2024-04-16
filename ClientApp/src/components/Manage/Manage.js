@@ -327,11 +327,12 @@ const Manage = ({currentSelectedLeague}) => {
                             </div>
                         </div>
                         <div className="p-3 mt-5 flex-container standard-background" style={{marginTop: '7em'}}>
-                            <div className="button-3D">
+                            <div className="button-3D" >
                                 <button
                                     type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
                                     data-tooltip-content="Save your setting for later"
                                     aria-label="Save Form" disabled={locked}
+                                    className={`${locked ? ' disabled-button ' : ''}`}
                                     onClick={() => setIsSubmit(false)}
                                 >
                                     <Tooltip id="save-tip"/>
@@ -343,6 +344,7 @@ const Manage = ({currentSelectedLeague}) => {
                                     type="submit" data-tooltip-id="submit-tip" data-tooltip-variant="info"
                                     data-tooltip-content="This will finalize your league rules!"
                                     aria-label="Save Form" disabled={locked}
+                                    className={`${locked ? ' disabled-button ' : ''}`}
                                     onClick={() => setIsSubmit(true)}
                                 >
                                     <Tooltip id="submit-tip"/>
