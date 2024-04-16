@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { getOpenLeagues } from '../../api/league';
 import { LoadingOverlay } from '../../utils/loading';
-import { Pagination } from 'react-bootstrap';
 import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
 import {useCurrentSeason, useRefreshLeague} from '../../state/season';
@@ -32,7 +31,7 @@ const Join = ({refreshSideMenu}) => {
             setPageCount(count);
         }
 
-        loadLeague(currentPage).then((r) => {
+        loadLeague(currentPage).then(() => {
             setLoading(false);
         }).catch((err) => {
             console.error(err);
