@@ -28,11 +28,11 @@ const seasonLeagueFamily = atomFamily({
 })
 export const useSeasonLeague = (leagueId) => {
     const season = useCurrentSeason();
-    return useRecoilState(seasonLeagueFamily({seasonId: season.data[0].id, leagueId}))
+    return useRecoilState(seasonLeagueFamily({seasonId: season.id, leagueId}))
 }
 export const useSeasonLeagueRefresher = (leagueId) => {
     const season = useCurrentSeason();
-    return useRecoilRefresher_UNSTABLE(seasonLeagueFamily({seasonId: season.data[0].id, leagueId}));
+    return useRecoilRefresher_UNSTABLE(seasonLeagueFamily({seasonId: season.id, leagueId}));
 }
 const leagueFamily = atomFamily({
     key: 'league',
@@ -83,18 +83,18 @@ export const useCurrentLeagues = () => {
     const [currentUser,] = useRecoilState(currentUserAtom);
     const userId = currentUser.id;
     const memberLeagues = useRecoilValue(leagueMemberFamily({member: {userId: userId}}));
-    const joinedLeagueIds = memberLeagues.data.map(m => m.leagueId);
+    const joinedLeagueIds = memberLeagues.map(m => m.leagueId);
     const joinedLeagues = useRecoilValue(leaguesJoinedFamily({leagueIds: joinedLeagueIds}));
     const myLeagues = useRecoilValue(leagueFamily(userId));
     const leaguesToSelectFrom = [];
-    leaguesToSelectFrom.push(...(myLeagues?.data ?? []));
-    leaguesToSelectFrom.push(...(joinedLeagues?.data ?? []));
+    leaguesToSelectFrom.push(...(myLeagues ?? []));
+    leaguesToSelectFrom.push(...(joinedLeagues ?? []));
     return leaguesToSelectFrom;
 }
 
 export const useCurrentLeagueMembersUsers = (leagueId) => {
     const season = useCurrentSeason();
-    return useRecoilValue(leaguesMemberUsersFamily({seasonId: season.data[0].id, leagueId}))
+    return useRecoilValue(leaguesMemberUsersFamily({seasonId: season.id, leagueId})) || [];
 }
 
 
@@ -110,11 +110,11 @@ export const useCurrentLeagueMembersUsers = (leagueId) => {
 })*/
 export const useCurrentSeason = () => {
     // return useRecoilValue(seasonFamily((new Date()).getFullYear()))
-    return {data: [ {
+    return  {
             "id": 2,
             "year": "2024",
             "over": false
-        }]}
+        };
 }
 const teamsFamily = atomFamily({
     key: 'nfl/teams',

@@ -23,8 +23,8 @@ const Picks = () => {
     // const season = useCurrentSeason(year);
     const selectedLeagueValue = JSON.parse(localStorage.getItem('selectedLeague'));
     const leagueSeason = useSeasonLeague(selectedLeagueValue._id);
-    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(currentUser.id, leagueSeason[0].data._id, week);
-    const refresher = useCurrentPickRefresh(currentUser.id, leagueSeason[0].data._id, week);
+    const currentWeeklyPick = useCurrentPickLeagueSeasonWeek(currentUser.id, leagueSeason[0]._id, week);
+    const refresher = useCurrentPickRefresh(currentUser.id, leagueSeason[0]._id, week);
     const currentWeeklySchedule = useWeeklySchedule(year, week);
     const createModalRef = useRef();
     const teams = useTeams();
@@ -37,22 +37,22 @@ const Picks = () => {
     } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-           pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick?.data[0].gameId : null
+           pick: currentWeeklyPick[0] ? currentWeeklyPick[0].teamId + '-' + currentWeeklyPick[0]?.gameId : null
         },
         mode: 'onChange'
     })
 
     useEffect(() => {
-        reset( {pick: currentWeeklyPick.data[0] ? currentWeeklyPick.data[0].teamId + '-' + currentWeeklyPick.data[0].gameId : null})
+        reset( {pick: currentWeeklyPick[0] ? currentWeeklyPick[0].teamId + '-' + currentWeeklyPick[0].gameId : null})
     }, [reset, currentWeeklyPick])
 
     const handleOnSubmit = (data) => {
-        const currentPickId = currentWeeklyPick.data[0]?._id;
+        const currentPickId = currentWeeklyPick[0]?._id;
         const pick = {
             id: currentPickId ?? generateUUID(),
             userId: currentUser.id,
             weekId: week,
-            leagueSeasonId: leagueSeason[0].data._id,
+            leagueSeasonId: leagueSeason[0]._id,
             locked: false,
             gameId: data.pick.split('-')[1],
             teamId: data.pick.split('-')[0]
@@ -71,8 +71,8 @@ const Picks = () => {
         refresher();
     }
     const getSelectedTeamName = () => {
-        if (currentWeeklyPick.data[0]?.teamId) {
-            return teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)?.teamCity + ' ' + teams.data.body.find(f => f.teamID === currentWeeklyPick.data[0]?.teamId)?.teamName;
+        if (currentWeeklyPick[0]?.teamId) {
+            return teams.data.body.find(f => f.teamID === currentWeeklyPick[0]?.teamId)?.teamCity + ' ' + teams.data.body.find(f => f.teamID === currentWeeklyPick[0]?.teamId)?.teamName;
         } else {
             return 'has not been selected';
         }
@@ -84,9 +84,9 @@ const Picks = () => {
                 <div style={{fontSize: '2em'}} className="grey-begin text-shadow-black">Picks - {selectedLeagueValue.name}</div>
             </div>
             <div
-                className={`mb-1 p-3 mx-3  standard-background  ${currentWeeklyPick.data[0]?.locked ? 'text-success' : 'text-danger'}`}>
+                className={`mb-1 p-3 mx-3  standard-background  ${currentWeeklyPick[0]?.locked ? 'text-success' : 'text-danger'}`}>
                 {
-                    `Current Pick for the week ${week} is ${getSelectedTeamName()} ${currentWeeklyPick.data[0]?.locked ? 'Locked' : 'Not Locked'}`
+                    `Current Pick for the week ${week} is ${getSelectedTeamName()} ${currentWeeklyPick[0]?.locked ? 'Locked' : 'Not Locked'}`
                 }
             </div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
@@ -105,7 +105,7 @@ const Picks = () => {
                 <div className="p-2 mx-3 mt-1 text-center flex-container  standard-background">
                     <div className="button-3D">
                         <button type="submit" aria-label="Save Pick"
-                                disabled={!isValid || currentWeeklyPick.data[0]?.locked}>
+                                disabled={!isValid || currentWeeklyPick[0]?.locked}>
                             Save Pick
                         </button>
                     </div>
@@ -118,13 +118,13 @@ const Picks = () => {
 export default Picks;
 
 const GameCard = ({game, teams, register, currentWeeklyPick}) => {
-    return ( <div key={game.gameID} className={"glass " + (game.gameID === currentWeeklyPick?.data[0]?.gameId ? ' picked': '')} style={{'--r': '2'}}
+    return ( <div key={game.gameID} className={"glass " + (game.gameID === currentWeeklyPick[0]?.gameId ? ' picked': '')} style={{'--r': '2'}}
              data-text={`${game.away} vs ${game.home}`}>
             <div style={{display: 'grid', gridTemplateColumns: 'auto', padding: '5px', marginTop: '10px'}}>
                 <div className="form-check form-check-inline">
                     <input className="form-check-input"
                            type="radio" {...register('pick')}
-                           disabled={currentWeeklyPick.data[0]?.locked}
+                           disabled={currentWeeklyPick[0]?.locked}
                            id="exampleRadios1"
                            value={`${game.teamIDAway}-${game.gameID}`}/>
                     <span>{teams.data.body.find(f => f.teamID === game.teamIDAway)?.teamCity}</span>
@@ -138,7 +138,7 @@ const GameCard = ({game, teams, register, currentWeeklyPick}) => {
                 <div className="form-check form-check-inline">
                     <input className="form-check-input"
                            type="radio" {...register('pick')}
-                           disabled={currentWeeklyPick.data[0]?.locked}
+                           disabled={currentWeeklyPick[0]?.locked}
                            id="exampleRadios1"
                            value={`${game.teamIDHome}-${game.gameID}`}/>
                     <span>{teams.data.body.find(f => f.teamID === game.teamIDHome)?.teamCity}</span>

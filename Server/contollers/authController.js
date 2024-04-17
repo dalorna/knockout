@@ -16,12 +16,14 @@ const handleLogin = async (req, res) => {
         const match = await bcrypt.compare(pwd, foundUser.password);
         if (match) {
             const roles = Object.values(foundUser.roles).filter(Boolean);
+            const leagueIds = foundUser.leagues?.map(m => m.leagueId) ?? [];
             // create JWTs (token and refresh token)
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
                         "username": foundUser.username,
-                        "roles": roles
+                        "roles": roles,
+                        "leagueIds": leagueIds
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
@@ -45,6 +47,7 @@ const handleLogin = async (req, res) => {
                     id: foundUser.id
                 },
                 roles,
+                leagueIds,
                 accessToken });
         } else {
             res.sendStatus(401);

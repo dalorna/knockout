@@ -112,11 +112,11 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
         });
         await saveLeagueSeason({
             seasonId: season.id,
-            leagueId: league.data._id,
+            leagueId: league._id,
             privateCode: data.privateCode,
             locked: false
         });
-        afterSubmit(league.data);
+        afterSubmit(league);
         modal.hide();
     }
     return (

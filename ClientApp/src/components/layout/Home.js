@@ -18,7 +18,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
         createModalRef.current.show(
             {
                 user: currentUser,
-                season: season.data[0]
+                season: season
             }
         )
     }
@@ -108,7 +108,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </li>
             </ol>
         </div>
-        <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season.data[0]}/>
+        <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season}/>
         <JoinLeagueModal actionsRef={joinModalRef} afterSubmit={joinRefresher}/>
     </div>
 }

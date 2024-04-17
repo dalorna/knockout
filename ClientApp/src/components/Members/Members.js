@@ -22,19 +22,19 @@ const Members = () => {
                             <div>
                     <span>
                         {
-                            `${users.data.find((user) => user._id === selectedLeagueValue.userId).username}: `
+                            `${users?.find((user) => user._id === selectedLeagueValue.userId)?.username}: `
                         }
                     </span>
                                 <span>
                         {
-                            `${users.data.find((user) => user._id === selectedLeagueValue.userId)?.firstName} ${users.data.find((user) => user._id === selectedLeagueValue.userId)?.lastName}`
+                            `${users?.find((user) => user._id === selectedLeagueValue.userId)?.firstName} ${users?.find((user) => user._id === selectedLeagueValue.userId)?.lastName}`
                         }
                     </span>
                             </div>
                             <div>
                     <span>
                         {
-                            `${users.data.find((user) => user._id === selectedLeagueValue.userId).email}: `
+                            `${users?.find((user) => user._id === selectedLeagueValue.userId)?.email}: `
                         }
                     </span>
                             </div>
@@ -46,9 +46,9 @@ const Members = () => {
         </div>
         <div className="member-grid">
             {
-                leagueSeason[0].data.members.map((member, i) => {
+                leagueSeason[0].members.map((member, i) => {
                     return (
-                        <MemberDisplayCard key={i} user={users.data.find((user) => user._id === member.userId)}/>
+                        <MemberDisplayCard key={i} user={users.find((user) => user._id === member.userId)}/>
                     )
                 })
             }

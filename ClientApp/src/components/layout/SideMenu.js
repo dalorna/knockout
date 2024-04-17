@@ -25,6 +25,7 @@ import {useRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
 import {generateUUID} from '../../utils/helpers';
 import SimpleModal from '../../utils/simpleModal';
+import RequireLeague from '../Auth/RequireLeague';
 
 const currentSelectedLeague = signal(null);
 
@@ -39,8 +40,7 @@ const SideMenu = () => {
   const [show, setShow] = useState(false);
   const [refreshLeagues, setRefreshLeagues] = useState('')
   const [modalProps , setModalProps]= useState({ modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)});
-  // const favorite = JSON.parse(localStorage.getItem('favoriteTeam'));
-  
+
   useEffect(() => {
     setAllLeagues(leagues);
     let selectedLeagueStorage = localStorage.getItem('selectedLeague');
@@ -85,6 +85,7 @@ const SideMenu = () => {
   }
   const logout = async () => {
     setAuth({});
+    localStorage.removeItem('auth');
     navigate('/login');
   }
   const refreshHandler = () => {
@@ -159,7 +160,9 @@ const SideMenu = () => {
       <Suspense fallback={<Loading/>}>
         <Routes>
           <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} refreshSideMenu={refreshHandler} />} />
-          <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
+          <Route element={<RequireLeague allowedLeagues={currentUser.leagueIds?.map(m => m) ?? []} /> }>
+            <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
+          </Route>
           <Route path="members" element={<Members />} />
           <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
           <Route path="picks" element={<Picks />} />

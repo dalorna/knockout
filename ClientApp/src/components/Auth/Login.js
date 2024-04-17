@@ -7,6 +7,7 @@ import {currentUserAtom} from '../../state/user';
 import {useRecoilState} from 'recoil';
 import '../../styles/login.scss';
 import '../../styles/teams.scss';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -35,6 +36,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
+            // const handler = axios;
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({user, pwd}),
                 {
@@ -42,16 +44,24 @@ const Login = () => {
                     withCredentials: true
                 }
             );
-            const accessToken = response?.data?.accessToken;
-            const userInfo = response?.data?.userInfo;
-            setAuth({user, pwd, userInfo, accessToken});
+            const accessToken = response?.accessToken;
+            const userInfo = response?.userInfo;
+            const leagueIds = response?.leagueIds;
+
+            setAuth({user, pwd, userInfo, leagueIds, accessToken});
             userInfo.username = user;
+            userInfo.leagueIds = leagueIds;
             setCurrentUser(userInfo);
+            localStorage.setItem('auth', JSON.stringify({ accessToken, leagueIds}))
 
             setUser('');
             setPwd('');
             navigate('/knockout/home');
         } catch (err) {
+            if (typeof err === 'string') {
+                toast.error(err);
+                setErrMsg('Login Failed');
+            }
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 400) {

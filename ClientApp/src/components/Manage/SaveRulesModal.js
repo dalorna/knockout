@@ -27,16 +27,15 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
     const saveCurrentRules = async () => {
         try {
             const leagueSeason = await getLeagueSeasonByLeagueIdSeasonId(seasonId, league._id);
-            if (leagueSeason.data) {
-                leagueSeason.data.locked = isSubmit;
-                leagueSeason.data.rules.canSeePick = rules.canSeePick;
-                leagueSeason.data.rules.earlyPoint = rules.earlyPoint;
-                leagueSeason.data.rules.elimination = rules.elimination;
-                leagueSeason.data.rules.gameType = rules.gameType;
-                leagueSeason.data.rules.ties = rules.ties;
-                leagueSeason.data.rules.cantPickSame = rules.cantPickSame
-                const result = await updateLeagueSeason(leagueSeason.data);
-                console.log('result', result);
+            if (leagueSeason) {
+                leagueSeason.locked = isSubmit;
+                leagueSeason.rules.canSeePick = rules.canSeePick;
+                leagueSeason.rules.earlyPoint = rules.earlyPoint;
+                leagueSeason.rules.elimination = rules.elimination;
+                leagueSeason.rules.gameType = rules.gameType;
+                leagueSeason.rules.ties = rules.ties;
+                leagueSeason.rules.cantPickSame = rules.cantPickSame
+                const result = await updateLeagueSeason(leagueSeason);
             } else {
                 const newLeagueSeason = {
                     seasonId,

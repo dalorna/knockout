@@ -25,9 +25,9 @@ const Join = ({refreshSideMenu}) => {
         setLoading(true)
         const loadLeague = async (page) => {
             const result = await getOpenLeagues(page, currentUser.id);
-            setLeagues(result.data.leagues.filter(f => f.userId !== currentUser.id));
-            setSeasons(result.data.leagueSeasons.filter(f => !f.members.map(m => m).includes(currentUser.id)));
-            const count = Math.ceil(result.data.count / leaguesPerPage);
+            setLeagues(result.leagues.filter(f => f.userId !== currentUser.id));
+            setSeasons(result.leagueSeasons.filter(f => !f.members.map(m => m).includes(currentUser.id)));
+            const count = Math.ceil(result.count / leaguesPerPage);
             setPageCount(count);
         }
 
@@ -58,7 +58,7 @@ const Join = ({refreshSideMenu}) => {
             {
                 currentUser,
                 league,
-                season: season.data[0]
+                season: season
             }
         )
     }
@@ -100,7 +100,7 @@ const Join = ({refreshSideMenu}) => {
                             return (
                                 <div key={league._id} className="standard-background card-join">
                                     <div className="text-center">
-                                        <h5 className="text-white text-shadow-black">{`${league.name} - ${currentSeason.data[0].year}`}</h5>
+                                        <h5 className="text-white text-shadow-black">{`${league.name} - ${currentSeason.year}`}</h5>
                                         <h6>{league.description}</h6>
                                     </div>
                                     <div>

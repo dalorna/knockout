@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const leagueController = require('../../contollers/leagueController');
+const verifyLeague = require('../../middleware/verifyLeague');
 
 
 router.route('/')
     .post(leagueController.createNewLeague)
-    .put(leagueController.updateLeague);
+    .put(verifyLeague(), leagueController.updateLeague);
 
 router.route('/:userId')
     .get(leagueController.getLeaguesByUserId);
 
 router.route('/:id')
-    .delete(leagueController.deleteLeagueById);
+    .delete(verifyLeague(), leagueController.deleteLeagueById);
 
 router.route('/member')
     .post(leagueController.getLeaguesByLeagueIds)

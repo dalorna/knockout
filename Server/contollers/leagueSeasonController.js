@@ -53,11 +53,11 @@ const createLeagueSeason = async (req, res) => {
 }
 const updateLeagueSeason = async (req, res) => {
     if (!req?.body?._id) {
-        return res.status(400).json({"message": `League Season id is required`});
+        return res.status(400).json({"message": `Season id is required`});
     }
     const leagueSeason = await LeagueSeason.findOne({ _id: req.body._id }).exec();
     if (!leagueSeason) {
-        return res.status(204).json({"message": `No Employee matches ID ${req.body._id}`});
+        return res.status(204).json({"message": `No Season ID ${req.body._id}`});
     }
     if (req.body?.privateCode) leagueSeason.name = req.body.privateCode;
     leagueSeason.locked = req.body.locked;
@@ -103,7 +103,6 @@ const joinLeague = async (req, res) => {
     let leagueSeason;
     try {
         leagueSeason = await LeagueSeason.findOne({ leagueId: req.body.leagueId }).exec();
-        console.log('here 2');
         if (!leagueSeason) {
             leagueSeason = await LeagueSeason.findOne({ privateCode: req.body.leagueId }).exec();
             if (!leagueSeason) {
@@ -118,7 +117,6 @@ const joinLeague = async (req, res) => {
 
     try {
         const currentMember = leagueSeason.members.find(m => m.userId === req.body.member.userId);
-        console.log('here 1');
         if (!currentMember) {
             if(leagueSeason.members && leagueSeason.members.length > 0) {
                 leagueSeason.members.push(req.body.member)
@@ -169,7 +167,7 @@ const getLeagueMemberUsers = async (req, res) => {
             seasonId: req.params.seasonId
         }).exec();
 
-        if (league?.userId && leagueSeason?.members?.length > 0) {
+        if (league?.userId && leagueSeason?.members) {
             const members = leagueSeason.members.map(m => m.userId);
             members.push(league.userId);
             const users = await User.find({
@@ -191,7 +189,6 @@ const getOpenLeagues = async (req, res) => {
     if (!req?.params?.page || !req?.query?.userId) {
         return res.status(400).json({"message": `Page and member id are required`});
     }
-    console.log('member', req.query.userId)
     const recordsPerPage = 3;
     const page = req.params.page;
     const skip = recordsPerPage * page;

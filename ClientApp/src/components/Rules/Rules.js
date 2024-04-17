@@ -23,7 +23,7 @@ const Rules = () => {
                     Your commissioner has chosen:&nbsp;&nbsp;
                     <span className="rule-selection text-shadow-black">
                     {
-                        leagueSeason[0].data.rules.gameType === 'survivor' ? 'Survivor' : 'Loser'
+                        leagueSeason[0].rules.gameType === 'survivor' ? 'Survivor' : 'Loser'
                     }
                     </span>
                 </p>
@@ -43,23 +43,23 @@ const Rules = () => {
                 <p>You commissioner has chosen:&nbsp;&nbsp;
                     <span className="rule-selection text-shadow-black">
                     {
-                        leagueSeason[0].data.rules.elimination === 'hardCore' && 'Hard Core'
+                        leagueSeason[0].rules.elimination === 'hardCore' && 'Hard Core'
                     }
                     {
-                        leagueSeason[0].data.rules.elimination === 'oneMulligan' && 'One Mulligan'
+                        leagueSeason[0].rules.elimination === 'oneMulligan' && 'One Mulligan'
                     }
                     {
-                        leagueSeason[0].data.rules.elimination === 'twoMulligan' && 'Two Mulligan'
+                        leagueSeason[0].rules.elimination === 'twoMulligan' && 'Two Mulligan'
                     }
                     {
-                        leagueSeason[0].data.rules.elimination === 'neverOut' && 'Never Out'
+                        leagueSeason[0].rules.elimination === 'neverOut' && 'Never Out'
                     }
                     </span>
                 </p>
             </div>
         </div>
         {
-            leagueSeason[0].data.rules.elimination !== 'hardCore' &&
+            leagueSeason[0].rules.elimination !== 'hardCore' &&
             <div className="p-1 mx-3 mt-1 standard-background">
                 <div className="text-center">
                     <h4 className={`${favorite?.favoriteTeam}-color`}>Early Point</h4>
@@ -68,7 +68,7 @@ const Rules = () => {
                     <p>You commissioner has chosen:&nbsp;&nbsp;
                         <span className="rule-selection text-shadow-black">
                             {
-                                leagueSeason[0].data.rules.earlyPoint ? 'A early lose counts more than a Late loss' : 'A late lose counts more than a early lose'
+                                leagueSeason[0].rules.earlyPoint ? 'A early lose counts more than a Late loss' : 'A late lose counts more than a early lose'
                             }
                         </span>
                     </p>
@@ -76,7 +76,7 @@ const Rules = () => {
             </div>
         }
         {
-        leagueSeason[0].data.rules.gameType === 'loser' && <>
+        leagueSeason[0].rules.gameType === 'loser' && <>
                 <div className="p-1 mx-3 mt-1 standard-background">
                     <div className="text-center">
                         <h4 className={`${favorite?.favoriteTeam}-color`}>Pick the same team</h4>
@@ -85,7 +85,7 @@ const Rules = () => {
                         <p>You commissioner has chosen:&nbsp;&nbsp;
                             <span className="rule-selection text-shadow-black">
                                 {
-                                    leagueSeason[0].data.rules.cantPickSame ? 'I can pick the same team more than once' : `I cannot pick the same team more than once`
+                                    leagueSeason[0].rules.cantPickSame ? 'I can pick the same team more than once' : `I cannot pick the same team more than once`
                                 }
                             </span>
                         </p>
@@ -99,7 +99,7 @@ const Rules = () => {
                         <p>You commissioner has chosen:&nbsp;&nbsp;
                             <span className="rule-selection text-shadow-black">
                                 {
-                                    leagueSeason[0].data.rules.canSeePick ? `I can see other's pick before I pick` : `I cannot see other's pick before I pick`
+                                    leagueSeason[0].rules.canSeePick ? `I can see other's pick before I pick` : `I cannot see other's pick before I pick`
                                 }
                             </span>
                         </p>
@@ -115,7 +115,7 @@ const Rules = () => {
                 <p>You commissioner has chosen:&nbsp;&nbsp;
                     <span className="rule-selection text-shadow-black">
                         {
-                            leagueSeason[0].data.rules.ties ? 'Ties count as loses' : 'Ties count as a win for the week'
+                            leagueSeason[0].rules.ties ? 'Ties count as loses' : 'Ties count as a win for the week'
                         }
                     </span>
                 </p>

@@ -13,4 +13,4 @@ export const getLeaguesByMember = (member) => axios.post('/leagueSeason/members'
 export const getLeaguesByLeagueId = (leagueIds) => axios.post('/league/member', leagueIds);
 export const getLeagueMemberUsers = (seasonId, leagueId) =>
     axios.get(`/leagueSeason/members/users/${seasonId}/${leagueId}`);
-export const getOpenLeagues = (page, userId) => axios.get(`/leagueSeason/join/open/${page}?userId=${userId}`)
+export const getOpenLeagues = (page, userId) => axios.get(`/leagueSeason/join/open/${page}?userId=${userId}`);

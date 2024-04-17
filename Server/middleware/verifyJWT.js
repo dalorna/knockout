@@ -9,10 +9,12 @@ const verifyJWT = (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if(err) {
+                res.statusMessage = err.message;
                 return res.sendStatus(403); // forbidden (invalid token)
             }
             req.user = decoded.UserInfo.username;
-            req.roles = decoded.UserInfo.roles
+            req.roles = decoded.UserInfo.roles;
+            req.leagueId = decoded.UserInfo.leagueIds ?? [];
             next();
         }
     );

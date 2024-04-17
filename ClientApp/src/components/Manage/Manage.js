@@ -37,15 +37,15 @@ const Manage = ({currentSelectedLeague}) => {
 
     useEffect(() => {
         const load = async () => {
-            return await getLeagueSeasonByLeagueIdSeasonId(season.data[0].id, currentSelectedLeague.value?._id)
+            return await getLeagueSeasonByLeagueIdSeasonId(season.id, currentSelectedLeague.value?._id)
         };
         load().then((res) => {
-            if (res?.data?.rules) {
-                if (res.data.rules.elimination === 'hardCore') {
+            if (res?.rules) {
+                if (res.rules.elimination === 'hardCore') {
                     setHardCore();
                 }
-                setLocked(res.data.locked);
-                reset(res.data.rules);
+                setLocked(res.locked);
+                reset(res.rules);
             } else {
                 reset(defaultValues);
             }
@@ -64,7 +64,7 @@ const Manage = ({currentSelectedLeague}) => {
         createModalRef.current.show(
             {
                 league: selectedLeague,
-                seasonId: season.data[0].id,
+                seasonId: season.id,
                 rules: rules
             }
         )

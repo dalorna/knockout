@@ -3,6 +3,7 @@ import { faCheck, faTimes, faInfoCircle} from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../../api/axios';
 import toast from 'react-hot-toast';
+import {useNavigate} from 'react-router';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -13,6 +14,7 @@ const REGISTER_URL = '/register';
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
+    const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState('')
     const [validFirstName, setValidFirstName] = useState(false);
@@ -101,7 +103,8 @@ const Register = () => {
             setEmail('');
             setFirstName('');
             setLastName('');
-            toast.success('You have successfully signed up!');
+            // toast.success('You have successfully signed up!');
+            navigate('/login')
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const errorHandler = require('./middleware/errorHandler');
-// const verifyJWT = require('./middleware/verifyJWT');
+const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
 const mongoose = require('mongoose');
@@ -42,10 +42,10 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
 // protected routes
-// app.use(verifyJWT);
+app.use(verifyJWT);
 app.use('/league', require('./routes/api/league'));
-app.use('/leagueSeason', require('./routes/api/leagueSeason'));
 app.use('/pick', require('./routes/api/pick'));
+app.use('/leagueSeason', require('./routes/api/leagueSeason'));
 
 app.all('*', (req, res) => {
     res.status(404);
