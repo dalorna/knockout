@@ -165,8 +165,13 @@
 }
 .content-login .form-login .links-login a {
   color: #444444;
-  text-decoration: none;
+  text-decoration: underline;
 }
+
+.content-login .form-login .links-login a:hover {
+  color: #fff;
+}
+
 .content-login .form-login .inputBox-login button {
   background: #444444;
   color: #ffffff;
@@ -366,13 +371,13 @@
 
 
 .instructions {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   background: #dbdae1;
   color: #B22222;
   padding: 0.25rem;
   position: absolute;
   bottom: -10px;
-  width: 255px;
+  width: 290px;
   margin-left: 400px;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.1),
   15px 15px 15px rgba(0,0,0,0.1),

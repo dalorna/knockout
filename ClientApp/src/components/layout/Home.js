@@ -57,7 +57,10 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li>
-                    League Edit screen... leave league
+                    League Edit screen (name, add season to league)... leave league
+                </li>
+                <li className="chiefs-red">
+                    cap league with number of players if no private code 50 Max (max needs implemented)
                 </li>
                 <li>
                     Delete League... deactivate league
@@ -69,16 +72,10 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     3 fonts for the 3 sections (menu, header, content)
                 </li>
                 <li className="chiefs-red">
-                    register instructions bigger, background of sign-up hover effects (background)
-                </li>
-                <li className="chiefs-red">
                     Website Header reformat (Nav top)
                 </li>
                 <li className="chiefs-red">
-                    standing, join pages need created
-                </li>
-                <li className="chiefs-red">
-                    cap league with number of players if no private code 50 Max (max needs implemented)
+                    standings page need created - Who's still in, and or who is in the lead (standings)
                 </li>
                 <li className="chiefs-red">
                     Will need a profile page to set (address, city, state, zip) completely optional
@@ -86,18 +83,13 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <li className="chiefs-red">
                     Fix seasons
                 </li>
-                <li className="chiefs-gold">
-                    Join league screen, pick from leagues or enter a private code
-                </li>
                 <li>
                     Margin of victory to determine winner option?
                 </li>
-                <li className="chiefs-gold">Who's still in, and or who is in the lead (standings)</li>
                 <li className="chiefs-gold">Some Sort of selection for the next week, with message to select by a
-                    certain
-                    time on home page
+                    certain time on home page
                 </li>
-                <li>We need to show the create league for a user in the role of manager</li>
+                <li>Create a private league cost money</li>
                 <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
                 <li>league standings, view other leagues (public leagues)</li>
                 <li>
@@ -111,7 +103,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
         <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
             <h6>Bugs</h6>
             <ol className="features text-start">
-                <li>
+            <li>
                     Toast messages everywhere
                 </li>
             </ol>
