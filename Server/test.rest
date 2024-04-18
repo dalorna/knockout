@@ -1,3 +1,12 @@
+###
+POST http://localhost:3500/auth
+Content-Type: application/json
+
+{
+  "user": "rango_1",
+  "pwd": "RJR#12345_a"
+}
+
 ### test league
 GET http://localhost:3500/league/6614644eb0ac40d41852ae22
 ### test members

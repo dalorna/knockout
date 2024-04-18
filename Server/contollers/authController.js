@@ -10,6 +10,7 @@ const handleLogin = async (req, res) => {
     try {
         const foundUser = await User.findOne({username: user}).exec();
         if (!foundUser) {
+            res.statusMessage = 'user not found';
             return res.sendStatus(401); //Unauthorized
         }
         // evaluate password
