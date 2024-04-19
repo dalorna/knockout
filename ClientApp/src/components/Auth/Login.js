@@ -36,33 +36,39 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            // const handler = axios;
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({user, pwd}),
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 }
-            );
+            ).catch((r) => {
+                throw new Error(r);
+            });
             const accessToken = response?.accessToken;
+            const roles = response?.roles;
             const userInfo = response?.userInfo;
             const leagueIds = response?.leagueIds;
 
-            setAuth({user, pwd, userInfo, leagueIds, accessToken});
+            setAuth({user, pwd, userInfo, roles, leagueIds, accessToken});
             userInfo.username = user;
             userInfo.leagueIds = leagueIds;
+            userInfo.roles = roles;
             setCurrentUser(userInfo);
-            localStorage.setItem('auth', JSON.stringify({ accessToken, leagueIds}))
+            localStorage.setItem('auth', JSON.stringify({ accessToken, leagueIds}));
 
             setUser('');
             setPwd('');
             navigate('/knockout/home');
+
         } catch (err) {
             if (typeof err === 'string') {
                 toast.error(err);
                 setErrMsg('Login Failed');
             }
-            if (!err?.response) {
+            if (err?.message) {
+                setErrMsg(err.message);
+            } else if (!err?.response) {
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 400) {
                 setErrMsg('Missing Username or Password');

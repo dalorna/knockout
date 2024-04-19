@@ -25,8 +25,8 @@ const Join = ({refreshSideMenu}) => {
         setLoading(true)
         const loadLeague = async (page) => {
             const result = await getOpenLeagues(page, currentUser.id);
-            setLeagues(result.leagues.filter(f => f.userId !== currentUser.id));
-            setSeasons(result.leagueSeasons.filter(f => !f.members.map(m => m).includes(currentUser.id)));
+            setLeagues(result.leagues?.filter(f => f.userId !== currentUser.id) || []);
+            setSeasons(result.leagueSeasons?.filter(f => !f.members.map(m => m).includes(currentUser.id)) || []);
             const count = Math.ceil(result.count / leaguesPerPage);
             setPageCount(count);
         }

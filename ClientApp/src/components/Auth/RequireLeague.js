@@ -7,6 +7,10 @@ const RequireLeague = ({allowedLeagues}) => {
     const location = useLocation();
     const leagueIds = auth?.leagueIds ?? JSON.parse(localStorage.getItem('auth'))?.leagueIds;
 
+    if (!auth?.user) {
+        alert('auth.user missing (require league')
+    }
+
     return (
         leagueIds.find(league => allowedLeagues?.includes(league))
             ? <Outlet />
@@ -16,3 +20,4 @@ const RequireLeague = ({allowedLeagues}) => {
     );
 }
 export default RequireLeague;
+

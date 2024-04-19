@@ -32,12 +32,8 @@ const createNewLeague = async (req, res) => {
             description: req.body.description
         });
         foundUser.leagues.push({leagueId: result._id, Paid: !!req?.body.paid});
-        try {
-            await foundUser.save();
-        } catch (err) {
-            res.statusMessage = err.message;
-            return res.sendStatus(500);
-        }
+        await foundUser.save();
+
         res.status(201).json(result);
     } catch (err) {
         res.status(500).json({"message": "Server error attempting to save"})

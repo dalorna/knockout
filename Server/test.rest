@@ -3,8 +3,8 @@ POST http://localhost:3500/auth
 Content-Type: application/json
 
 {
-  "user": "rango_1",
-  "pwd": "RJR#12345_a"
+  "user": "Dalorna",
+  "pwd": "RJR#marlboro1%A"
 }
 
 ### test league

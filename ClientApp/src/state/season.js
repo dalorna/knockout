@@ -83,7 +83,7 @@ export const useCurrentLeagues = () => {
     const [currentUser,] = useRecoilState(currentUserAtom);
     const userId = currentUser.id;
     const memberLeagues = useRecoilValue(leagueMemberFamily({member: {userId: userId}}));
-    const joinedLeagueIds = memberLeagues.map(m => m.leagueId);
+    const joinedLeagueIds = memberLeagues?.map(m => m.leagueId) || [];
     const joinedLeagues = useRecoilValue(leaguesJoinedFamily({leagueIds: joinedLeagueIds}));
     const myLeagues = useRecoilValue(leagueFamily(userId));
     const leaguesToSelectFrom = [];

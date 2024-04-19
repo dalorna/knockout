@@ -7,7 +7,9 @@ const pickSchema = new Schema({
     leagueSeasonId: { type: String, required: true },
     locked: { type: Boolean, default: false},
     gameId: { type: String, required: true },
-    teamId: { type: String, required: true}
+    teamId: { type: String, required: true},
+    scoreDifferential: Number,
+    outCome: Boolean //0 for lose, 1 for win
 })
 
 module.exports = mongoose.model('Pick', pickSchema);

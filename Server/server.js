@@ -46,6 +46,7 @@ app.use(verifyJWT);
 app.use('/league', require('./routes/api/league'));
 app.use('/pick', require('./routes/api/pick'));
 app.use('/leagueSeason', require('./routes/api/leagueSeason'));
+app.use('/season', require('./routes/api/season'));
 
 app.all('*', (req, res) => {
     res.status(404);

@@ -26,6 +26,9 @@ import {currentUserAtom} from '../../state/user';
 import {generateUUID} from '../../utils/helpers';
 import SimpleModal from '../../utils/simpleModal';
 import RequireLeague from '../Auth/RequireLeague';
+import RequireRole from '../Auth/RequireRole';
+import {ROLES} from '../../utils/constants';
+import Admin from '../Admin/Admin';
 
 const currentSelectedLeague = signal(null);
 
@@ -154,6 +157,9 @@ const SideMenu = () => {
         <div className={getClassName('profile')}>
           <Link to="profile">Profile</Link>
         </div>
+        <div id="admin" className={getClassName('admin')}>
+          <Link to="admin">Admin</Link>
+        </div>
       </div>
     </div>
     <div>
@@ -170,6 +176,9 @@ const SideMenu = () => {
           <Route path="profile" element={<Profile />} />
           <Route path="join" element={<Join refreshSideMenu={refreshHandler} />} />
           <Route path="*" element={<Unauthorized />} />
+          <Route element={<RequireRole allowedRoles={[ROLES.SA]} />} >
+            <Route path="admin" element={<Admin />} />
+          </Route>
         </Routes>
       </Suspense>
     </div>
