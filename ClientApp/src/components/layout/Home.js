@@ -80,9 +80,6 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <li className="chiefs-red">
                     Will need a profile page to set (address, city, state, zip) completely optional
                 </li>
-                <li className="chiefs-red">
-                    Fix seasons
-                </li>
                 <li>
                     Margin of victory to determine winner option?
                 </li>

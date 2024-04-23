@@ -41,3 +41,6 @@ Content-Type: application/json
   "name":"One League",
   "userId":"661fc6751de19bfbf12d2e8d"
 }
+###
+GET http://localhost:3500/leagueSeason/6626885694c65ac4cb1f6978/661fc9ac810b7a26b93abdc4
+Content-Type: application/json

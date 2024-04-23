@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const leagueSeasonSchema = new Schema({
-    seasonId: {type: Number, required: true},
+    seasonId: {type: String, required: true},
     leagueId: {type: String, required: true},
     privateCode: {type: String},
     locked: {type: Boolean, default: false},

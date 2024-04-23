@@ -309,6 +309,9 @@ i.member {
 .header-fontSize {
   font-size: 3em;
 }
+.header-fontSize-medium {
+  font-size: 2em;
+}
 
 .loadingOverlay {
   position: absolute;
@@ -344,4 +347,13 @@ i.member {
   background: white;
   border-top: solid 1px gray;
   border-bottom: solid 1px gray;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  overflow: hidden;
+  width: 77vw;
+  height: 45vh;
+  padding: 10px;
 }

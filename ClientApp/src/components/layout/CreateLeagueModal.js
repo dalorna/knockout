@@ -111,7 +111,7 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
             description: data.description,
         });
         await saveLeagueSeason({
-            seasonId: season.id,
+            seasonId: season._id,
             leagueId: league._id,
             privateCode: data.privateCode,
             locked: false

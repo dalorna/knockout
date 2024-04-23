@@ -37,7 +37,7 @@ const Manage = ({currentSelectedLeague}) => {
 
     useEffect(() => {
         const load = async () => {
-            return await getLeagueSeasonByLeagueIdSeasonId(season.id, currentSelectedLeague.value?._id)
+            return await getLeagueSeasonByLeagueIdSeasonId(season._id, currentSelectedLeague.value?._id)
         };
         load().then((res) => {
             if (res?.rules) {
@@ -64,7 +64,7 @@ const Manage = ({currentSelectedLeague}) => {
         createModalRef.current.show(
             {
                 league: selectedLeague,
-                seasonId: season.id,
+                seasonId: season._id,
                 rules: rules
             }
         )
@@ -181,7 +181,8 @@ const Manage = ({currentSelectedLeague}) => {
                                                         </span>
                                                     </span>
                                                     <p className="inlet">
-                                                        <span className={`text__effect ${favorite?.favoriteTeam}-color`}>
+                                                        <span
+                                                            className={`text__effect ${favorite?.favoriteTeam}-color`}>
                                                                     Hard Core
                                                         </span>
                                                     </p>
@@ -252,8 +253,8 @@ const Manage = ({currentSelectedLeague}) => {
                                         <div>
                                             <div>
                                                 <input className="football"
-                                                    type="checkbox" {...register('ties', {disabled: locked || isDisabled[0]})}
-                                                    id="ties"/>
+                                                       type="checkbox" {...register('ties', {disabled: locked || isDisabled[0]})}
+                                                       id="ties"/>
                                                 <label htmlFor="ties">
                                                     <span className="outer-checkbox">
                                                         <span className="inner">
@@ -326,34 +327,34 @@ const Manage = ({currentSelectedLeague}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="p-3 mt-5 flex-container standard-background" style={{marginTop: '7em'}}>
-                            <div className="button-3D" >
-                                <button
-                                    type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
-                                    data-tooltip-content="Save your setting for later"
-                                    aria-label="Save Form" disabled={locked}
-                                    className={`${locked ? ' disabled-button ' : ''}`}
-                                    onClick={() => setIsSubmit(false)}
-                                >
-                                    <Tooltip id="save-tip"/>
-                                    Save Rules
-                                </button>
-                            </div>
-                            <div className="button-3D">
-                                <button
-                                    type="submit" data-tooltip-id="submit-tip" data-tooltip-variant="info"
-                                    data-tooltip-content="This will finalize your league rules!"
-                                    aria-label="Save Form" disabled={locked}
-                                    className={`${locked ? ' disabled-button ' : ''}`}
-                                    onClick={() => setIsSubmit(true)}
-                                >
-                                    <Tooltip id="submit-tip"/>
-                                    Submit Final Rules
-                                </button>
-                            </div>
-                        </div>
                     </>
                 }
+                <div className="p-3 mt-5 flex-container standard-background" style={{marginTop: '7em'}}>
+                    <div className="button-3D">
+                        <button
+                            type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
+                            data-tooltip-content={locked ? 'Locked' : 'Save your setting for later'}
+                            aria-label="Save Form" disabled={locked}
+                            className={`${locked ? ' disabled-button ' : ''}`}
+                            onClick={() => setIsSubmit(false)}
+                        >
+                            <Tooltip id="save-tip"/>
+                            Save Rules
+                        </button>
+                    </div>
+                    <div className="button-3D">
+                        <button
+                            type="submit" data-tooltip-id="submit-tip" data-tooltip-variant="info"
+                            data-tooltip-content={locked ? 'Locked' : 'This will finalize your league rules!'}
+                            aria-label="Save Form" disabled={locked}
+                            className={`${locked ? ' disabled-button ' : ''}`}
+                            onClick={() => setIsSubmit(true)}
+                        >
+                            <Tooltip id="submit-tip"/>
+                            Submit Final Rules
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
         <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit} afterSubmit={refreshRules}/>

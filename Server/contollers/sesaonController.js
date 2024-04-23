@@ -1,15 +1,26 @@
 const Season = require('../model/Season');
 
-
-//get last 10 seasons
 const getLastTenSeason = async (req, res) => {
-
+    try {
+        const currentSeason = await Season.find(null, null, {
+            limit: 10,
+            sort: {year: 1}
+        }).exec();
+        res.status(200).json(currentSeason)
+    } catch (err) {
+        res.status(500).json({"message": `Server error attempting to get\r ${err.message}`})
+    }
 }
-//get current season
 const getCurrentSeason = async (req, res) => {
-
+    try {
+        const currentSeason = await Season.findOne({
+            isCurrent: true
+        }).exec();
+        res.status(200).json(currentSeason)
+    } catch (err) {
+        res.status(500).json({"message": `Server error attempting to get\r ${err.message}`})
+    }
 }
-//insert season
 const createNewSeason = async (req, res) => {
     if (!req?.body.year) {
         return res.status(400).json({"message": `Year is required`})
@@ -31,13 +42,45 @@ const createNewSeason = async (req, res) => {
         res.status(500).json({"message": "Server error attempting to save"})
     }
 }
-//update isCurrentYear
 const updateCurrentYear = async (req, res) => {
+    if (!req?.body.year) {
+        return res.status(400).json({"message": `Year is required`})
+    }
+    try {
+        const lastSeason = await Season.findOne({isCurrent: true}, null, null);
+        lastSeason.isCurrent = false;
+        await lastSeason.save();
 
+        const currentSeason = await Season.findOne({year: req.body.year}, null, null);
+        if (currentSeason) {
+            currentSeason.isCurrent = true;
+            await  currentSeason.save();
+        }
+        res.status(201).json({lastSeason, currentSeason});
+    } catch (err) {
+        res.status(500).json({"message": "Server error attempting to save"})
+    }
 }
-//update current week
 const updateCurrentWeek = async (req, res) => {
+    if (!req?.body.year && !req?.body.week) {
+        return res.status(400).json({"message": `Year and week are required`})
+    }
 
+    try {
+        const lastWeek = await Season.findOne({'week.isCurrent': true}, null, null);
+        lastWeek.weeks[req.body.week].isCurrent = false;
+        const lastWeekResult = await lastWeek.save();
+
+        const currentWeek = await Season.findOne({year: req.body.year}, null, null);
+        let currentWeekResult;
+        if (currentWeek) {
+            currentWeek.weeks[req.body.week].isCurrent = true;
+            currentWeekResult = await currentWeek.save();
+        }
+        res.status(201).json({lastWeekResult, currentWeekResult});
+    } catch (err) {
+        res.status(500).json({"message": "Server error attempting to save"})
+    }
 }
 
 const weeks = [

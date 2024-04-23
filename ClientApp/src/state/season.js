@@ -15,6 +15,7 @@ import {
 } from '../api/league';
 import {currentUserAtom} from './user';
 import { getNFLTeams } from '../api/nfl';
+import { getCurrentSeason } from '../api/season';
 
 const seasonLeagueFamily = atomFamily({
     key: 'season/seasonLeague',
@@ -26,14 +27,6 @@ const seasonLeagueFamily = atomFamily({
         }
     }
 })
-export const useSeasonLeague = (leagueId) => {
-    const season = useCurrentSeason();
-    return useRecoilState(seasonLeagueFamily({seasonId: season.id, leagueId}))
-}
-export const useSeasonLeagueRefresher = (leagueId) => {
-    const season = useCurrentSeason();
-    return useRecoilRefresher_UNSTABLE(seasonLeagueFamily({seasonId: season.id, leagueId}));
-}
 const leagueFamily = atomFamily({
     key: 'league',
     default: async (userId) => {
@@ -44,7 +37,6 @@ const leagueFamily = atomFamily({
         }
     }
 })
-
 const leaguesJoinedFamily = atomFamily({
     key: 'league/joined',
     default: async (leagueIds) => {
@@ -55,7 +47,6 @@ const leaguesJoinedFamily = atomFamily({
         }
     }
 })
-
 const leagueMemberFamily = atomFamily({
     key: 'league/joined',
     default: selectorFamily({
@@ -68,7 +59,45 @@ const leagueMemberFamily = atomFamily({
         }
     })
 })
+const seasonFamily = atomFamily({
+    key: 'leagueSeason',
+    default: async () => {
+        try {
+            return  await getCurrentSeason();
+        } catch {
+            return null;
+        }
+    }
+})
+const teamsFamily = atomFamily({
+    key: 'nfl/teams',
+    default: async () => {
+        try {
+            return getNFLTeams();
+        } catch {
+            return null
+        }
+    }
+})
+const leaguesMemberUsersFamily = atomFamily({
+    key: 'league/members/users',
+    default: async ({seasonId, leagueId}) => {
+        try {
+            return seasonId && leagueId && await getLeagueMemberUsers(seasonId, leagueId);
+        } catch {
+            return [];
+        }
+    }
+})
 
+export const useSeasonLeague = (leagueId) => {
+    const season = useCurrentSeason();
+    return useRecoilState(seasonLeagueFamily({seasonId: season._id, leagueId}))
+}
+export const useSeasonLeagueRefresher = (leagueId) => {
+    const season = useCurrentSeason();
+    return useRecoilRefresher_UNSTABLE(seasonLeagueFamily({seasonId: season._id, leagueId}));
+}
 export const useRefreshLeague = () =>
     useRecoilCallback(
         ({ refresh, reset }) =>
@@ -77,8 +106,6 @@ export const useRefreshLeague = () =>
             reset(leagueMemberFamily(member))
         },[]
     );
-
-
 export const useCurrentLeagues = () => {
     const [currentUser,] = useRecoilState(currentUserAtom);
     const userId = currentUser.id;
@@ -91,52 +118,13 @@ export const useCurrentLeagues = () => {
     leaguesToSelectFrom.push(...(joinedLeagues ?? []));
     return leaguesToSelectFrom;
 }
-
+export const useCurrentSeason = () => {
+    return useRecoilValue(seasonFamily({}));
+}
+export const useTeams = () => {
+    return useRecoilValue(teamsFamily({}));
+}
 export const useCurrentLeagueMembersUsers = (leagueId) => {
     const season = useCurrentSeason();
-    return useRecoilValue(leaguesMemberUsersFamily({seasonId: season.id, leagueId})) || [];
+    return useRecoilValue(leaguesMemberUsersFamily({seasonId: season._id, leagueId})) || [];
 }
-
-
-/*const seasonFamily = atomFamily({
-    key: 'leagueSeason',
-    default: async (year) => {
-        try {
-            return year && getCurrentSeason(year)
-        } catch {
-            return null;
-        }
-    }
-})*/
-export const useCurrentSeason = () => {
-    // return useRecoilValue(seasonFamily((new Date()).getFullYear()))
-    return  {
-            "id": 2,
-            "year": "2024",
-            "over": false
-        };
-}
-const teamsFamily = atomFamily({
-    key: 'nfl/teams',
-    default: async () => {
-        try {
-            return getNFLTeams();
-        } catch {
-            return null
-        }
-    }
-})
-export const useTeams = () => {
-    return useRecoilValue(teamsFamily());
-}
-
-const leaguesMemberUsersFamily = atomFamily({
-    key: 'league/members/users',
-    default: async ({seasonId, leagueId}) => {
-        try {
-            return seasonId && leagueId && await getLeagueMemberUsers(seasonId, leagueId);
-        } catch {
-            return [];
-        }
-    }
-})

@@ -12,7 +12,7 @@ router.route('/')
 router.route('/week')
     .put(verifyRole(ROLES.SA), seasonController.updateCurrentWeek);
 
-router.route('archive')
+router.route('/archive')
     .get(seasonController.getLastTenSeason);
 
 module.exports = router;

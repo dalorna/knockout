@@ -29,6 +29,25 @@ $chiefs-g: rgb(255, 184, 28);
   30px 30px 15px rgba(0,0,0,0.1);
 }
 
+.button-3D button:hover {
+  background: linear-gradient($chiefs-red, $chiefs-gold);
+}
+
+.button-3D label.button-3D {
+  border-radius: 0 !important;
+  position: relative;
+  border: none;
+  padding: 10px 25px;
+  outline: none;
+  font-size: 1.1em;
+  color: #ffffff;
+  background: linear-gradient(#dbdae1, #aeaaba);
+  box-shadow: 5px 5px 5px rgba(0,0,0,.1),
+  15px 15px 15px rgba(0,0,0,0.1),
+  20px 20px 15px rgba(0,0,0,0.1),
+  30px 30px 15px rgba(0,0,0,0.1);
+}
+
 .flex-container {
   display: flex;
   align-items: center;

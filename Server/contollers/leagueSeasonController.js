@@ -10,7 +10,7 @@ const getLeaguesSeason = async (req, res) => {
         const leagueSeason = await LeagueSeason.find({ _id: req.params.id }).exec();
         res.status(200).json(leagueSeason)
     } catch (err) {
-        res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
+        res.status(500).json({"message": `Server error attempting to get\r ${err.message}`})
     }
 }
 const getLeaguesSeasonByLeagueIdSeasonId = async (req, res) => {
@@ -24,7 +24,7 @@ const getLeaguesSeasonByLeagueIdSeasonId = async (req, res) => {
         }).exec();
         res.status(200).json(leagueSeason)
     } catch (err) {
-        res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
+        res.status(500).json({"message": `Server error attempting to get\r ${err.message}`})
     }
 }
 const createLeagueSeason = async (req, res) => {
