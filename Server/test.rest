@@ -44,3 +44,11 @@ Content-Type: application/json
 ###
 GET http://localhost:3500/leagueSeason/6626885694c65ac4cb1f6978/661fc9ac810b7a26b93abdc4
 Content-Type: application/json
+###
+PUT http://localhost:3500/season/week
+Content-Type: application/json
+
+{
+  "year": 2023,
+  "week": {"name": "Week 2", "id": 0, "isCurrent": false, "_id": "6626885694c65ac4cb1f697a"}
+}

@@ -6,6 +6,8 @@ import {CreateNewSeasonModal} from './CreateNewSeasonModal';
 import {ProcessWeekModal} from './ProcessWeekModal';
 import {SetCurrentWeekModal} from './SetCurrentWeekModal';
 import {SetNewCurrentYearModal} from './SetNewCurrentYearModal';
+import useSound from 'use-sound';
+import chime from '../../assets/nfl-draft-chime.mp3'
 
 const Admin = () => {
     const [seasons, setSeasons] = useState([]);
@@ -16,6 +18,7 @@ const Admin = () => {
     const processWeekModalRef = useRef();
     const setCurrentWeekModalRef = useRef();
     const setNewCurrentYearModalRef = useRef();
+    const [play] = useSound(chime);
 
     useEffect(() => {
         setLoading( true);
@@ -33,6 +36,7 @@ const Admin = () => {
         setDisplaySeason(season);
     }
     const createNewSeason = () => {
+        play();
         createSeasonModalRef.current.show(
             {
                 season: currentSeason
@@ -61,6 +65,9 @@ const Admin = () => {
                 season: currentSeason
             }
         )
+    }
+    const refreshWeeks = (season) => {
+        setDisplaySeason(season.currentWeekResult);
     }
 
     return (<>
@@ -105,7 +112,7 @@ const Admin = () => {
                 </div>
                 <div className="mt-5 flex-container">
                     <div className="button-3D">
-                        <button type="button" onClick={createNewSeason}>Create New Year</button>
+                        <button type="button" onClick={createNewSeason}>Create New Season</button>
                     </div>
                     <div className="button-3D">
                         <button type="button" onClick={setNewCurrentYear}>Update Current Year</button>
@@ -114,7 +121,7 @@ const Admin = () => {
             </div>
             <CreateNewSeasonModal actionsRef={createSeasonModalRef}/>
             <ProcessWeekModal actionsRef={processWeekModalRef}/>
-            <SetCurrentWeekModal actionsRef={setCurrentWeekModalRef} />
+            <SetCurrentWeekModal actionsRef={setCurrentWeekModalRef} afterSubmit={refreshWeeks} />
             <SetNewCurrentYearModal actionsRef={setNewCurrentYearModalRef} />
         </div>
     </>);

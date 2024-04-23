@@ -3,7 +3,7 @@ import {useImperativeHandle, useState } from 'react';
 import toast from 'react-hot-toast';
 import {updateCurrentWeek} from '../../api/season';
 
-export const SetCurrentWeekModal = ({actionsRef}) => {
+export const SetCurrentWeekModal = ({actionsRef, afterSubmit}) => {
     const [modal, modalRef] = useModalInstance();
     const [season, setSeason] = useState(null);
     const [week, setWeek] = useState(null);
@@ -24,10 +24,12 @@ export const SetCurrentWeekModal = ({actionsRef}) => {
     const setCurrentWeek = async () => {
         if(season && week) {
             try {
-                await updateCurrentWeek({
-                    year: season.year
+                const updatedSeason = await updateCurrentWeek({
+                    year: season.year,
+                    week
                 });
                 // after submit needs to update the screen to show the current week
+                afterSubmit(updatedSeason)
                 toast.success('Current Week changes');
                 modal.hide();
             } catch (err) {

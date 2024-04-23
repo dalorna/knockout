@@ -10,7 +10,7 @@ router.route('/')
     .put(verifyRole(ROLES.SA), seasonController.updateCurrentYear);
 
 router.route('/week')
-    .put(verifyRole(ROLES.SA), seasonController.updateCurrentWeek);
+    .put(seasonController.updateCurrentWeek);
 
 router.route('/archive')
     .get(seasonController.getLastTenSeason);
