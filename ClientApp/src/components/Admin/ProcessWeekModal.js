@@ -1,9 +1,6 @@
 import {useModalInstance} from '../../utils/simpleModal';
 import {useImperativeHandle, useState } from 'react';
 import toast from 'react-hot-toast';
-import {processWeek} from '../../api/process';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCheck, faInfoCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 export const ProcessWeekModal = ({actionsRef, afterSubmit}) => {
     const [modal, modalRef] = useModalInstance();
