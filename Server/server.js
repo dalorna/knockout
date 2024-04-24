@@ -41,6 +41,8 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
+app.use('/process', require('./routes/api/process'));
+
 // protected routes
 app.use(verifyJWT);
 app.use('/leagueSeason', require('./routes/api/leagueSeason'));

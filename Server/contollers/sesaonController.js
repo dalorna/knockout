@@ -62,7 +62,6 @@ const updateCurrentYear = async (req, res) => {
     }
 }
 const updateCurrentWeek = async (req, res) => {
-    console.log('here 1');
     if (!req?.body.year && !req?.body.week) {
         return res.status(400).json({"message": `Year and week are required`})
     }
@@ -70,16 +69,10 @@ const updateCurrentWeek = async (req, res) => {
     try {
         const seasonToChange = await Season.findOne({year: req.body.year}, null, null);
         const changeWeek = seasonToChange.weeks.find(f => f.isCurrent);
-        console.log('changeWeek.id ', changeWeek.id);
-        console.log('seasonToChange.weeks[req.body.week.id].id ', seasonToChange.weeks[req.body.week.id].id);
-        console.log('t/f', changeWeek.id !== seasonToChange.weeks[req.body.week.id].id);
         if (changeWeek.id !== seasonToChange.weeks[req.body.week.id].id) {
-            console.log('lastWeek', seasonToChange.weeks[req.body.week.id]);
             seasonToChange.weeks[changeWeek.id].isCurrent = false;
             const lastWeekResult = await seasonToChange.save();
-            console.log('lastWeekResult', lastWeekResult);
 
-            // const currentWeek = await Season.findOne({year: req.body.year}, null, null);
             let currentWeekResult;
             if (seasonToChange) {
                 seasonToChange.weeks[req.body.week.id].isCurrent = true;

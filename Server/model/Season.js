@@ -9,7 +9,8 @@ const seasonSchema = new Schema({
         {
             name: String,
             id: Number,
-            isCurrent: {type: Boolean, default: false}
+            isCurrent: {type: Boolean, default: false},
+            isProcessed: {type: Boolean, default: false}
         }
     ]
 });

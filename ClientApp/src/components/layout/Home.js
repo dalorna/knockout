@@ -65,11 +65,11 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <li>
                     Delete League... deactivate league
                 </li>
-                <li className="chiefs-red">
-                    protect the routes
+                <li className="chiefs-gold">
+                    3 fonts for the 3 sections (menu, header, content)
                 </li>
                 <li className="chiefs-red">
-                    3 fonts for the 3 sections (menu, header, content)
+                    Disabled button needs to show disable with hover effect gone
                 </li>
                 <li className="chiefs-red">
                     Website Header reformat (Nav top)
@@ -79,6 +79,9 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </li>
                 <li className="chiefs-red">
                     Will need a profile page to set (address, city, state, zip) completely optional
+                </li>
+                <li className="chiefs-red">
+                    Can't pick after game start (probably need to have up until 5 minutes before game start
                 </li>
                 <li>
                     Margin of victory to determine winner option?

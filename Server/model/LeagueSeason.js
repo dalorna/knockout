@@ -14,6 +14,15 @@ const leagueSeasonSchema = new Schema({
         earlyPoint: { type: Boolean, default: false},
         cantPickSame: {type: Boolean, default: false}
     },
+    weeklyResults: [{
+        userId: String,
+        alive: Boolean, //0 for out, 1 for still in
+        totalScoreDifferential: Number,
+        weekResults: [{
+            win: Boolean,
+            week: Number
+        }]
+    }],
     members: [{userId: String, username: String}],
     maxMembers: {type: Number, default: 25, max: 100}
 })

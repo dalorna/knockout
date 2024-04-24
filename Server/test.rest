@@ -6,9 +6,9 @@ Content-Type: application/json
   "user": "Dalorna",
   "pwd": "RJR#marlboro1%A"
 }
-
 ### test league
 GET http://localhost:3500/league/6614644eb0ac40d41852ae22
+Content-Type: application/json
 ### test members
 POST http://localhost:3500/leagueSeason/members
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJ1c2VybmFtZSI6InJhbmdvXzEiLCJyb2xlcyI6WzIwMDFdLCJsZWFndWVJZHMiOlsiNjYxZmM5YWM4MTBiN2EyNmI5M2FiZGM0Il19LCJpYXQiOjE3MTMzNjUyMjEsImV4cCI6MTcxMzM2NjEyMX0.xvoIUfaSHQoJrBQHmJba556c-eFhSMAqQcbZ84-_C-Y
@@ -32,6 +32,7 @@ authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJ1c
 Content-Type: application/json
 ###
 GET http://localhost:3500/leagueSeason/join/open/0?userId=6617e05bb8f33a77085ba49f
+Content-Type: application/json
 ###
 POST http://localhost:3500/league
 Content-Type: application/json
@@ -51,4 +52,12 @@ Content-Type: application/json
 {
   "year": 2023,
   "week": {"name": "Week 2", "id": 0, "isCurrent": false, "_id": "6626885694c65ac4cb1f697a"}
+}
+###
+POST http://localhost:3500/process
+Content-Type: application/json
+
+{
+  "leagueSeasonId": "661fc9ac810b7a26b93abdc8",
+  "week": {"name": "Week 1", "id": 0, "isCurrent": true, "_id": "6626885694c65ac4cb1f6979"}
 }
