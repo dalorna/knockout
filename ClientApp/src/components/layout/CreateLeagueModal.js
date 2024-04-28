@@ -5,6 +5,10 @@ import {saveLeague, saveLeagueSeason} from '../../api/league';
 import { ErrorFeedback, generateUUID } from '../../utils/helpers';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import {useRecoilState} from 'recoil';
+import {currentUserAtom} from '../../state/user';
+import useAuth from '../../state/useAuth';
+import axios from '../../api/axios';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('League name is required')
@@ -90,6 +94,9 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
     const [modal, modalRef] = useModalInstance();
     const [user, setUser] = useState(null);
     const [season, setSeason] = useState(null);
+    const [, setCurrentUser ] = useRecoilState(currentUserAtom);
+    const {auth, setAuth } = useAuth();
+    const LOGIN_URL = '/auth';
 
     useImperativeHandle(
         actionsRef,
@@ -103,7 +110,30 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
         }),
         [modal]
     );
-    
+    const loginSilentForLeague = async () => {
+        const user = auth.user;
+        const pwd = auth.pwd;
+        const response = await axios.post(LOGIN_URL,
+            JSON.stringify({user, pwd}),
+            {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true
+            }
+        ).catch((r) => {
+            throw new Error(r);
+        });
+        const accessToken = response?.accessToken;
+        const roles = response?.roles;
+        const userInfo = response?.userInfo;
+        const leagueIds = response?.leagueIds;
+
+        setAuth({user, pwd, userInfo, roles, leagueIds, accessToken});
+        userInfo.username = user;
+        userInfo.leagueIds = leagueIds;
+        userInfo.roles = roles;
+        setCurrentUser(userInfo);
+        localStorage.setItem('auth', JSON.stringify({ accessToken, leagueIds}));
+    }
     const onConfirm = async (data) => {
         const league = await saveLeague({
             userId: user.id,
@@ -116,6 +146,7 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
             privateCode: data.privateCode,
             locked: false
         });
+        await loginSilentForLeague();
         afterSubmit(league);
         modal.hide();
     }

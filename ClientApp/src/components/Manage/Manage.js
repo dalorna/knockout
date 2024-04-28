@@ -5,6 +5,7 @@ import {useCurrentSeason, useSeasonLeagueRefresher} from '../../state/season';
 import { SaveRulesModal } from './SaveRulesModal';
 import { loser, survivor } from '../../utils/constants';
 import {getLeagueSeasonByLeagueIdSeasonId} from '../../api/league';
+import {ShowPrivateCodeModal} from './ShowPrivateCodeModal';
 
 const Manage = ({currentSelectedLeague}) => {
     const season = useCurrentSeason();
@@ -13,7 +14,9 @@ const Manage = ({currentSelectedLeague}) => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [isDisabled, setIsDisabled] = useState([false, false, false, false]);
     const [locked, setLocked] = useState(false);
+    const [privateCode, setPrivateCode] = useState(null);
     const createModalRef = useRef();
+    const privateCodeModalRef = useRef();
     const favorite = JSON.parse(localStorage.getItem('favoriteTeam'));
 
     const defaultValues = {
@@ -45,6 +48,7 @@ const Manage = ({currentSelectedLeague}) => {
                     setHardCore();
                 }
                 setLocked(res.locked);
+                setPrivateCode(res.privateCode);
                 reset(res.rules);
             } else {
                 reset(defaultValues);
@@ -69,6 +73,13 @@ const Manage = ({currentSelectedLeague}) => {
             }
         )
     };
+    const showPrivateCode = () => {
+        privateCodeModalRef.current.show(
+            {
+                privateCode
+            }
+        )
+    }
     const refreshRules = async (locked) => {
         refresher();
         setLocked(locked);
@@ -330,6 +341,20 @@ const Manage = ({currentSelectedLeague}) => {
                     </>
                 }
                 <div className="p-3 mt-5 flex-container standard-background" style={{marginTop: '7em'}}>
+                    {
+                        privateCode !== 'false' &&
+                        <div className="button-3D">
+                            <button
+                                type="button" data-tooltip-id="privateCode-tip" data-tooltip-variant="info"
+                                data-tooltip-content="Show Private Code"
+                                aria-label="Show Private Code"
+                                onClick={() => showPrivateCode()}
+                            >
+                                <Tooltip id="privateCode-tip"/>
+                                Show Private Code
+                            </button>
+                        </div>
+                    }
                     <div className="button-3D">
                         <button
                             type="submit" data-tooltip-id="save-tip" data-tooltip-variant="info"
@@ -358,6 +383,7 @@ const Manage = ({currentSelectedLeague}) => {
             </form>
         </div>
         <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit} afterSubmit={refreshRules}/>
+        <ShowPrivateCodeModal actionsRef={privateCodeModalRef}/>
     </>);
 }
 export default Manage;

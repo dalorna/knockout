@@ -56,27 +56,19 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
         <div className="row p-3 standard-background mx-3 mt-1 overflow-auto" style={{maxHeight: '60vh'}}>
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
-                <li>
-                    League Edit screen (name, add season to league)... leave league
+                <li className="chiefs-red">
+                    reset pass word
+                </li>
+                <li className="chiefs-red">
+                    Send email to user with private code
                 </li>
                 <li className="chiefs-red">
                     cap league with number of players if no private code 50 Max (max needs implemented)
                 </li>
-                <li>
-                    Delete League... deactivate league
-                </li>
-                <li>
-                    3 fonts for the 3 sections (menu, header, content)
-                </li>
                 <li className="chiefs-red">
                     Disabled button needs to show disable with hover effect gone
                 </li>
-                <li className="chiefs-red">
-                    Website Header reformat (Nav top)
-                </li>
-                <li className="chiefs-red">
-                    reset pass word
-                </li>
+
                 <li className="chiefs-red">
                     Will need a profile page to set (address, city, state, zip) completely optional. Change Password
                 </li>
@@ -86,24 +78,41 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <li className="chiefs-red">
                     refresh issues on standings and picks
                 </li>
-                <li>
-                    Margin of victory to determine winner option?
-                </li>
                 <li className="chiefs-red">Some Sort of selection for the next week, with message to select by a
                     certain time on home page
                 </li>
+
+                <li>
+                    Margin of victory to determine winner option? sort by points if never out
+                </li>
+                <li>
+                    Delete League... deactivate league
+                </li>
+                <li>
+                    3 fonts for the 3 sections (menu, header, content)
+                </li>
+                <li>
+                    League Edit screen (name, add season to league)... leave league
+                </li>
+
                 <li>Create a private league cost money</li>
-                <li>Need to create role Visitor. Commissioner is done, SA is done, user is done </li>
+                <li>Need to create role Visitor. Commissioner is done, SA is done, user is done</li>
                 <li>
                     Footer
+                </li>
+                <li>
+                    Website Header reformat (Nav top)
                 </li>
             </ol>
         </div>
         <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
             <h6>Bugs</h6>
             <ol className="features text-start">
-            <li>
-                    Toast messages everywhere
+                <li>
+                    hide admin
+                </li>
+                <li>
+                    Auto loss if pick is not in on time
                 </li>
             </ol>
         </div>

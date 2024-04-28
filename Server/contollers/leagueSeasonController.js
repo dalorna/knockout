@@ -33,10 +33,11 @@ const createLeagueSeason = async (req, res) => {
     }
 
     try {
+        const code = req.body.privateCode.length === 0 ? 'false' : req.body.privateCode;
         const result = await LeagueSeason.create({
             seasonId: req.body.seasonId,
             leagueId: req.body.leagueId,
-            privateCode: !!req.body.privateCode,
+            privateCode: code,
             locked: !!req.body.locked,
             rules: {
                 canSeePick: req.body.rules?.canSeePick,

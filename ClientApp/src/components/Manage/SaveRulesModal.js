@@ -27,6 +27,7 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
     const saveCurrentRules = async () => {
         try {
             const leagueSeason = await getLeagueSeasonByLeagueIdSeasonId(seasonId, league._id);
+            const cantPick = rules.gameType === 'survivor' ? true : rules.cantPickSame;
             if (leagueSeason) {
                 leagueSeason.locked = isSubmit;
                 leagueSeason.rules.canSeePick = rules.canSeePick;
@@ -34,7 +35,7 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
                 leagueSeason.rules.elimination = rules.elimination;
                 leagueSeason.rules.gameType = rules.gameType;
                 leagueSeason.rules.ties = rules.ties;
-                leagueSeason.rules.cantPickSame = rules.cantPickSame
+                leagueSeason.rules.cantPickSame = cantPick
                 await updateLeagueSeason(leagueSeason);
             } else {
                 const newLeagueSeason = {
@@ -48,7 +49,7 @@ export const SaveRulesModal = ({actionsRef, isSubmit, afterSubmit}) => {
                         elimination: rules.elimination,
                         gameType: rules.gameType,
                         ties: rules.ties,
-                        cantPickSame: rules.cantPickSame
+                        cantPickSame: cantPick
                     }
                 }
                 await saveLeagueSeason(newLeagueSeason);
