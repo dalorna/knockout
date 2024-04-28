@@ -9,4 +9,10 @@ router.route('/')
 router.route('/:weekId')
     .post(pickController.getPick)
 
+router.route('/:leagueSeasonId/:weekId')
+    .get(pickController.picksByWeek)
+
+router.route('/:leagueSeasonId/user/:userId')
+    .get(pickController.getPicksByUser)
+
 module.exports = router;

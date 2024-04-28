@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import {useNavigate, useLocation} from 'react-router-dom';
 import '../../styles/teams.scss';
-import { signal } from '@preact/signals';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import React, {Suspense, useEffect, useState} from 'react';
 import {useCurrentLeagues} from '../../state/season';
@@ -30,8 +29,6 @@ import RequireRole from '../Auth/RequireRole';
 import {ROLES} from '../../utils/constants';
 import Admin from '../Admin/Admin';
 
-const currentSelectedLeague = signal(null);
-
 const SideMenu = () => {
   const { setAuth } = useAuth();
   const leagues = useCurrentLeagues();
@@ -41,7 +38,7 @@ const SideMenu = () => {
   const [allLeagues, setAllLeagues] = useState([]);
   const [currentLeague, setCurrentLeague] = useState(null);
   const [show, setShow] = useState(false);
-  const [refreshLeagues, setRefreshLeagues] = useState('')
+  const [refreshLeagues, setRefreshLeagues] = useState('');
   const [modalProps , setModalProps]= useState({ modalTitle: 'Pick a League', modalBody: 'You Must pick a league before you can access the menu!', handleClose: () => setShow(false)});
 
   useEffect(() => {
@@ -54,7 +51,6 @@ const SideMenu = () => {
       }
     }
     if (leagues.length > 0 && selectedLeagueStorage && leagues.find(f => f._id === JSON.parse(selectedLeagueStorage)._id))  {
-      currentSelectedLeague.value = JSON.parse(selectedLeagueStorage);
       setCurrentLeague(JSON.parse(selectedLeagueStorage));
     } else {
       setCurrentLeague(null);
@@ -69,7 +65,6 @@ const SideMenu = () => {
   }, [])
 
   const setSelectedLeague = (league) => {
-    currentSelectedLeague.value = league;
     localStorage.setItem('selectedLeague', JSON.stringify(league));
     setCurrentLeague(league);
   }
@@ -77,7 +72,7 @@ const SideMenu = () => {
     showNoLeague();
   }
   const canManage = () => {
-    return (currentSelectedLeague.value && (currentSelectedLeague.value?.userId === currentUser.id));
+    return (currentLeague && (currentLeague?.userId === currentUser.id));
   }
   const showNoLeague = () => {
     setModalProps(prev => {
@@ -97,7 +92,7 @@ const SideMenu = () => {
   const getClassName = (path, canDisable) => {
     let style = `side-nav-3D`
     if (canDisable) {
-      style += (!currentSelectedLeague.value?._id ? ' disabled ' : '');
+      style += (!currentLeague?._id ? ' disabled ' : '');
     }
     style +=  (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === path ? ' selected ' : '');
     return style;
@@ -136,19 +131,19 @@ const SideMenu = () => {
             canManage() && <div id="manage" className={getClassName('manage')}><Link to="manage">Manage</Link></div>
         }
         <div id="picks" className={getClassName('picks', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Picks"
+          <SafeLink disabled={!currentLeague?._id} callback={showNoLeagueModal} text="Picks"
                     path="picks"/>
         </div>
         <div id="members" className={getClassName('members', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Members"
+          <SafeLink disabled={!currentLeague?._id} callback={showNoLeagueModal} text="Members"
                     path="members"/>
         </div>
         <div className={getClassName('standings', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Standings"
+          <SafeLink disabled={!currentLeague?._id} callback={showNoLeagueModal} text="Standings"
                     path="standings"/>
         </div>
         <div className={getClassName('rules', true)}>
-          <SafeLink disabled={!currentSelectedLeague.value?._id} callback={showNoLeagueModal} text="Rules"
+          <SafeLink disabled={!currentLeague?._id} callback={showNoLeagueModal} text="Rules"
                     path="rules"/>
         </div>
         <div className={getClassName('join')}>
@@ -167,10 +162,10 @@ const SideMenu = () => {
         <Routes>
           <Route path="home" element={<Home leagues={leagues} setLeagues={setAllLeagues} refreshSideMenu={refreshHandler} />} />
           <Route element={<RequireLeague allowedLeagues={currentUser.leagueIds?.map(m => m) ?? []} /> }>
-            <Route path="manage" element={<Manage currentSelectedLeague={currentSelectedLeague} />} />
+            <Route path="manage" element={<Manage currentSelectedLeague={currentLeague} />} />
           </Route>
           <Route path="members" element={<Members />} />
-          <Route path="standings" element={<Standings currentSelectedLeague={currentSelectedLeague} />} />
+          <Route path="standings" element={<Standings currentSelectedLeague={currentLeague} refreshSideMenu={refreshHandler} />} />
           <Route path="picks" element={<Picks />} />
           <Route path="rules" element={<Rules  />} />
           <Route path="profile" element={<Profile />} />

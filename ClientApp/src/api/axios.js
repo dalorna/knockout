@@ -17,7 +17,7 @@ const createApiInstance = () => {
     instance.interceptors.response.use(dataOnly, (error) => {
         let reason;
         if (error.response.status === 400) {
-            reason = 'Bad Request';
+            reason = error?.response?.statusText ?? 'Bad Request';
         }
         if (error.response.status === 401) {
             localStorage.removeItem('auth');

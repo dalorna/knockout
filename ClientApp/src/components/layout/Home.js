@@ -43,7 +43,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
             <div style={{fontSize: '2em'}} className="grey-begin text-shadow-black">{`Welcome ${currentUser?.firstName} ${currentUser?.lastName}`}</div>
         </div>
         <div className="row p-3 mx-3 mt-1 standard-background">
-            <h5>Create New League</h5>
+            <h5>{`Create New League: ${season.weeks.find(f => f.isCurrent).name}`}</h5>
             <div className="flex-container">
                 <div className="button-3D">
                     <button onClick={create}>Create League</button>
@@ -65,7 +65,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <li>
                     Delete League... deactivate league
                 </li>
-                <li className="chiefs-gold">
+                <li>
                     3 fonts for the 3 sections (menu, header, content)
                 </li>
                 <li className="chiefs-red">
@@ -75,29 +75,28 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     Website Header reformat (Nav top)
                 </li>
                 <li className="chiefs-red">
-                    standings page need created - Who's still in, and or who is in the lead (standings)
+                    reset pass word
                 </li>
                 <li className="chiefs-red">
-                    Will need a profile page to set (address, city, state, zip) completely optional
+                    Will need a profile page to set (address, city, state, zip) completely optional. Change Password
                 </li>
                 <li className="chiefs-red">
                     Can't pick after game start (probably need to have up until 5 minutes before game start
                 </li>
+                <li className="chiefs-red">
+                    refresh issues on standings and picks
+                </li>
                 <li>
                     Margin of victory to determine winner option?
                 </li>
-                <li className="chiefs-gold">Some Sort of selection for the next week, with message to select by a
+                <li className="chiefs-red">Some Sort of selection for the next week, with message to select by a
                     certain time on home page
                 </li>
                 <li>Create a private league cost money</li>
-                <li>Need to create roles, System Administrator, League Administrator, Player, Visitor?</li>
-                <li>league standings, view other leagues (public leagues)</li>
+                <li>Need to create role Visitor. Commissioner is done, SA is done, user is done </li>
                 <li>
                     Footer
                 </li>
-                <li>Rules Engine</li>
-                <li>Identity Server</li>
-
             </ol>
         </div>
         <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">

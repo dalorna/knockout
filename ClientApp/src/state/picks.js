@@ -4,26 +4,25 @@ import {
     useRecoilRefresher_UNSTABLE,
     selectorFamily
 } from 'recoil';
-import {getUserPicks} from '../api/picks';
+import {getPicksByUser, getUserPicks} from '../api/picks';
 
-const pickAtomFamily = atomFamily({
-    key: 'pick',
+const pickUserAtomFamily = atomFamily({
+    key: 'pick/user',
     default: selectorFamily({
-        key: 'pick/default',
-        get: ({userId, leagueSeasonId, weekId}) => async () => {
+        key: 'pick/user/default',
+        get: ({userId, leagueSeasonId}) => async () => {
             try {
-                return await getUserPicks(userId, leagueSeasonId, weekId);
+                return await getPicksByUser(userId, leagueSeasonId);
             } catch {
-                return { data: []};
+                return [];
             }
         }
     })
 })
 
-export const useCurrentPickLeagueSeasonWeek = (userId, leagueSeasonId, weekId) => {
-    return useRecoilValue(pickAtomFamily({userId, leagueSeasonId, weekId}));
+export const useCurrentPickRefresh = (userId, leagueSeasonId) => {
+    return useRecoilRefresher_UNSTABLE(pickUserAtomFamily({userId, leagueSeasonId}))
 }
-
-export const useCurrentPickRefresh = (userId, leagueSeasonId, weekId) => {
-    return useRecoilRefresher_UNSTABLE(pickAtomFamily({userId, leagueSeasonId, weekId}))
+export const useCurrentUserPicksLeagueSeason = (userId, leagueSeasonId) => {
+    return useRecoilValue(pickUserAtomFamily({userId, leagueSeasonId}));
 }

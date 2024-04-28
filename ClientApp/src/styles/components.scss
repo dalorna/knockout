@@ -104,3 +104,10 @@ $chiefs-g: rgb(255, 184, 28);
 .side-nav-3D.disabled button {
   background: linear-gradient(red, #aeaaba);
 }
+
+.standings-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  overflow: auto;
+  height: 20vh;
+}

@@ -80,7 +80,7 @@ const Admin = () => {
                 <div className="button-3D">
                     <label className="button-3D" style={{marginRight: '0px', height: '46px'}}>Year: </label>
                     <Dropdown>
-                        <DropdownButton title={displaySeason?.year ?? 'Select Current Year'} id="year Select">
+                        <DropdownButton title={displaySeason?.year ?? 'Select Current Year'} id="yearSelect">
                             {
                                 seasons.map(season => <Dropdown.Item key={season._id} onClick={() => setSelectedYear(season)} >{season.year}</Dropdown.Item>)
                             }

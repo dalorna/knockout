@@ -357,3 +357,17 @@ i.member {
   height: 45vh;
   padding: 10px;
 }
+
+.overlay-alive {
+  position: absolute;
+  background: rgba(10, 14, 11, .5);
+  z-index: 50000;
+  height: 78%;
+  width: 78%;
+  top: 172px;
+  left: 182px;
+}
+
+.disabled-pick {
+  background: linear-gradient(rgba(0, 0, 0, .75), #ffffff)
+}

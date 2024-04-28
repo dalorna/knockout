@@ -88,7 +88,7 @@ const handleGetUser = async (req, res) => {
             });
 
     } catch (e) {
-        res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
+        res.status(500).json({"message": `Server error attempting to get\r ${e.message}`})
     }
 }
 

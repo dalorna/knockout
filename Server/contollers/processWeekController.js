@@ -13,9 +13,12 @@ const processWeekByLeagueSeasonId = async (req, res) => {
         if (leagueSeason) {
             const season = await Season.findOne({_id: leagueSeason.seasonId}, null, null).exec();
             if (season) {
-                const picks = await Pick.find({ leagueSeasonId: req.body.leagueSeasonId }, null, null).exec();
                 const weekToProcess = req.body.week.id + 1;
-                if (picks.some(s => !s.processed)) {
+                const picks = await Pick.find({
+                    leagueSeasonId: req.body.leagueSeasonId,
+                    weekId: weekToProcess
+                }, null, null).exec();
+                if (picks.length > 0) {
                     const leagueResults = await processPicks(picks, leagueSeason, weekToProcess, req.body.processDateTime);
                     return res.status(201).json(leagueResults);
                 }
@@ -33,8 +36,31 @@ const processWeekByLeagueSeasonId = async (req, res) => {
     }
 }
 
+const setProcessedToFalse = async (req, res) => {
+    try {
+        const weekToProcess = 1;
+        const picks = await Pick.find({
+                    leagueSeasonId: req.params.leagueSeasonId,
+                    weekId: weekToProcess
+                }, null, null).exec();
+        if (picks.length === 0) {
+            return res.status(204);
+        }
+        for(const pick of picks) {
+            pick.processed = false;
+            pick.save();
+        }
+
+        return res.status(200).json(picks);
+
+    } catch (err) {
+        res.status(500).json({"message": `Server error attempting to get\r ${err.message}`})
+    }
+}
+
 module.exports = {
-    processWeekByLeagueSeasonId
+    processWeekByLeagueSeasonId,
+    setProcessedToFalse
 }
 
 const options = {
@@ -141,10 +167,14 @@ const processLeague = (processedPicks, leagueSeason, week) => {
     for(const pick of processedPicks) {
         const weekResults = {
             win: pick.win,
+            teamId: pick.teamId,
+            scoreDifferential: pick.scoreDifferential,
+            points: pick.points,
             week
         };
         const userResults = currentWeeklyResults.find(f => f.userId === pick.userId) ?? {
             userId: pick.userId,
+            username: pick.username,
             alive: true,
             totalScoreDifferential: 0,
             weekResults: []
@@ -154,11 +184,13 @@ const processLeague = (processedPicks, leagueSeason, week) => {
         if (leagueSeason.rules.elimination === 'hardCore') {
             userResults.alive = pick.win;
         } else if (leagueSeason.rules.elimination === 'oneMulligan') {
-            userResults.alive = userResults.weekResults.map(m => m.win).reduce((t, val) => t + (!val * 1), 0) > 1
+            userResults.alive = !(userResults.weekResults.map(m => m.win).reduce((t, val) => t + (!val * 1), 0) >= 1)
         } else if (leagueSeason.rules.elimination === 'twoMulligan') {
-            userResults.alive = userResults.weekResults.map(m => m.win).reduce((t, val) => t + (!val * 1), 0) > 2
+            userResults.alive = !(userResults.weekResults.map(m => m.win).reduce((t, val) => t + (!val * 1), 0) >= 2)
         }
-        currentWeeklyResults.push(userResults);
+        if (!userResults._id) {
+            currentWeeklyResults.push(userResults);
+        }
     }
     leagueSeason.weeklyResults = currentWeeklyResults;
     leagueSeason.save();

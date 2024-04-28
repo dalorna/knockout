@@ -54,10 +54,42 @@ Content-Type: application/json
   "week": {"name": "Week 2", "id": 0, "isCurrent": false, "_id": "6626885694c65ac4cb1f697a"}
 }
 ###
+POST http://localhost:3500/pick
+Content-Type: application/json
+
+{
+  "id": "57038ce3-9402-4266-85ba-34332042b12f",
+  "userId": "661fc6751de19bfbf12d2e8d",
+  "username": "rango_1",
+  "weekId": 1,
+  "leagueSeasonId": "661fc9ac810b7a26b93abdc8",
+  "locked": true,
+  "gameId": "20230910_SF@PIT",
+  "teamId": "28"
+}
+###
 POST http://localhost:3500/process
 Content-Type: application/json
 
 {
   "leagueSeasonId": "661fc9ac810b7a26b93abdc8",
-  "week": {"name": "Week 1", "id": 0, "isCurrent": true, "_id": "6626885694c65ac4cb1f6979"}
+  "week": {"name": "Week 4", "id": 3, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
 }
+###
+POST http://localhost:3500/process
+Content-Type: application/json
+
+{
+  "leagueSeasonId": "662d3fd4904552602e73879c",
+  "week": {"name": "Week 4", "id": 3, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
+}
+###
+GET http://localhost:3500/process/setFalse/662d3fd4904552602e73879c
+Content-Type: application/json
+
+###
+GET http://localhost:3500/pick/661fc9ac810b7a26b93abdc8/2
+Content-Type: application/json
+###
+GET http://localhost:3500/pick/661fc9ac810b7a26b93abdc8/user/662aa657cbcb379821f4d339
+Content-Type: application/json

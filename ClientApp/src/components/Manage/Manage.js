@@ -9,7 +9,7 @@ import {getLeagueSeasonByLeagueIdSeasonId} from '../../api/league';
 const Manage = ({currentSelectedLeague}) => {
     const season = useCurrentSeason();
     const selectedLeague = JSON.parse(localStorage.getItem('selectedLeague'));
-    const refresher = useSeasonLeagueRefresher(selectedLeague.value?._id);
+    const refresher = useSeasonLeagueRefresher(selectedLeague?._id);
     const [isSubmit, setIsSubmit] = useState(false);
     const [isDisabled, setIsDisabled] = useState([false, false, false, false]);
     const [locked, setLocked] = useState(false);
@@ -37,7 +37,7 @@ const Manage = ({currentSelectedLeague}) => {
 
     useEffect(() => {
         const load = async () => {
-            return await getLeagueSeasonByLeagueIdSeasonId(season._id, currentSelectedLeague.value?._id)
+            return await getLeagueSeasonByLeagueIdSeasonId(season._id, currentSelectedLeague?._id)
         };
         load().then((res) => {
             if (res?.rules) {
@@ -50,7 +50,7 @@ const Manage = ({currentSelectedLeague}) => {
                 reset(defaultValues);
             }
         })
-    }, [reset, currentSelectedLeague.value])
+    }, [reset, currentSelectedLeague])
 
     const handleOnSubmit = async (data) => {
         const rules = {

@@ -16,11 +16,15 @@ const leagueSeasonSchema = new Schema({
     },
     weeklyResults: [{
         userId: String,
+        username: String,
         alive: Boolean, //0 for out, 1 for still in
         totalScoreDifferential: Number,
         weekResults: [{
             win: Boolean,
-            week: Number
+            week: Number,
+            teamId: String,
+            points: Number,
+            scoreDifferential: Number
         }]
     }],
     members: [{userId: String, username: String}],

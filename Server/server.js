@@ -42,12 +42,12 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
 app.use('/process', require('./routes/api/process'));
+app.use('/pick', require('./routes/api/pick'));
 
 // protected routes
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use('/leagueSeason', require('./routes/api/leagueSeason'));
 app.use('/league', require('./routes/api/league'));
-app.use('/pick', require('./routes/api/pick'));
 app.use('/season', require('./routes/api/season'));
 
 app.all('*', (req, res) => {
