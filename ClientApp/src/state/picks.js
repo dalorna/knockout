@@ -4,7 +4,7 @@ import {
     useRecoilRefresher_UNSTABLE,
     selectorFamily
 } from 'recoil';
-import {getPicksByUser, getUserPicks} from '../api/picks';
+import {getPicksByUser} from '../api/picks';
 
 const pickUserAtomFamily = atomFamily({
     key: 'pick/user',

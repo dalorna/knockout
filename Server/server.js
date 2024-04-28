@@ -45,7 +45,7 @@ app.use('/process', require('./routes/api/process'));
 app.use('/pick', require('./routes/api/pick'));
 
 // protected routes
-// app.use(verifyJWT);
+app.use(verifyJWT);
 app.use('/leagueSeason', require('./routes/api/leagueSeason'));
 app.use('/league', require('./routes/api/league'));
 app.use('/season', require('./routes/api/season'));
