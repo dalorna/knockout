@@ -11,7 +11,22 @@ import useAuth from '../../state/useAuth';
 import axios from '../../api/axios';
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('League name is required')
+    name: Yup.string().required('League name is required').min(5, 'League name must be 5 character long'),
+    maxMembers: Yup.number()
+        .required('Max number of players is required')
+        .min(10, 'The number of players is 10')
+        .positive('Must be a positive number')
+        .typeError('Please enter the max number of players. The field cannot be left blank')
+        .test({
+            name: 'testPrivate',
+            test: (value, context) => {
+                const valid = context.parent.isPrivateLeague ? value <= 50 : value <= 25;
+                const message  = context.parent.isPrivateLeague ? 'Max players for a Private League is 50'
+                    : 'Max players for a public league is 25';
+
+                return valid ? valid : context.createError({message})
+            }
+        })
 });
 
 export const ConfirmLeagueForm = ({onSubmit, props}) => {
@@ -21,13 +36,14 @@ export const ConfirmLeagueForm = ({onSubmit, props}) => {
         setValue, 
         reset, 
         watch,
-        formState: {errors} } = useForm({
+        formState: {errors, isValid} } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
             name: '',
             description: '',
             privateCode: '',
-            isPrivateLeague: false            
+            isPrivateLeague: false,
+            maxMembers: 10
         }
     });
     const isPrivate = watch('isPrivateLeague');
@@ -35,18 +51,20 @@ export const ConfirmLeagueForm = ({onSubmit, props}) => {
         setValue('privateCode', generateUUID());
     }
     const resetForm = async () => {
-        await new Promise((resolve) => {
-            resolve(setTimeout(() => {
-                reset(
-                    {
-                        name: '',
-                        description: '',
-                        privateCode: '',
-                        isPrivateLeague: false
-                    }
-                )
-            }, 5000))
-        })
+        if (isValid) {
+            await new Promise((resolve) => {
+                resolve(setTimeout(() => {
+                    reset(
+                        {
+                            name: '',
+                            description: '',
+                            privateCode: '',
+                            isPrivateLeague: false
+                        }
+                    )
+                }, 5000))
+            })
+        }
     }
     
     return(
@@ -57,24 +75,33 @@ export const ConfirmLeagueForm = ({onSubmit, props}) => {
                     <div className="form-group text-start">
                         <label htmlFor="name" className="text-primary-emphasis">League Name</label>
                         <input type="text" className="form-control" {...register('name')} id="name"/>
-                        <ErrorFeedback error={errors.name} />
+                        <ErrorFeedback error={errors.name}/>
                     </div>
                     <div className="form-group text-start">
                         <label htmlFor="description" className="text-primary-emphasis">League Description
                             (optional)</label>
                         <input type="text" className="form-control" {...register('description')} id="description"/>
                     </div>
+                    <div className="form-group text-start">
+                        <label htmlFor="maxMembers" className="text-primary-emphasis">Max Players</label>
+                        <input type="number" className="form-control" {...register('maxMembers')} id="maxMembers" />
+                        <ErrorFeedback error={errors.maxMembers}/>
+                    </div>
                     <div className="form-check text-start">
-                        <input className="form-check-input" type="checkbox" id="isPrivateLeague" name="isPrivateLeague" {...register('isPrivateLeague')} onClick={makeLeaguePrivate} />
+                        <input className="form-check-input" type="checkbox" id="isPrivateLeague"
+                               name="isPrivateLeague" {...register('isPrivateLeague')} onClick={makeLeaguePrivate}/>
                         <label className="form-check-label" htmlFor="isPrivateLeague">
                             Private League
                         </label>
                     </div>
                     {
-                        isPrivate && <div className="form-group text-start">
-                            <label htmlFor="privateCode" className="text-primary-emphasis">Private Code</label>
-                            <input type="text" className="form-control" disabled {...register('privateCode')} id="privateCode"/>
-                        </div>
+                        isPrivate && <>
+                            <div className="form-group text-start">
+                                <label htmlFor="privateCode" className="text-primary-emphasis">Private Code</label>
+                                <input type="text" className="form-control" disabled {...register('privateCode')}
+                                       id="privateCode"/>
+                            </div>
+                        </>
                     }
                 </div>
                 <div className="modal-footer bg-dark-subtle">
@@ -144,7 +171,8 @@ export const CreateLeagueModal = ({actionsRef, afterSubmit, props}) => {
             seasonId: season._id,
             leagueId: league._id,
             privateCode: data.privateCode,
-            locked: false
+            locked: false,
+            maxMembers: data.maxMembers
         });
         await loginSilentForLeague();
         afterSubmit(league);

@@ -39,6 +39,7 @@ const createLeagueSeason = async (req, res) => {
             leagueId: req.body.leagueId,
             privateCode: code,
             locked: !!req.body.locked,
+            maxMembers: req.body.maxMembers,
             rules: {
                 canSeePick: req.body.rules?.canSeePick,
                 gameType: req.body.rules?.gameType,

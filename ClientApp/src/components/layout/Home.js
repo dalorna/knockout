@@ -58,7 +58,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li className="chiefs-red">
-                    cap league with number of players if no private code 50 Max (max needs implemented)
+                    can only join locked league
                 </li>
                 <li className="chiefs-red">
                     Disabled button needs to show disable with hover effect gone
@@ -85,7 +85,11 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     certain time on home page
                 </li>
                 <li>
-                    Delete League... deactivate league
+                    Clean up constants for rules, and pretty much everything else that needs a constant. Clean up
+                    folders and file with proper casing
+                </li>
+                <li>
+                    Manage Page: deactivate league, or create new season after season finish
                 </li>
                 <li>
                     League Edit screen (name, add season to league)... leave league
@@ -103,7 +107,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </li>
             </ol>
         </div>
-{/*        <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
+        {/*        <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
             <h6>Bugs</h6>
             <ol className="features text-start">
                 <li>

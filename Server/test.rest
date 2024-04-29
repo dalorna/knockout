@@ -86,10 +86,20 @@ Content-Type: application/json
 ###
 GET http://localhost:3500/process/setFalse/662d3fd4904552602e73879c
 Content-Type: application/json
-
 ###
 GET http://localhost:3500/pick/661fc9ac810b7a26b93abdc8/2
 Content-Type: application/json
 ###
 GET http://localhost:3500/pick/661fc9ac810b7a26b93abdc8/user/662aa657cbcb379821f4d339
 Content-Type: application/json
+###
+POST http://localhost:3500/leagueSeason
+Content-Type: application/json
+
+{
+    "seasonId": "6626885694c65ac4cb1f6978",
+    "leagueId": "662fb167f9f59380e518c466",
+    "privateCode": "",
+    "locked": false,
+    "maxMembers": 15
+}
