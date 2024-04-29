@@ -30,7 +30,7 @@ import {ROLES} from '../../utils/constants';
 import Admin from '../Admin/Admin';
 
 const SideMenu = () => {
-  const { setAuth } = useAuth();
+  const {auth, setAuth } = useAuth();
   const leagues = useCurrentLeagues();
   const [currentUser,] = useRecoilState(currentUserAtom);
   const navigate = useNavigate();
@@ -97,6 +97,9 @@ const SideMenu = () => {
     style +=  (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === path ? ' selected ' : '');
     return style;
   }
+  const isAdmin = () => {
+    return auth?.roles?.includes(ROLES.SA);
+  }
 
   return<>
     <div>
@@ -152,9 +155,11 @@ const SideMenu = () => {
         <div className={getClassName('profile')}>
           <Link to="profile">Profile</Link>
         </div>
-        <div id="admin" className={getClassName('admin')}>
-          <Link to="admin">Admin</Link>
-        </div>
+        {
+            isAdmin() && <div id="admin" className={getClassName('admin')}>
+              <Link to="admin">Admin</Link>
+            </div>
+        }
       </div>
     </div>
     <div>

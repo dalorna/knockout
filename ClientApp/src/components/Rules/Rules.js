@@ -15,8 +15,8 @@ const Rules = () => {
                 <h4 className={`${favorite?.favoriteTeam}-color`}>Game Type</h4>
             </div>
             <ol>
-                <li>Knockout Survivor - You must pick a winner each week</li>
-                <li>Loser Pool - You must pick a Loser each week</li>
+                <li>Knockout Survivor - You must pick a winner each week. (Never the same team twice in a season)</li>
+                <li>Loser Pool - You must pick a Loser each week.</li>
             </ol>
             <div>
                 <p>
@@ -34,10 +34,10 @@ const Rules = () => {
                 <h4 className={`${favorite?.favoriteTeam}-color`}>Elimination Style</h4>
             </div>
             <ol>
-                <li>HardCore - You are eliminated after your first lose</li>
-                <li>One Mulligan - You may lose once during the season and still continue with the season</li>
-                <li>Two Mulligan - You may lose twice during the season and still continue with the season</li>
-                <li>Never Out - You are never out the game, no matter how many times you lose</li>
+                <li>HardCore - You are eliminated after your first lose.</li>
+                <li>One Mulligan - You may lose once during the season and still continue with the season.</li>
+                <li>Two Mulligan - You may lose twice during the season and still continue with the season.</li>
+                <li>Never Out - You are never out the game, no matter how many times you lose. Standings will sort by Points</li>
             </ol>
             <div>
                 <p>You commissioner has chosen:&nbsp;&nbsp;

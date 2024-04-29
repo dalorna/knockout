@@ -19,7 +19,6 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
         setDisplayWeek(currentSeason?.weeks.find(w => w.isCurrent));
     }, []);
     useEffect(() => {
-        // if (leagueSeason[0].rules.canSeePick) {
             setLoading(true);
             const getPicks = async () => {
                 if (displayWeek) {
@@ -28,9 +27,6 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                 }
             }
             getPicks().then(() => setLoading(false));
-/*        } else {
-            setPicks([]);
-        }*/
     }, [displayWeek, currentSelectedLeague]);
     const refreshSeasonLeague = () => {
         refresher();
@@ -84,9 +80,8 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
     const sortOverall = (a, b) => {
         const aWins = a.weekResults.length > 0 && displayWeek ? a.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (val * 1), 0) : 0;
         const bWins = b.weekResults.length > 0 && displayWeek ? b.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (val * 1), 0) : 0;
-        return bWins - aWins || b.totalScoreDifferential - a.totalScoreDifferential;
+        return leagueSeason[0]?.rules.elimination !== 'neverOut' ? bWins - aWins || b.totalScoreDifferential - a.totalScoreDifferential : bWins - aWins || b.points - a.points;
     }
-
     const displayOverall = (result) => {
         if (result && result?.weekResults?.length > 0) {
             return result.username + ' - wins: ' + result.weekResults.map(m => m.win).reduce((t, val) => t + (val * 1), 0) + ', Score Diff: ' + result.totalScoreDifferential + ', Total Points: ' + result.weekResults.reduce((t, v) => t + v.points, 0);
