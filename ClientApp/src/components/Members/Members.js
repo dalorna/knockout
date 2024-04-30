@@ -5,7 +5,7 @@ const Members = () => {
     const leagueSeason = useSeasonLeague(selectedLeagueValue._id);
     const users = useCurrentLeagueMembersUsers(selectedLeagueValue._id);
 
-    return <div className="page container py-1">
+    return <div className="container py-1">
         <div className="text-center">
             <div className="header-fontSize grey-begin text-shadow-black">Members</div>
         </div>
@@ -34,7 +34,7 @@ const Members = () => {
                             <div>
                     <span>
                         {
-                            `${users?.find((user) => user._id === selectedLeagueValue.userId)?.email}: `
+                            `${users?.find((user) => user._id === selectedLeagueValue.userId)?.email} `
                         }
                     </span>
                             </div>

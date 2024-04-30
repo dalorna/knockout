@@ -208,7 +208,6 @@ a, a:visited {
 .chiefs-red {
   color: $chiefs-red;
 }
-
 .chiefs-gold {
   color: $chiefs-gold;
 }
@@ -265,13 +264,15 @@ a, a:visited {
 .member-grid {
   display: grid;
   grid-template-columns: auto auto auto;
+  grid-template-rows: 100px;
   overflow: auto;
-  width: 77vw;
+  width: 80vw;
   height: 65vh;
   box-shadow: 15px 15px 15px black;
   padding: 10px;
   border: solid 2px gray;
   background: $base-grey-begin;
+  margin-left: 15px;
 }
 
 .text-shadow-black {

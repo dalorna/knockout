@@ -112,6 +112,12 @@ const joinLeague = async (req, res) => {
                 return res.sendStatus(400).end();
             }
         }
+
+        if (!leagueSeason.locked) {
+            res.statusMessage = "The rules for this league are not locked, and you may not join."
+            return res.sendStatus(204).end();
+        }
+
     } catch (e) {
         res.statusMessage = "Error Attempting to save";
         return res.sendStatus(500).end();

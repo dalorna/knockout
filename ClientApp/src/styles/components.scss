@@ -33,6 +33,11 @@ $chiefs-g: rgb(255, 184, 28);
   background: linear-gradient($chiefs-red, $chiefs-gold);
 }
 
+.button-3D button:disabled {
+  background: linear-gradient(red, #aeaaba);
+  cursor: default;
+}
+
 .button-3D label.button-3D {
   border-radius: 0 !important;
   position: relative;
@@ -103,6 +108,7 @@ $chiefs-g: rgb(255, 184, 28);
 
 .side-nav-3D.disabled button {
   background: linear-gradient(red, #aeaaba);
+  cursor: default;
 }
 
 .standings-grid {

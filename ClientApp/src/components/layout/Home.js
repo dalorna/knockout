@@ -58,10 +58,10 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
             <h5>Feature enhancements</h5>
             <ol className="features text-start">
                 <li className="chiefs-red">
-                    can only join locked league
+                    Can't pick after game start (probably need to have up until 5 minutes before game start
                 </li>
                 <li className="chiefs-red">
-                    Disabled button needs to show disable with hover effect gone
+                    No pick will give lose after game starts
                 </li>
                 <li className="chiefs-red">
                     reset pass word
@@ -69,20 +69,14 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <li className="chiefs-red">
                     Send email to user with private code
                 </li>
-                <li className="chiefs-red">
-                    Will need a profile page to set (address, city, state, zip) completely optional. Change Password
-                </li>
-                <li className="chiefs-red">
-                    Can't pick after game start (probably need to have up until 5 minutes before game start
-                </li>
-                <li className="chiefs-red">
-                    No pick will give lose after game starts
+                <li className="chiefs-red">Some Sort of selection for the next week, with message to select by a
+                    certain time on home page
                 </li>
                 <li className="chiefs-red">
                     refresh issues on standings and picks
                 </li>
-                <li className="chiefs-red">Some Sort of selection for the next week, with message to select by a
-                    certain time on home page
+                <li className="chiefs-red">
+                    Will need a profile page to set (address, city, state, zip) completely optional. Change Password
                 </li>
                 <li>
                     Clean up constants for rules, and pretty much everything else that needs a constant. Clean up
@@ -107,14 +101,14 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 </li>
             </ol>
         </div>
-        {/*        <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
-            <h6>Bugs</h6>
+        <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
+            <h6>Tests</h6>
             <ol className="features text-start">
-                <li>
-                    Auto loss if pick is not in on time
+            <li>
+                    Test joining a locked league, user needs to have a dialog showing why
                 </li>
             </ol>
-        </div>*/}
+        </div>
         <CreateLeagueModal actionsRef={createModalRef} afterSubmit={refresher} props={season}/>
         <JoinLeagueModal actionsRef={joinModalRef} afterSubmit={joinRefresher}/>
     </div>

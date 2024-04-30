@@ -41,9 +41,6 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
         }
         return {team: displayTeamId ? teams.data.body.find(f => f.teamID === displayTeamId)?.teamCity + ' ' + teams.data.body.find(f => f.teamID === displayTeamId)?.teamName : '', isPick };
     }
-    const sortByWeeklyResult = (a, b) => {
-        return b.weekResults[displayWeek?.id]?.scoreDifferential - a.weekResults[displayWeek?.id]?.scoreDifferential;
-    }
     const setSelectedWeek = (week) => {
         setDisplayWeek(week);
     }
@@ -88,6 +85,17 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
         }
         return '';
     }
+    const filterWeekKnockOut = (result) => {
+        if(leagueSeason[0].rules.elimination === 'hardCore') {
+            return !result.alive
+        } else if (leagueSeason[0].rules.elimination === 'oneMulligan') {
+            return !result.alive && result.weekResults[displayWeek?.id]?.points === 0
+        } else if (leagueSeason[0].rules.elimination === 'twoMulligan') {
+            const hasTwoLosses = result.weekResults.filter(f => f.week <= displayWeek?.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) >= 2;
+            return !result.alive && result.weekResults[displayWeek?.id]?.points === 0 && hasTwoLosses
+        }
+        return true;
+    }
 
     return (<>
             {loading && <LoadingOverlay message={'Loading please wait'}/>}
@@ -98,7 +106,7 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                 <div className="mb-1 p-2 mx-3 standard-background" style={{overflow: 'visible'}}>
                     <div className="flex-container">
                         <div className="button-3D">
-                            <label className="button-3D" style={{marginRight: '0px', height: '46px'}}>Viewing: </label>
+                            <label className="button-3D" style={{marginRight: '0px', height: '46px'}}>Select: </label>
                             <Dropdown>
                                 <DropdownButton title={displayWeek?.name ?? ''} id="weekSelect">
                                     {
@@ -115,7 +123,11 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                 </div>
                 <div className="mb-1 p-2 mx-3 standard-background">
                     <div className="text-center" style={{borderBottom: 'solid 1px black'}}>
-                        <div style={{fontSize: '1.5em'}} className={`${favorite?.favoriteTeam}-color`}>Current Week
+                        <div style={{fontSize: '1.5em'}} className={`${favorite?.favoriteTeam}-color`}>
+                            {
+                                `${currentSeason?.weeks?.find(w => w.isCurrent)?.id === displayWeek?.id ? 'Current Week' : displayWeek?.name}`
+                            }
+
                         </div>
                     </div>
                     <div className="standings-grid">
@@ -125,7 +137,7 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                             <ol>
                                 {
                                     leagueSeason[0]?.weeklyResults?.filter(f => filterWeek(f))
-                                        .sort((a, b) => sortByWeeklyResult(a, b))
+                                        .sort((a, b) => sortOverall(a, b))
                                         .map((result, i) => {
                                             const t = getTeam(result?.weekResults[displayWeek?.id]?.teamId, result?.userId);
                                             const record = getRecord(result.weekResults);
@@ -163,7 +175,7 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                             </div>
                             <ol>
                                 {
-                                    leagueSeason[0]?.weeklyResults?.filter(f => !f.alive && f.weekResults[displayWeek?.id]?.points === 0).map((result, i) => {
+                                    leagueSeason[0]?.weeklyResults?.filter(result => filterWeekKnockOut(result)).map((result, i) => {
                                         return (
                                             <li key={i}>
                                                 {
