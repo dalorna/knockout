@@ -1,12 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import '../../styles/components.scss';
-import {seasonSelector, useCurrentSeason, useRefreshLeague, useSeasonLeague, useTeams} from '../../state/season';
+import {seasonSelector, useCurrentSeason, useRefreshLeague, useTeams} from '../../state/season';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 import {currentUserAtom} from '../../state/user';
 import {JoinLeagueModal} from './JoinLeagueModal';
-import {useCurrentUserPicksLeagueSeason} from '../../state/picks';
 import {getPicksByUserAllLeagues} from '../../api/picks';
 import moment from 'moment';
 import {LoadingOverlay} from '../../utils/loading';
