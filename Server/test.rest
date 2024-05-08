@@ -74,7 +74,7 @@ Content-Type: application/json
 
 {
   "leagueSeasonId": "661fc9ac810b7a26b93abdc8",
-  "week": {"name": "Week 8", "id": 7, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
+  "week": {"name": "Week 9", "id": 8, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
 }
 ###
 POST http://localhost:3500/process
@@ -82,7 +82,7 @@ Content-Type: application/json
 
 {
   "leagueSeasonId": "662d3fd4904552602e73879c",
-  "week": {"name": "Week 8", "id": 7, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
+  "week": {"name": "Week 9", "id": 8, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
 }
 ###
 GET http://localhost:3500/process/setFalse/662d3fd4904552602e73879c
@@ -131,4 +131,16 @@ Content-Type: application/json
   "locked": false,
   "gameId": "20231008_NYG@MIA",
   "teamId": "20"
+}
+###
+POST http://localhost:3500/pick/all/user/661fc6751de19bfbf12d2e8d
+Content-Type: application/json
+
+{
+  "leagueIds": [
+    "661fc9ac810b7a26b93abdc4",
+    "662d3fd4904552602e738798"
+  ],
+  "weekId": 8,
+  "seasonId": "6626885694c65ac4cb1f6978"
 }

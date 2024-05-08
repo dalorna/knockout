@@ -234,6 +234,18 @@ const getOpenLeagues = async (req, res) => {
 
 }
 
+const getLeaguesSeasonsBySeasonId = async (req, res) => {
+    if (!req?.params?.seasonId) {
+        return res.status(400).json({"message": `SeasonId is required`})
+    }
+    try {
+        const leagueSeasons = await LeagueSeason.find({ seasonId: req.params.seasonId }, null, null).exec();
+        res.status(200).json(leagueSeasons)
+    } catch (err) {
+        res.status(500).json({"message": `Server error attempting to get\r ${err.message}`})
+    }
+}
+
 module.exports = {
     getLeaguesSeason,
     createLeagueSeason,

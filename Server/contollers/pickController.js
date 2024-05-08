@@ -1,5 +1,6 @@
 const Pick = require('../model/Pick');
 const Season = require('../model/Season');
+const LeagueSeason = require('../model/LeagueSeason')
 
 const getPick = async (req, res) => {
     if (!req?.body?.userId || !req?.body?.leagueSeasonId || !req?.params?.weekId) {
@@ -106,11 +107,40 @@ const getPicksByUser = async (req, res) => {
         res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
     }
 }
+const getPicksByUserAllLeagues = async (req, res) => {
+    if (!req?.params?.userId || !req.body?.weekId || !req?.body?.leagueIds || !req.body.seasonId ) {
+        return res.status(400).json({"message": `userId, weekId, seasonId, and leagueSeasonId are required`})
+    }
+    try {
+        const leagueSeasons = await LeagueSeason.find({
+            seasonId: req.body.seasonId,
+            leagueId: { $in: req.body.leagueIds}
+        }, null, null).exec();
+        const picks = await Pick.find({
+            userId: req.params.userId,
+            weekId: req.body.weekId,
+            leagueSeasonId: { $in: leagueSeasons.map(m => m._id.toString())}
+        }, null, null).exec();
+
+        const userPicks = [];
+        for (const pick of picks) {
+            const ls = leagueSeasons.find(f => f._id.toString() === pick.leagueSeasonId);
+            let p = JSON.parse(JSON.stringify(pick));
+            p.leagueId = ls.leagueId.toString();
+            userPicks.push(p);
+        }
+
+        res.status(200).json({userPicks, leagueSeasons})
+    } catch (err) {
+        res.status(500).json({"message": `Server error attempting to get\r ${err.me}`})
+    }
+}
 
 module.exports = {
     getPick,
     createPick,
     updatePick,
     picksByWeek,
-    getPicksByUser
+    getPicksByUser,
+    getPicksByUserAllLeagues
 }

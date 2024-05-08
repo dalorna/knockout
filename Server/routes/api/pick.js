@@ -7,12 +7,15 @@ router.route('/')
     .put(pickController.updatePick);
 
 router.route('/:weekId')
-    .post(pickController.getPick)
+    .post(pickController.getPick);
 
 router.route('/:leagueSeasonId/:weekId')
-    .get(pickController.picksByWeek)
+    .get(pickController.picksByWeek);
 
 router.route('/:leagueSeasonId/user/:userId')
-    .get(pickController.getPicksByUser)
+    .get(pickController.getPicksByUser);
+
+router.route('/all/user/:userId')
+    .post(pickController.getPicksByUserAllLeagues);
 
 module.exports = router;
