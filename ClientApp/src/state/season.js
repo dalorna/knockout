@@ -5,7 +5,7 @@ import {
     useRecoilRefresher_UNSTABLE,
     useRecoilState,
     useRecoilValue,
-    atom, useSetRecoilState, DefaultValue, useResetRecoilState, selector
+    atom, DefaultValue, useResetRecoilState, selector
 } from 'recoil';
 import {
     getLeagueMemberUsers,

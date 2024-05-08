@@ -143,11 +143,10 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                                         .map((result, i) => {
                                             const min = Math.min(result?.weekResults.map(m => m.week));
                                             const teamId = result?.weekResults.find(f => f.week === (displayWeek?.id + 1))?.teamId;
-                                            const tId = result?.weekResults[displayWeek?.id]?.teamId;
-                                            const t = getTeam(teamId, result?.userId);
+                                            const team = getTeam(teamId, result?.userId);
                                             const record = !(min > (displayWeek?.id + 1)) ? getRecord(result.weekResults) : '';
                                             const teamDisplay = !(min > (displayWeek?.id + 1))
-                                                ? getTeamDisplay(t, result?.userId, leagueSeason[0].rules.canSeePick) : {display: `No results, Competition Started Week ${min}`}
+                                                ? getTeamDisplay(team, result?.userId, leagueSeason[0].rules.canSeePick) : {display: `No results, Competition Started Week ${min}`}
                                             return (
                                                 <li key={i} style={{color: teamDisplay.color}}>
                                                     {

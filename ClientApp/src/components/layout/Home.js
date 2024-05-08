@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import '../../styles/components.scss';
-import {seasonSelector, useCurrentSeason, useRefreshLeague, useResetSeason} from '../../state/season';
+import {seasonSelector, useCurrentSeason, useRefreshLeague} from '../../state/season';
 import {CreateLeagueModal} from './CreateLeagueModal';
 import toast from 'react-hot-toast';
 import {useRecoilState, useResetRecoilState} from 'recoil';

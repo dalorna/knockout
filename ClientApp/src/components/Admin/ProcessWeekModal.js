@@ -2,7 +2,7 @@ import {useModalInstance} from '../../utils/simpleModal';
 import {useImperativeHandle, useState } from 'react';
 import toast from 'react-hot-toast';
 
-export const ProcessWeekModal = ({actionsRef, afterSubmit}) => {
+export const ProcessWeekModal = ({actionsRef}) => {
     const [modal, modalRef] = useModalInstance();
     const [season, setSeason] = useState(null);
     const [week, setWeek] = useState(null);
@@ -27,7 +27,7 @@ export const ProcessWeekModal = ({actionsRef, afterSubmit}) => {
 
                 // web socket to show working...
                 // web socket will be used to update first login after game
-                const result = await processWeek({
+                await processWeek({
                     leagueSeasonId: "",
                     week
                 });

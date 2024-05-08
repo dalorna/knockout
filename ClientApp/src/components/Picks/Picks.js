@@ -105,9 +105,7 @@ const Picks = () => {
     const showPickDate = () => {
         return !currentWeeklyPick?.locked && (new Date()).getTime() < (new Date(season.weeks.find(f => f.isCurrent).firstGameDate)).getTime();
     }
-    const displayDate = (dateUtc) => {
-        return moment(dateUtc).local().format('MM/DD/YYYY hh:mm a');
-    }
+
     return <>
         <div className="container py-1">
             {
