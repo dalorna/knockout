@@ -87,6 +87,22 @@ const updateCurrentWeek = async (req, res) => {
     }
 }
 
+const updateCurrentWeekTime = async (req, res) => {
+    if (!req?.body.year && !req?.body.week && !req?.body.firstGameDate) {
+        return res.status(400).json({"message": `Year, week, and dateTime are required`})
+    }
+
+    try {
+        const seasonToChange = await Season.findOne({year: req.body.year}, null, null);
+        const changeWeek = seasonToChange.weeks.find(f => f.id === req.body.week.id);
+        changeWeek.firstGameDate = new Date(req.body.firstGameDate);
+        const lastWeekResult = await seasonToChange.save();
+        return res.status(201).json(lastWeekResult);
+    } catch (err) {
+        res.status(500).json({"message": "Server error attempting to save"})
+    }
+}
+
 const weeks = [
     {
         name: 'Week 1',
@@ -168,5 +184,6 @@ module.exports = {
     getCurrentSeason,
     createNewSeason,
     updateCurrentYear,
-    updateCurrentWeek
+    updateCurrentWeek,
+    updateCurrentWeekTime
 }

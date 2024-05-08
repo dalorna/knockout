@@ -4,7 +4,8 @@ import {
     useRecoilCallback,
     useRecoilRefresher_UNSTABLE,
     useRecoilState,
-    useRecoilValue
+    useRecoilValue,
+    atom, useSetRecoilState, DefaultValue, useResetRecoilState, selector
 } from 'recoil';
 import {
     getLeagueMemberUsers,
@@ -59,16 +60,39 @@ const leagueMemberFamily = atomFamily({
         }
     })
 })
-const seasonFamily = atomFamily({
+export const seasonTrigger = atom({
+    key: 'forceSeason',
+    default: 0
+})
+/*const seasonFamily = atomFamily({
     key: 'leagueSeason',
-    default: async () => {
-        try {
-            return  await getCurrentSeason();
-        } catch {
-            return null;
+    default: selectorFamily({
+        key: 'leagueSeason/default',
+        get: () => async ({get}) => {
+            get(seasonTrigger);
+            return await getCurrentSeason();
+        },
+        set: ({set}, value) => {
+            if (value instanceof DefaultValue) {
+                set(seasonTrigger, v => v + 1);
+            }
+        }
+    })
+})*/
+
+export const seasonSelector = selector({
+    key: 'leagueSeasonSelector',
+    get: async ({get}) => {
+        get(seasonTrigger);
+        return await getCurrentSeason();
+    },
+    set: ({set}, value) => {
+        if (value instanceof DefaultValue) {
+            set(seasonTrigger, v => v + 1)
         }
     }
-})
+});
+
 const teamsFamily = atomFamily({
     key: 'nfl/teams',
     default: async () => {
@@ -103,7 +127,7 @@ export const useRefreshLeague = () =>
         ({ refresh, reset }) =>
             (member) => {
             refresh(leagueMemberFamily(member));
-            reset(leagueMemberFamily(member))
+            reset(leagueMemberFamily(member));
         },[]
     );
 export const useCurrentLeagues = () => {
@@ -119,7 +143,11 @@ export const useCurrentLeagues = () => {
     return leaguesToSelectFrom;
 }
 export const useCurrentSeason = () => {
-    return useRecoilValue(seasonFamily({}));
+    return useRecoilValue(seasonSelector);
+}
+
+export const useResetSeason = () => {
+    return useResetRecoilState(seasonSelector);
 }
 export const useTeams = () => {
     return useRecoilValue(teamsFamily({}));

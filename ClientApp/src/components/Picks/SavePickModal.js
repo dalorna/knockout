@@ -43,8 +43,8 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
             }
             afterSubmit(pick);
             toast.success(`Pick is ${lockPick ? ' Locked and Saved' : ' Saved'} `);
-        } catch {
-            toast.error('Your pick was not saved correctly');
+        } catch (err) {
+            toast.error(err.message || err);
         } finally {
             modal.hide();
         }

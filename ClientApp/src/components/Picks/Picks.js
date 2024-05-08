@@ -20,7 +20,7 @@ const validationSchema = yup.object().shape({
 }).required()
 
 const Picks = () => {
-    const season = useCurrentSeason();
+    const season =  useCurrentSeason();
     const week = season?.weeks.find(f => f.isCurrent);
     const [currentUser,] = useRecoilState(currentUserAtom);
     const selectedLeagueValue = JSON.parse(localStorage.getItem('selectedLeague'));
@@ -97,26 +97,45 @@ const Picks = () => {
         return leagueSeason[0].weeklyResults.find(f => f.userId === currentUser.id)?.alive;
     }
     const isDisabled = () => {
-        return !isValid || currentWeeklyPick?.locked || !isAlive();
+        return !isValid || currentWeeklyPick?.locked || !isAlive() || passedDue();
     }
-
+    const passedDue = () => {
+        return !currentWeeklyPick?.locked && (new Date()).getTime() > (new Date(season.weeks.find(f => f.isCurrent).firstGameDate)).getTime();
+    }
+    const showPickDate = () => {
+        return !currentWeeklyPick?.locked && (new Date()).getTime() < (new Date(season.weeks.find(f => f.isCurrent).firstGameDate)).getTime();
+    }
+    const displayDate = (dateUtc) => {
+        return moment(dateUtc).local().format('MM/DD/YYYY hh:mm a');
+    }
     return <>
-        {
-            !isAlive() && <div className="overlay-alive"></div>
-        }
         <div className="container py-1">
+            {
+                !isAlive() && <div className="container overlay-alive"></div>
+            }
             <div className="text-center">
                 <div style={{fontSize: '2em'}} className="grey-begin text-shadow-black">Picks - {selectedLeagueValue.name}</div>
             </div>
             {
                 isAlive() ? (
                     <div className={`mb-1 p-3 mx-3  standard-background  ${currentWeeklyPick?.locked ? 'text-success' : 'text-danger'}`}>
-                        {
-                            `Current Pick for the ${week.name} is ${getSelectedTeamName()} ${currentWeeklyPick?.locked ? 'Locked' : 'Not Locked'}`
-                        }
+                        <div className="row">
+                            <div className="col-8">
+                                {
+                                    passedDue() ? `You're pick is passed due, and will count as a loss` :
+                                        `Current Pick for ${week.name} ${getSelectedTeamName()} ${currentWeeklyPick?.locked ? 'Locked' : 'Not Locked'}`
+                                }
+                            </div>
+                            <div className="col-4 text-info-emphasis">
+                                {
+                                    showPickDate() ? `Pick must be in by ${new Date(season.weeks.find(f => f.isCurrent).firstGameDate).toLocaleString()}`: ''
+                                }
+                            </div>
+                        </div>
                     </div>
                 ) : (
-                    <div className={`mb-1 p-3 mx-3  standard-background  ${currentWeeklyPick?.locked ? 'text-success' : 'text-danger'}`}>
+                    <div
+                        className={`mb-1 p-3 mx-3  standard-background  ${currentWeeklyPick?.locked ? 'text-success' : 'text-danger'}`}>
                         You are no longer eligible to compete.
                     </div>
                 )
@@ -130,7 +149,7 @@ const Picks = () => {
                                 return (
                                     <GameCard key={i} game={game} teams={teams} register={register}
                                               currentWeeklyPick={currentWeeklyPick} previousPicks={picksByUser}
-                                              rules={leagueSeason[0].rules}/>
+                                              rules={leagueSeason[0].rules} passeDue={passedDue}/>
                                 )
                             })
                         }
@@ -152,7 +171,7 @@ const Picks = () => {
 }
 export default Picks;
 
-const GameCard = ({game, teams, register, currentWeeklyPick, previousPicks, rules}) => {
+const GameCard = ({game, teams, register, currentWeeklyPick, previousPicks, rules, passeDue}) => {
     const disableAway = !!previousPicks.find(f => f.teamId === game.teamIDAway) && rules.cantPickSame;
     const disableHome = !!previousPicks.find(f => f.teamId === game.teamIDHome) && rules.cantPickSame;
     return ( <div key={game.gameID} className={"glass " + (game.gameID === currentWeeklyPick?.gameId ? ' picked': '')} style={{'--r': '2'}}
@@ -161,7 +180,7 @@ const GameCard = ({game, teams, register, currentWeeklyPick, previousPicks, rule
                 <div className={`form-check form-check-inline ${disableAway && game.gameID !== currentWeeklyPick?.gameId  ? 'disabled-pick' : ''}`}>
                     <input className="form-check-input"
                            type="radio" {...register('pick')}
-                           disabled={currentWeeklyPick?.locked || disableAway}
+                           disabled={passeDue() || disableAway}
                            id="exampleRadios1"
                            value={`${game.teamIDAway}-${game.gameID}`}/>
                     <span>{teams.data.body.find(f => f.teamID === game.teamIDAway)?.teamCity}</span>
@@ -173,7 +192,7 @@ const GameCard = ({game, teams, register, currentWeeklyPick, previousPicks, rule
                 <div  className={`form-check form-check-inline ${disableHome && game.gameID !== currentWeeklyPick?.gameId ? 'disabled-pick' : ''}`}>
                     <input className="form-check-input"
                            type="radio" {...register('pick')}
-                           disabled={currentWeeklyPick?.locked || disableHome}
+                           disabled={passeDue() || disableHome}
                            id="exampleRadios1"
                            value={`${game.teamIDHome}-${game.gameID}`}/>
                     <span>{teams.data.body.find(f => f.teamID === game.teamIDHome)?.teamCity}</span>

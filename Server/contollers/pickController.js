@@ -1,4 +1,5 @@
 const Pick = require('../model/Pick');
+const Season = require('../model/Season');
 
 const getPick = async (req, res) => {
     if (!req?.body?.userId || !req?.body?.leagueSeasonId || !req?.params?.weekId) {
@@ -23,7 +24,13 @@ const createPick = async (req, res) => {
     }
     try {
         //need to stop from picking same team if in knockout or loser and can't pick same
+        const currentSeason = await Season.findOne({isCurrent: true}, null, null);
+        const currentWeek = currentSeason.weeks.find(f => f.id === (req.body.weekId - 1));
 
+        if ((new Date()).getTime() > (new Date(currentWeek.firstGameDate)).getTime()) {
+            res.statusMessage ="To late to make the pick!"
+            return res.sendStatus(400).end();
+        }
 
         const result = await Pick.create({
             userId: req.body.userId,
@@ -46,6 +53,13 @@ const updatePick = async (req, res) => {
     }
 
     //need to stop from picking same team if in knockout or loser and can't pick same
+    const currentSeason = await Season.findOne({isCurrent: true}, null, null);
+    const currentWeek = currentSeason.weeks.find(f => f.id === (req.body.weekId - 1));
+
+    if ((new Date()).getTime() > (new Date(currentWeek.firstGameDate)).getTime()) {
+        res.statusMessage ="To late to make the pick!"
+        return res.sendStatus(400).end();
+    }
 
     const pick = await Pick.findOne({ _id: req.body.id }).exec();
     if (!pick) {

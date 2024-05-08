@@ -32,14 +32,16 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
         refresher();
         refreshSideMenu();
     }
-    const getTeam = (teamId, userId) => {
+    const getTeam = (teamId, userId, ) => {
         let displayTeamId = teamId;
         let isPick = false;
         if (picks && picks.length > 0 && !displayTeamId) {
             displayTeamId = picks.find(f => f.userId === userId)?.teamId;
             isPick = true
         }
-        return {team: displayTeamId ? teams.data.body.find(f => f.teamID === displayTeamId)?.teamCity + ' ' + teams.data.body.find(f => f.teamID === displayTeamId)?.teamName : '', isPick };
+        const city = teams.data.body.find(f => f.teamID === displayTeamId)?.teamCity || '';
+        const name = teams.data.body.find(f => f.teamID === displayTeamId)?.teamName || '';
+        return {team: displayTeamId !== "0" ? city + ' ' + name : 'No Pick', isPick };
     }
     const setSelectedWeek = (week) => {
         setDisplayWeek(week);
@@ -66,9 +68,9 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
             if (leagueSeason[0].rules.elimination === 'hardCore') {
                 alive = !(weeklyResults.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) > 0);
             } else if (leagueSeason[0].rules.elimination === 'oneMulligan') {
-                alive = !(weeklyResults.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) >= 1)
+                alive = !(weeklyResults.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) > 1)
             } else if (leagueSeason[0].rules.elimination === 'twoMulligan') {
-                alive = !(weeklyResults.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) >= 2)
+                alive = !(weeklyResults.weekResults.filter(f => f.week <= displayWeek.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) > 2)
             }
         }
 
@@ -87,11 +89,11 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
     }
     const filterWeekKnockOut = (result) => {
         if(leagueSeason[0].rules.elimination === 'hardCore') {
-            return !result.alive
+            return !result.alive && result.weekResults.findIndex(f => f.points === 0) === displayWeek?.id
         } else if (leagueSeason[0].rules.elimination === 'oneMulligan') {
             return !result.alive && result.weekResults[displayWeek?.id]?.points === 0
         } else if (leagueSeason[0].rules.elimination === 'twoMulligan') {
-            const hasTwoLosses = result.weekResults.filter(f => f.week <= displayWeek?.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) >= 2;
+            const hasTwoLosses = result.weekResults.filter(f => f.week <= displayWeek?.id + 1).map(m => m.win).reduce((t, val) => t + (!val * 1), 0) > 2;
             return !result.alive && result.weekResults[displayWeek?.id]?.points === 0 && hasTwoLosses
         }
         return true;
@@ -139,9 +141,13 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                                     leagueSeason[0]?.weeklyResults?.filter(f => filterWeek(f))
                                         .sort((a, b) => sortOverall(a, b))
                                         .map((result, i) => {
-                                            const t = getTeam(result?.weekResults[displayWeek?.id]?.teamId, result?.userId);
-                                            const record = getRecord(result.weekResults);
-                                            const teamDisplay = getTeamDisplay(t, result?.userId, leagueSeason[0].rules.canSeePick)
+                                            const min = Math.min(result?.weekResults.map(m => m.week));
+                                            const teamId = result?.weekResults.find(f => f.week === (displayWeek?.id + 1))?.teamId;
+                                            const tId = result?.weekResults[displayWeek?.id]?.teamId;
+                                            const t = getTeam(teamId, result?.userId);
+                                            const record = !(min > (displayWeek?.id + 1)) ? getRecord(result.weekResults) : '';
+                                            const teamDisplay = !(min > (displayWeek?.id + 1))
+                                                ? getTeamDisplay(t, result?.userId, leagueSeason[0].rules.canSeePick) : {display: `No results, Competition Started Week ${min}`}
                                             return (
                                                 <li key={i} style={{color: teamDisplay.color}}>
                                                     {
@@ -224,7 +230,7 @@ const Standings = ({currentSelectedLeague, refreshSideMenu}) => {
                                         return (
                                             <li key={i}>
                                                 {
-                                                    result?.username
+                                                    `${result?.username} week ${Math.max.apply(Math, result?.weekResults.map(m => m.week))}`
                                                 }
                                             </li>
                                         );

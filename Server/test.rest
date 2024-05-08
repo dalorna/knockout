@@ -46,12 +46,13 @@ Content-Type: application/json
 GET http://localhost:3500/leagueSeason/6626885694c65ac4cb1f6978/661fc9ac810b7a26b93abdc4
 Content-Type: application/json
 ###
-PUT http://localhost:3500/season/week
+PUT http://localhost:3500/season/week/time
 Content-Type: application/json
 
 {
   "year": 2023,
-  "week": {"name": "Week 2", "id": 0, "isCurrent": false, "_id": "6626885694c65ac4cb1f697a"}
+  "week": {"name": "Week 7", "id": 6, "isCurrent": false, "_id": "6626885694c65ac4cb1f697a"},
+  "firstGameDate": "2024-05-06T18:15"
 }
 ###
 POST http://localhost:3500/pick
@@ -73,7 +74,7 @@ Content-Type: application/json
 
 {
   "leagueSeasonId": "661fc9ac810b7a26b93abdc8",
-  "week": {"name": "Week 4", "id": 3, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
+  "week": {"name": "Week 8", "id": 7, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
 }
 ###
 POST http://localhost:3500/process
@@ -81,7 +82,7 @@ Content-Type: application/json
 
 {
   "leagueSeasonId": "662d3fd4904552602e73879c",
-  "week": {"name": "Week 4", "id": 3, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
+  "week": {"name": "Week 8", "id": 7, "isCurrent": true, "_id": "6626885694c65ac4cb1f697a"}
 }
 ###
 GET http://localhost:3500/process/setFalse/662d3fd4904552602e73879c
@@ -102,4 +103,32 @@ Content-Type: application/json
     "privateCode": "",
     "locked": false,
     "maxMembers": 15
+}
+### Change date time of week or current week
+PUT http://localhost:3500/season/week/time
+Content-Type: application/json
+
+{
+  "year": 2023,
+  "week": {
+    "name": "Week 5",
+    "id": 4,
+    "isCurrent": false,
+    "_id": "6626885694c65ac4cb1f697d"
+  },
+  "dateTime": "2024-04-30T20:00:00.000Z"
+}
+###
+POST http://localhost:3500/pick
+Content-Type: application/json
+
+{
+  "id": "524c7114-2001-4ab7-abf0-ca832dc06b8a",
+  "userId": "661fc6751de19bfbf12d2e8d",
+  "username": "rango_1",
+  "weekId": 5,
+  "leagueSeasonId": "661fc9ac810b7a26b93abdc8",
+  "locked": false,
+  "gameId": "20231008_NYG@MIA",
+  "teamId": "20"
 }

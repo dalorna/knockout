@@ -15,4 +15,6 @@ router.route('/week')
 router.route('/archive')
     .get(seasonController.getLastTenSeason);
 
+router.route('/week/time')
+    .put(seasonController.updateCurrentWeekTime);
 module.exports = router;

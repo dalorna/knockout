@@ -31,7 +31,6 @@ export const ProcessWeekModal = ({actionsRef, afterSubmit}) => {
                     leagueSeasonId: "",
                     week
                 });
-                console.log('result', result);
                 toast.success('Current Season changes');
                 modal.hide();
             } catch (err) {

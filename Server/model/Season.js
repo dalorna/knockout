@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 
 const seasonSchema = new Schema({
-    year: Number,
+    year: {type: Number, required: true},
     isCurrent: {type: Boolean, default: false},
     weeks: [
         {
             name: String,
             id: Number,
             isCurrent: {type: Boolean, default: false},
-            isProcessed: {type: Boolean, default: false}
+            firstGameDate: Date
         }
     ]
 });

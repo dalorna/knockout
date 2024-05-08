@@ -46,7 +46,7 @@ const Admin = () => {
     const setCurrentWeek = (week) => {
         setCurrentWeekModalRef.current.show(
             {
-                season: currentSeason,
+                season: displaySeason,
                 week
             }
         )

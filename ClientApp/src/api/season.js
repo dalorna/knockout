@@ -5,3 +5,4 @@ export const getCurrentSeason = () => axios.get('/season');
 export const updateCurrentYear = (year) => axios.put('/season', year);
 export const getLastTenSeason = () => axios.get('/season/archive');
 export const updateCurrentWeek = (year) => axios.put('/season/week', year)
+export const updateCurrentWeekDateTime = (year) => axios.put('/season/week/time', year)
