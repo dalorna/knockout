@@ -115,16 +115,16 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                         Will need a profile page to Change Password
                     </li>
                     <li>
-                        Clean up constants for rules, and pretty much everything else that needs a constant. Clean up
-                        folders and file with proper casing
-                    </li>
-                    <li>
                         Manage Page: deactivate league, and create new season after season finish, kick a member
                     </li>
                     <li>
                         League Edit screen (name, add season to league)... leave league (for a member)
                     </li>
                     <li>Create a private league cost money. (set up payments)</li>
+                    <li>
+                        Clean up constants for rules, and pretty much everything else that needs a constant. Clean up
+                        folders and file with proper casing
+                    </li>
                     <li>Need to create role Visitor. Commissioner is done, SA is done, user is done</li>
                     <li>
                         Footer
@@ -144,8 +144,8 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
             <div className="row p-3 standard-background mx-3 mt-1 overflow-auto">
                 <h6>Tests</h6>
                 <ol className="features text-start">
-                <li>
-                        Test joining a locked league, user needs to have a dialog showing why
+                    <li>
+                    Test joining a locked league, user needs to have a dialog showing why
                     </li>
                 </ol>
             </div>
