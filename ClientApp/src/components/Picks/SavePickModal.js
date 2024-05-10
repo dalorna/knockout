@@ -3,6 +3,8 @@ import {useEffect, useImperativeHandle, useState} from 'react';
 import toast from 'react-hot-toast';
 import moment from 'moment/moment';
 import {savePick, updatePick } from '../../api/picks';
+import useSound from 'use-sound';
+import chime from '../../assets/nfl-draft-chime.mp3'
 
 export const SavePickModal = ({actionRef, afterSubmit}) => {
     const [modal, modalRef] = useModalInstance();
@@ -12,6 +14,7 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
     const [selectedTeam, setSelectedTeam] = useState({});
     const [currentPickId, setCurrentPickId] = useState(null);
     const [selectedLeagueValue, setSelectedLeagueValue] = useState(null);
+    const [play] = useSound(chime);
 
     useEffect(() => {
         if (week.teamIDHome === pick.teamId) {
@@ -43,6 +46,7 @@ export const SavePickModal = ({actionRef, afterSubmit}) => {
             }
             afterSubmit(pick);
             toast.success(`Pick is ${lockPick ? ' Locked and Saved' : ' Saved'} `);
+            play();
         } catch (err) {
             toast.error(err.message || err);
         } finally {

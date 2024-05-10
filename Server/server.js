@@ -50,6 +50,7 @@ app.use('/league', require('./routes/api/league'));
 app.use('/leagueSeason', require('./routes/api/leagueSeason'));
 app.use('/pick', require('./routes/api/pick'));
 app.use('/season', require('./routes/api/season'));
+app.use('/mail', require('./routes/api/mail'));
 
 app.all('*', (req, res) => {
     res.status(404);

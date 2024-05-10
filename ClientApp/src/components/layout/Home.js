@@ -114,6 +114,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     <li className="chiefs-red">
                         Will need a profile page to Change Password
                     </li>
+                    <li>Home page getSelectedTeam needs to be a component</li>
                     <li>
                         Manage Page: deactivate league, and create new season after season finish, kick a member
                     </li>
@@ -154,52 +155,51 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
         </div>
     </>
 }
-
-    const getSelectedTeamName = (leagueName, pick, ls, teams, season, userId, week) => {
-        const alive = ls?.weeklyResults?.find(f => f.userId === userId)?.alive;
-        let colorClass = 'chiefs-red';
-        let textDecoration = '';
-        let teamName = '';
-        let lockedMessage = '';
-        let aliveMessage = '';
-        let eligibilityMessage = '';
-        let dateMessage = ''
-        if (pick?.teamId) {
-            colorClass = 'text-primary-emphasis';
-            teamName = teams.data.body.find(f => f.teamID === pick.teamId).teamCity + ' ' + teams.data.body.find(f => f.teamID === pick.teamId).teamName;
-            if (!pick.locked) {
-                lockedMessage = `, You pick is not locked for the week, please lock it before`
-                dateMessage = moment(season.weeks[week.id]?.firstGameDate).local().format('MMM Do YYYY, h:mm a');
-            }
-        } else if (alive) {
-            aliveMessage = passedDue(pick, season) ? `You're pick is passed due, and will count as a loss`
-                : `No pick selected for the week, you have until `;
-            dateMessage = !passedDue(pick, season) ? moment(season.weeks[week.id]?.firstGameDate).local().format('MMM Do YYYY, h:mm a') : '';
-        } else {
-            if (ls?.weeklyResults.length === 0 ) {
-                eligibilityMessage = 'This league has not started yet';
-            } else {
-                textDecoration = 'strike-through'
-                eligibilityMessage = `You're no longer eligible to compete`;
-            }
+const getSelectedTeamName = (leagueName, pick, ls, teams, season, userId, week) => {
+    const alive = ls?.weeklyResults?.find(f => f.userId === userId)?.alive;
+    let colorClass = 'chiefs-red';
+    let textDecoration = '';
+    let teamName = '';
+    let lockedMessage = '';
+    let aliveMessage = '';
+    let eligibilityMessage = '';
+    let dateMessage = ''
+    if (pick?.teamId) {
+        colorClass = 'text-primary-emphasis';
+        teamName = teams.data.body.find(f => f.teamID === pick.teamId).teamCity + ' ' + teams.data.body.find(f => f.teamID === pick.teamId).teamName;
+        if (!pick.locked) {
+            lockedMessage = `, You pick is not locked for the week, please lock it before`
+            dateMessage = moment(season.weeks[week.id]?.firstGameDate).local().format('MMM Do YYYY, h:mm a');
         }
-        return (
-            <div className={`text-start ${colorClass} ${textDecoration}`}>
-                <span >
+    } else if (alive) {
+        aliveMessage = passedDue(pick, season) ? `You're pick is passed due, and will count as a loss`
+            : `No pick selected for the week, you have until `;
+        dateMessage = !passedDue(pick, season) ? moment(season.weeks[week.id]?.firstGameDate).local().format('MMM Do YYYY, h:mm a') : '';
+    } else {
+        if (ls?.weeklyResults.length === 0) {
+            eligibilityMessage = 'This league has not started yet';
+        } else {
+            textDecoration = 'strike-through'
+            eligibilityMessage = `You're no longer eligible to compete`;
+        }
+    }
+    return (
+        <div className={`text-start ${colorClass} ${textDecoration}`}>
+                <span>
                     {
                         `${leagueName}: ${teamName} ${lockedMessage} ${aliveMessage} ${eligibilityMessage}`
                     }
                 </span>
-                <span className="underline">
+            <span className="underline">
                     {
                         dateMessage
                     }
                 </span>
-            </div>
-        );
-    }
+        </div>
+    );
+}
+const passedDue = (pick, season) => {
+    return !pick?.locked && (new Date()).getTime() > (new Date(season?.weeks.find(f => f.isCurrent).firstGameDate)).getTime();
+}
 
-    const passedDue = (pick, season) => {
-        return !pick?.locked && (new Date()).getTime() > (new Date(season?.weeks.find(f => f.isCurrent).firstGameDate)).getTime();
-    }
 export default Home;
