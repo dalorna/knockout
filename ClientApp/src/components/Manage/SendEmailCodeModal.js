@@ -1,12 +1,13 @@
 import {useModalInstance} from '../../utils/simpleModal';
-import {useEffect, useImperativeHandle, useState} from 'react';
+import {useImperativeHandle, useState} from 'react';
 import toast from 'react-hot-toast';
 import {sendEmail} from '../../api/mail';
 import {ErrorFeedback} from '../../utils/helpers';
-import {joinLeague} from '../../api/league';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
+import {useRecoilState} from 'recoil';
+import {currentUserAtom} from '../../state/user';
 const EMAIL_REGEX = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
 
@@ -22,6 +23,7 @@ const validationSchema = Yup.object().shape({
 
 
 export const SendEmailCodeModal = ({actionsRef}) => {
+    const [currentUser,] = useRecoilState(currentUserAtom);
     const [modal, modalRef] = useModalInstance();
     const [league, setLeague] = useState(null);
     const [season, setSeason] = useState(null);
@@ -62,7 +64,7 @@ export const SendEmailCodeModal = ({actionsRef}) => {
 
 
     const onHandleSubmit = async (data) => {
-        const body = emailBody(data.code);
+        const body = emailBody(data.code, currentUser.firstName, currentUser.lastName,  currentUser.email);
         try {
             const result = await sendEmail({
                 to: data.email,
@@ -121,5 +123,12 @@ export const SendEmailCodeModal = ({actionsRef}) => {
         </div>);
 }
 
-const emailSubject = '';
-const emailBody = (code) => `<div><h2>Welcome to Knock Out Survivor</h2><div>Here is your link to Knock out</div><div>Here is your pass code: ${code}</div></div>`
+const emailBody = (code, firstName, lastName, email) => {
+    return `<div>
+    <h2>Welcome to Knock Out Survivor</h2>
+        <div>Click the link <a href="http://localhost:3000/login">Knock Out Survivor</a> to sign in</div>
+        <div>If you don't have a login, you must create one to play</div>
+        <div>You have a private code sent from ${firstName} ${lastName}, ${email}</div>
+        <div>Here is your pass code: ${code}</div>
+    </div>`
+}
