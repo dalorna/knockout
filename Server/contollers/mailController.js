@@ -11,7 +11,7 @@ const emailSend = async (req, res) => {
     });
 
     const mailOptions = {
-        from: req.body.from,
+        from: Email_Transport.auth.user,
         to: req.body.to,
         subject: req.body.subject,
         html: req.body.html
@@ -20,15 +20,15 @@ const emailSend = async (req, res) => {
     try {
         await transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
-                console.log(error);
-                res.status(500).json({"message": "Server error attempting to send email"})
+                res.statusText = 'Failed to send text';
+                res.sendStatus(500).json({"message": "Server error attempting to send email"})
             } else {
-                res.statusMessage = 'Email sent: ' + info.response;
+                return res.statusMessage = 'Email sent: ' + info.response;
             }
-        })
-        return res.status(200).end();
+        });
+        res.sendStatus(200);
     } catch (err) {
-        return res.status(500).json({"message": "Server error attempting to send email. End."})
+        return res.sendStatus(500).json({"message": "Server error attempting to send email. End."})
     }
 }
 module.exports = {

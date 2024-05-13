@@ -6,6 +6,7 @@ import { SaveRulesModal } from './SaveRulesModal';
 import { loser, survivor } from '../../utils/constants';
 import {getLeagueSeasonByLeagueIdSeasonId} from '../../api/league';
 import {ShowPrivateCodeModal} from './ShowPrivateCodeModal';
+import {SendEmailCodeModal} from './SendEmailCodeModal';
 
 const Manage = ({currentSelectedLeague}) => {
     const season = useCurrentSeason();
@@ -17,6 +18,7 @@ const Manage = ({currentSelectedLeague}) => {
     const [privateCode, setPrivateCode] = useState(null);
     const createModalRef = useRef();
     const privateCodeModalRef = useRef();
+    const emailRef = useRef();
     const favorite = JSON.parse(localStorage.getItem('favoriteTeam'));
 
     const defaultValues = {
@@ -77,6 +79,15 @@ const Manage = ({currentSelectedLeague}) => {
         privateCodeModalRef.current.show(
             {
                 privateCode
+            }
+        )
+    }
+    const sendPrivateCode = () => {
+        emailRef.current.show(
+            {
+                privateCode,
+                season,
+                league: selectedLeague
             }
         )
     }
@@ -341,19 +352,38 @@ const Manage = ({currentSelectedLeague}) => {
                     </>
                 }
                 <div className="p-3 mt-5 flex-container standard-background" style={{marginTop: '7em'}}>
+
                     {
-                        privateCode !== 'false' &&
-                        <div className="button-3D">
-                            <button
-                                type="button" data-tooltip-id="privateCode-tip" data-tooltip-variant="info"
-                                data-tooltip-content="Show Private Code"
-                                aria-label="Show Private Code"
-                                onClick={() => showPrivateCode()}
-                            >
-                                <Tooltip id="privateCode-tip"/>
-                                Show Private Code
-                            </button>
-                        </div>
+                        privateCode !== 'false' && <>
+                            <div className="button-3D">
+                                <button
+                                    type="button" data-tooltip-id="sendCode-tip" data-tooltip-variant="info"
+                                    data-tooltip-content="Send a email for a player to join"
+                                    aria-label="Show Private Code"
+                                    onClick={() => sendPrivateCode()}
+                                >
+                                    <Tooltip id="sendCode-tip"/>
+                                    Send Private Code
+                                </button>
+                            </div>
+                        </>
+
+                    }
+                    {
+                        privateCode !== 'false' && <>
+                            <div className="button-3D">
+                                <button
+                                    type="button" data-tooltip-id="privateCode-tip" data-tooltip-variant="info"
+                                    data-tooltip-content="Show Private Code"
+                                    aria-label="Show Private Code"
+                                    onClick={() => showPrivateCode()}
+                                >
+                                    <Tooltip id="privateCode-tip"/>
+                                    Show Private Code
+                                </button>
+                            </div>
+                        </>
+
                     }
                     <div className="button-3D">
                         <button
@@ -384,6 +414,7 @@ const Manage = ({currentSelectedLeague}) => {
         </div>
         <SaveRulesModal actionsRef={createModalRef} isSubmit={isSubmit} afterSubmit={refreshRules}/>
         <ShowPrivateCodeModal actionsRef={privateCodeModalRef}/>
+        <SendEmailCodeModal actionsRef={emailRef} />
     </>);
 }
 export default Manage;
