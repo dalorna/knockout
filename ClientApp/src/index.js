@@ -9,6 +9,9 @@ import { AuthProvider } from './state/AuthProvider';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import Unauthorized from './components/Auth/Unauthorized';
+import ForgotPassword from './components/Auth/ForgotPassword';
+import OTPInput from './components/Auth/OTPInput';
+import ResetPassword from './components/Auth/ResetPassword';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +24,9 @@ root.render(
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                     <Route path="unauthorized" element={<Unauthorized />} />
+                    <Route path="forgot-password" element={<ForgotPassword />} />
+                    <Route path="password-recovery" element={<OTPInput />} />
+                    <Route path="reset" element={<ResetPassword />} />
 
                     {/* Will eventually be protected */}
                     <Route path="knockout/*" element={<App />}/>

@@ -114,6 +114,8 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     <li className="chiefs-red">
                         Will need a profile page to Change Password
                     </li>
+                    <li>All pick feature, pick all the games</li>
+                    <li>Add vegas line to pick screen in the card</li>
                     <li>Home page getSelectedTeam needs to be a component</li>
                     <li>
                         Manage Page: deactivate league, and create new season after season finish, kick a member

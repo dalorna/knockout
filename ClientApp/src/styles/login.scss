@@ -157,6 +157,16 @@
   color: #ffffff;
   padding: 2px 4px;
 }
+.content-login .form-login .inputBox-login button {
+  background: #444444;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 10px;
+}
+.content-login .form-login .inputBox-login button:hover {
+  background: #848884;
+}
+
 .content-login .form-login .links-login {
   width: 100%;
   margin-top: 15px;
@@ -171,22 +181,6 @@
 .content-login .form-login .links-login a:hover {
   color: #fff;
 }
-
-.content-login .form-login .inputBox-login button {
-  background: #444444;
-  color: #ffffff;
-  cursor: pointer;
-  padding: 10px;
-}
-.content-login .form-login .inputBox-login button:hover {
-   background: #848884;
- }
-
-
-
-
-
-
 
 
 
@@ -384,7 +378,7 @@
   20px 10px 20px rgba(0,0,0,0.1),
   50px 50px 80px rgba(0,0,0,0.25);
 }
- .instructions::before {
+.instructions::before {
   content: '';
   position: absolute;
   top: 0;
@@ -417,4 +411,313 @@
 }
 .text-shadow-title {
   text-shadow: 15px 15px 15px grey;
+}
+
+
+
+
+
+.container-recovery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15%;
+}
+.container-recovery .box-recovery {
+  position: relative;
+  width: 450px;
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-recovery .box-recovery::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 100%;
+  background: linear-gradient(#ffffff, #ffffff, #e3e3e3);
+  filter: blur(1px);
+  z-index: 1;
+}
+.container-recovery .box-recovery::after {
+  content: '';
+  position: absolute;
+  top: -.5px;
+  right: -1px;
+  width: 25px;
+  height: 100%;
+  background: #9d9d9d;
+  filter: blur(1px);
+  z-index: 1;
+}
+.container-recovery .box-recovery .shadow-recovery {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+/*.container-recovery .box-recovery .shadow-recovery::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(112%);
+  width: 100%;
+  height: 240%;
+  background: linear-gradient(rgba(0,0,0,0.075), transparent);
+  transform: skewX(45deg);
+}
+.container-recovery .box-recovery .shadow-recovery::after {
+  content: '';
+  position: absolute;
+  bottom: -200%;
+  left: calc(60%);
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(rgba(0,0,0,0.075), transparent);
+  transform: skewX(45deg);
+}*/
+.cover-recovery {
+  position: absolute;
+  top: 0;
+  left: -400px;
+  width: 400px;
+  height: 400px;
+  background: #aeaaba;
+  z-index: 10;
+}
+.content-recovery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#dbdae1, #a3aaba);
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.1),
+  15px 15px 15px rgba(0,0,0,0.1),
+  20px 10px 20px rgba(0,0,0,0.1),
+  50px 50px 80px rgba(0,0,0,0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-recovery .form-recovery {
+  position: relative;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.logo-recovery {
+  width: 70px;
+  height: 70px;
+  background: #444;
+  color: #fff;
+  font-size: 1.75em;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.container-recovery .form-recovery h2 {
+  font-size: 2em;
+  color: #444;
+  margin-bottom: 20px;
+}
+.content-recovery .form-recovery .inputBox-recovery {
+  position: relative;
+  width: 100%;
+  margin-top: 15px;
+}
+.content-recovery .form-recovery .inputBox-recovery input {
+  position: relative;
+  width: 100%;
+  padding: 10px 0 10px 25px;
+  font-size: 1.25em;
+  background: transparent !important;
+  box-shadow: none;
+  border: none;
+  border-bottom: 3px solid #444444;
+  outline: none;
+}
+.content-recovery .form-recovery .inputBox-recovery button {
+  position: relative;
+  width: 100%;
+  padding: 10px 0 10px 0;
+  font-size: 1.25em;
+  background: #444444;
+  color: #ffffff;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+.content-recovery .form-recovery .inputBox-recovery i {
+  position: absolute;
+  left: 0;
+  bottom: 15px;
+  font-size: 1.25em;
+  color: #444444;
+}
+.content-recovery .form-recovery .inputBox-recovery span {
+  position: absolute;
+  left: 0;
+  padding: 10px 0 10px 25px;
+  font-size: 1.25em;
+  pointer-events: none;
+  color: #444444;
+  transition: 0.5s;
+}
+.content-recovery .form-recovery .inputBox-recovery input:focus ~ span,
+.content-recovery .form-recovery .inputBox-recovery input:valid ~ span {
+  transform: translateY(-20px);
+  font-size: 0.9em;
+  background: #444444;
+  color: #ffffff;
+  padding: 2px 4px;
+}
+.content-recovery .form-recovery .links-recovery {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.content-recovery .form-recovery .links-recovery a {
+  color: #444444;
+}
+.content-recovery .form-recovery .inputBox-recovery button {
+  background: #444444;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 10px;
+}
+.content-recovery .form-recovery .inputBox-recovery button:hover {
+  background: #848884;
+}
+
+.otp-input {
+  width: 40px;
+  height: 40px;
+  margin: auto;
+}
+
+.otp-input input {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.recovery-links-adj {
+  padding-top: 30px;
+  margin-bottom: -50px;
+  margin-top: 20px;
+}
+
+
+.container-register .box-register.reset {
+  position: relative;
+  width: 400px;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-register .box-register.reset::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 100%;
+  background: linear-gradient(#ffffff, #ffffff, #e3e3e3);
+  filter: blur(1px);
+  z-index: 1;
+}
+.container-register .box-register.reset::after {
+  content: '';
+  position: absolute;
+  top: -.5px;
+  right: -1px;
+  width: 25px;
+  height: 100%;
+  background: #9d9d9d;
+  filter: blur(1px);
+  z-index: 1;
+}
+.container-register .box-register.reset .shadow-register {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+.container-register .box-register.reset .shadow-register::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 44%;
+  width: 112%;
+  height: 120%;
+  background: linear-gradient(rgba(0,0,0,0.075), transparent);
+  transform: skewX(45deg);
+}
+.container-register .box-register.reset .shadow-register::after {
+  content: '';
+  position: absolute;
+  bottom: -200%;
+  left: 100%;
+  width: 95%;
+  height: 200%;
+  background: linear-gradient(rgba(0,0,0,0.075), transparent);
+  transform: skewX(45deg);
+}
+
+.reset-submit {
+  margin-top: 10px;
+  width: 260px;
+}
+.reset-submit input {
+  position: relative;
+  width: 100%;
+  padding: 10px 0 10px 25px;
+  font-size: 1.25em;
+  background: transparent !important;
+  box-shadow: none;
+  border: none;
+  border-bottom: 3px solid #444444;
+  outline: none;
+}
+.reset-submit button {
+  position: relative;
+  width: 100%;
+  padding: 10px 0 10px 0;
+  font-size: 1.25em;
+  background: #444444;
+  color: #ffffff;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+.content-login .form-login .inputBox-login i {
+  position: absolute;
+  left: 0;
+  bottom: 15px;
+  font-size: 1.25em;
+  color: #444444;
+}
+.reset-submit input:focus ~ span,
+.reset-submit input:valid ~ span {
+  transform: translateY(-20px);
+  font-size: 0.9em;
+  background: #444444;
+  color: #ffffff;
+  padding: 2px 4px;
+}
+.reset-submit button {
+  background: #444444;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 10px;
+}
+.reset-submit button:hover {
+  background: #848884;
 }

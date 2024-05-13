@@ -33,4 +33,25 @@ const handleNewUser = async (req, res) => {
     }
 }
 
-module.exports = { handleNewUser }
+const resetPassword = async (req, res) => {
+    const { pwd, email } = req.body;
+    if (!pwd || !email) {
+        return res.status(400).json({'message' : `All fields are required`});
+    }
+    // find email sent to update the password
+    const foundEmail = await User.findOne(
+        {email: {'$regex': email , $options:'i'}}, null, null
+    ).exec();
+
+    try {
+        //encrypt the password
+        const hashedPwd = await bcrypt.hash(pwd, 10);
+        foundEmail.password = hashedPwd;
+        const result = await foundEmail.save();
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(500).json({'message' : err.message})
+    }
+}
+
+module.exports = { handleNewUser, resetPassword }

@@ -40,7 +40,7 @@ app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
-
+app.use('/recovery', require('./routes/api/recovery'));
 
 app.use('/process', require('./routes/api/process'));
 
