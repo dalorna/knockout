@@ -34,7 +34,6 @@ const ResetPassword = () => {
         setErrMsg('');
     }, [pwd, matchPwd])
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -67,7 +66,6 @@ const ResetPassword = () => {
             errRef.current.focus();
         }
     }
-
 
     return (
         <main className="App">

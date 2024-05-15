@@ -100,19 +100,7 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                 <h5>Feature enhancements</h5>
                 <ol className="features text-start">
                     <li className="chiefs-red">
-                        Send email to user with private code
-                    </li>
-                    <li className="chiefs-red">
-                        reset pass word in profile
-                    </li>
-                    <li className="chiefs-red">
-                        reset pass word email from login
-                    </li>
-                    <li className="chiefs-red">
                         league should run when user navigates to standings page... (first user there runs the league)
-                    </li>
-                    <li className="chiefs-red">
-                        Will need a profile page to Change Password
                     </li>
                     <li>All pick feature, pick all the games</li>
                     <li>Add vegas line to pick screen in the card</li>
@@ -138,6 +126,9 @@ const Home = ({leagues, setLeagues, refreshSideMenu}) => {
                     <li>
                         Commissioner should see people who do not have pick yet for the week
                         (possibly send email to them)
+                    </li>
+                    <li>
+                        Upload image icon
                     </li>
                     <li>
                         3 fonts for the 3 sections (menu, header, content)

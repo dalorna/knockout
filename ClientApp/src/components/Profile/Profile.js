@@ -64,7 +64,7 @@ const Profile = () => {
                         Soon !</h5>
                 </div>
                 <div>Change Password</div>
-                <div>Change Email Address</div>
+                <div>Change UserName</div>
             </div>
         </div>
     )

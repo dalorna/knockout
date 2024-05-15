@@ -127,6 +127,9 @@ const Login = () => {
                                     <a href="/register"> <i className="fa fa-user-plus"/> Sign Up</a>
                                     <a href="/forgot-password">Forgot Password</a>
                                 </div>
+                                <div className="links-login">
+                                    <a href="/username-recovery" style={{marginLeft: '140px', marginTop: '-20px'}}>Forgot Username</a>
+                                </div>
                                 <div className="inputBox-login">
                                     <button style={{width: '100%'}}>Sign In</button>
                                 </div>

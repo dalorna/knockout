@@ -183,6 +183,21 @@
 }
 
 
+.auth-login {
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.auth-login a {
+  color: #444444;
+  text-decoration: underline;
+}
+.auth-login a:hover {
+  color: #fff;
+}
+
+
 
 .container-register {
   display: flex;
@@ -426,7 +441,7 @@
 .container-recovery .box-recovery {
   position: relative;
   width: 450px;
-  height: 240px;
+  height: 265px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -720,4 +735,19 @@
 }
 .reset-submit button:hover {
   background: #848884;
+}
+
+
+.otp-login {
+  width: 100%;
+  margin-top: -15px;
+  display: flex;
+  justify-content: space-between;
+}
+.otp-login a {
+  color: #444444;
+  text-decoration: underline;
+}
+.otp-login a:hover {
+  color: #fff;
 }

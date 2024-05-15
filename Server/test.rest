@@ -153,3 +153,10 @@ Content-Type: application/json
   "subject": "You've been invited to play Knock Out Survivor",
   "html" : "<div><h2>Welcome to Knock Out Survivor</h2><div>Here is you you link to Knock out</div><div>Here is your pass code: 12321-123-123-123-132</div></div>"
 }
+###
+POST http://localhost:3500/recovery/username
+Content-Type: application/json
+
+{
+  "to": "rjrango@gmail.com"
+}

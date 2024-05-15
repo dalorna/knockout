@@ -12,6 +12,8 @@ import Unauthorized from './components/Auth/Unauthorized';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import OTPInput from './components/Auth/OTPInput';
 import ResetPassword from './components/Auth/ResetPassword';
+import ResetUsername from './components/Auth/ResetUsername';
+import {Toaster} from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,10 +29,28 @@ root.render(
                     <Route path="forgot-password" element={<ForgotPassword />} />
                     <Route path="password-recovery" element={<OTPInput />} />
                     <Route path="reset" element={<ResetPassword />} />
+                    <Route path="username-recovery" element={<ResetUsername />} />
 
                     {/* Will eventually be protected */}
                     <Route path="knockout/*" element={<App />}/>
                 </Routes>
+
+                <Toaster position='top-right' reverseOrder={false}  toastOptions={{
+                    duration: 3000,
+                    success: {
+                        style: {
+                            borderLeftColor: '#3daf8d',
+                        },
+                        iconTheme: {
+                            primary: '#3daf8d',
+                        },
+                    },
+                    error: {
+                        duration: 5000,
+                        iconTheme: {
+                            primary: '#9e0442',
+                        }
+                    }}} />
             </AuthProvider>
         </RecoilRoot>
     </BrowserRouter>
