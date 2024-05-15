@@ -45,8 +45,7 @@ const resetPassword = async (req, res) => {
 
     try {
         //encrypt the password
-        const hashedPwd = await bcrypt.hash(pwd, 10);
-        foundEmail.password = hashedPwd;
+        foundEmail.password = await bcrypt.hash(pwd, 10);
         const result = await foundEmail.save();
         res.status(201).json(result);
     } catch (err) {
