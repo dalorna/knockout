@@ -32,7 +32,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 //serve static files
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '.build')))
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname,'/index.html'));
+});
 
 // routes
 app.use('/', require('./routes/root'));
