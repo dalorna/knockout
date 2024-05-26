@@ -1,4 +1,6 @@
-export const baseUrl = '';
+// export const baseUrl = 'http://localhost:3500';
+
+export const baseUrl = 'https://api-dot-commanding-tome-408915.uc.r.appspot.com';
 export const submitRulesBody = `You're league rules will be submitted, and will be LOCKED DOWN for the season`;
 export const saveRulesBody = `You're league rules will be saved, but will NOT be locked down for the season`;
 export const loser = 'loser';
