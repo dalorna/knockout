@@ -1,4 +1,9 @@
 runtime: nodejs22
 service: api
-includes:
-  - env_vars.yaml
+skip_files: .env
+env_variable:
+  ACCESS_TOKEN_SECRET: "62d8154fcde5044128e9f8020db7a550978dcb5166d25a8a6b12dc172088aec55bee5c31519c97cc0fb89f56cc29e103dd6fed8e22dc4e29897d52f3b639cd6e"
+  REFRESH_TOKEN_SECRET: "068e70efde4197d72dc0ee47482735a0e696d6804629ae4b519206c5aea4ea3d993b802f782126c673891ff7215035fc238e9a99bcd7a4b0d29190733e87283e"
+  DATABASE_URI: "mongodb+srv://MongoAdmin:MongoAdmin12345@maincluster1.0pgjkjf.mongodb.net/RangoDB?retryWrites=true&w=majority"
+  NFL_API_HOST: "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com"
+  NFL_API_KEY: "44f8c96637mshbb70e34a02bf508p17025djsn1890db6d647d"
